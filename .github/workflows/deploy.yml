@@ -1,14 +1,7 @@
 name: CI/CD
 
-# Trigger when push to master branch happes, or when a pull request targetting
-# the master branch is updated
-on:
-  push:
-    branches:
-      - master
-  pull_request:
-    branches:
-      - master
+# Trigger test on very push, deploy only after push on master branch after test
+on: push
 
 jobs:
   test:
@@ -61,3 +54,20 @@ jobs:
           APP_KEY: base64:HXaE/pTpPoSNdHFMl5SpgX2XKtdph3EjrdmvWFDKisE=
           DB_URL: mysql://root:@127.0.0.1:${{ job.services.mysql.ports[3307] }}/komarch_testing
           SCOUT_ELASTIC_HOST: 127.0.0.1:${{ job.services.elasticsearch.ports[9200] }}
+
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-18.04
+    needs: [test]
+    if: github.ref == 'refs/heads/master'
+    steps:
+    - uses: actions/checkout@v1
+    - uses: shivammathur/setup-php@v1
+      with:
+        php-version: 7.4
+    - run: composer install --no-progress --no-interaction
+    - uses: atymic/deployer-php-action@0.2.0
+      with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          ssh-known-hosts: ${{ secrets.SSH_KNOWN_HOSTS }}
+    - run: php artisan deploy
