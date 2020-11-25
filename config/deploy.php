@@ -119,7 +119,7 @@ return [
     */
 
     'hosts' => [
-        'new.komarch.sk' => [
+        'webumenia.sk' => [
             'deploy_path' => '/var/www/komarch.sk',
             'user' => 'lab_sng',
             'branch' => 'master',
