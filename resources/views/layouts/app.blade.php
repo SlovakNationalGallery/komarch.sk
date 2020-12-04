@@ -21,7 +21,6 @@
 
   <body class="h-100">
     <div id="app" class="d-flex flex-column min-vh-100">
-      <?php // XXX: What is role=main? ?>
       <main role="main" class="flex-fill {{ (isSet($error_number)) ? 'bg-light' : '' }}">
         @yield('content')
       </main>
