@@ -17,6 +17,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::resource('spravy', '\App\Http\Controllers\PostsController')->names('posts')
+            ->parameter('spravy', 'post');
+
 Route::get('/styleguide', function () {
     return view('styleguide');
 });
