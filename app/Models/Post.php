@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\Publishable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Sluggable\HasSlug;
@@ -13,12 +14,13 @@ class Post extends Model
 {
     use HasFactory,
         HasSlug,
-        HasTags;
+        HasTags,
+        Publishable;
 
     public $with = ['tags'];
 
-    public $dates = ['publish_date'];
-    protected $guarded = [];
+    protected $guarded = ['id'];
+    protected $dates = ['published_at'];
 
     public function getRouteKeyName()
     {

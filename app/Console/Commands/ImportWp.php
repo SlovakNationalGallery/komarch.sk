@@ -37,8 +37,7 @@ class ImportWp extends Command
                     'title' => $oldPost->post_title,
                     'text' => $this->sanitizePostContent($oldPost->post_content),
                     'wp_post_name' => $oldPost->post_name,
-                    'publish_date' => Carbon::createFromFormat('Y-m-d H:i:s', $oldPost->post_date),
-                    'published' => true,
+                    'published_at' => Carbon::createFromFormat('Y-m-d H:i:s', $oldPost->post_date),
                 ]);
 
                 $this->attachTags($oldPost, $post);

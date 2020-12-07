@@ -19,8 +19,7 @@ class CreatePostsTable extends Migration
             $table->string('slug');
             $table->text('text');
             $table->string('wp_post_name')->nullable();
-            $table->datetime('publish_date');
-            $table->boolean('published')->default(false);
+            $table->timestamp('published_at')->nullable();
             $table->string('author')->default('komarch');
             $table->timestamps();
         });
