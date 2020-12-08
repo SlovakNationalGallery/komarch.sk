@@ -19,9 +19,9 @@
     @stack('styles')
   </head>
 
-  <body class="h-100">
-    <div id="app" class="d-flex flex-column min-vh-100">
-      <main role="main" class="flex-fill {{ (isSet($error_number)) ? 'bg-light' : '' }}">
+  <body>
+    <div id="app">
+      <main role="main">
         @yield('content')
       </main>
     </div>
