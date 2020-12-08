@@ -22,6 +22,10 @@ class ImportWp extends Command
 
     public function handle()
     {
+        if (!$this->confirm('⚠️ This will truncate all current posts! Do you wish to continue?')) {
+            return $this->info('OK. Bye.');
+        }
+
         $this->truncateTables();
 
         $this->db = DB::connection('wordpress');
@@ -44,6 +48,8 @@ class ImportWp extends Command
 
                 $this->createRedirect($post);
             });
+
+        $this->info("Done 🎉");
     }
 
     protected function truncateTables()
