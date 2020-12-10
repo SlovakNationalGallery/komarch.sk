@@ -9,15 +9,22 @@ use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use Spatie\Tags\HasTags;
 use Spatie\Tags\Tag;
+use Spatie\Translatable\HasTranslations;
 
 class Post extends Model
 {
     use HasFactory,
         HasSlug,
         HasTags,
-        Publishable;
+        Publishable,
+        HasTranslations;
 
     public $with = ['tags'];
+
+    public $translatable = [
+        'title',
+        'text',
+    ];
 
     protected $guarded = ['id'];
     protected $dates = ['published_at'];
@@ -31,7 +38,8 @@ class Post extends Model
     {
         return SlugOptions::create()
             ->generateSlugsFrom('title')
-            ->saveSlugsTo('slug');
+            ->saveSlugsTo('slug')
+            ->doNotGenerateSlugsOnUpdate();
     }
 
     public function getWordpressFullUrlAttribute(): string
