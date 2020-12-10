@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\UserRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
+use Illuminate\Support\Facades\Hash;
 
 /**
  * Class UserCrudController
@@ -14,8 +15,8 @@ use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 class UserCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation { store as traitStore; }
+    use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation { update as traitUpdate; }
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
 
@@ -42,8 +43,6 @@ class UserCrudController extends CrudController
         CRUD::column('name');
         CRUD::column('email');
         CRUD::column('email_verified_at');
-        CRUD::column('password');
-        CRUD::column('remember_token');
         CRUD::column('created_at');
         CRUD::column('updated_at');
 
@@ -62,29 +61,80 @@ class UserCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
+        $this->addUserFields();
         CRUD::setValidation(UserRequest::class);
-
-        CRUD::field('name');
-        CRUD::field('email');
-        CRUD::field('email_verified_at');
-        CRUD::field('password');
-        CRUD::field('remember_token');
-
-        /**
-         * Fields can be defined using the fluent syntax or array syntax:
-         * - CRUD::field('price')->type('number');
-         * - CRUD::addField(['name' => 'price', 'type' => 'number'])); 
-         */
     }
 
     /**
      * Define what happens when the Update operation is loaded.
-     * 
+     *
      * @see https://backpackforlaravel.com/docs/crud-operation-update
      * @return void
      */
     protected function setupUpdateOperation()
     {
-        $this->setupCreateOperation();
+        $this->addUserFields();
+        CRUD::setValidation(UserRequest::class);
+    }
+
+    protected function store()
+    {
+        $this->crud->setRequest($this->crud->validateRequest());
+        $this->crud->setRequest($this->handlePasswordInput($this->crud->getRequest()));
+
+        // validation has already been run
+        $this->crud->unsetValidation();
+
+        return $this->traitStore();
+    }
+
+    protected function update() {
+        $this->crud->setRequest($this->crud->validateRequest());
+        $this->crud->setRequest($this->handlePasswordInput($this->crud->getRequest()));
+
+        // validation has already been run
+        $this->crud->unsetValidation();
+
+        return $this->traitUpdate();
+    }
+
+    protected function handlePasswordInput($request)
+    {
+        // Remove fields not present in the model
+        $request->request->remove('password_confirmation');
+
+        if ($request->input('password')) {
+            $request->request->set('password', Hash::make($request->input('password')));
+        } else {
+            $request->request->remove('password');
+        }
+
+        return $request;
+    }
+
+    protected function addUserFields()
+    {
+        $this->crud->addFields([
+            [
+                'name' => 'name',
+                'label' => 'Name',
+                'type' => 'text',
+            ],
+            [
+                'name' => 'email',
+                'label' => 'Email',
+                'type' => 'email',
+            ],
+            [
+                'name' => 'password',
+                'label' => 'Password',
+                'type' => 'password',
+            ],
+            [
+                'name' => 'password_confirmation',
+                'label' => 'Password Confirmation',
+                'type' => 'password',
+            ]
+        ]);
     }
 }

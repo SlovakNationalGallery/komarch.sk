@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UserRequest extends FormRequest
 {
@@ -25,8 +26,16 @@ class UserRequest extends FormRequest
      */
     public function rules()
     {
+        $routeSegmentWithId = empty(config('backpack.base.route_prefix')) ? '2' : '3';
+        $userId = $this->get('id') ?? \Request::instance()->segment($routeSegmentWithId);
+
         return [
-            // 'name' => 'required|min:5|max:255'
+            'name' => 'required|min:5|max:255',
+            'email' => [
+                'required',
+                Rule::unique('users')->ignore($userId),
+            ],
+            'password' => 'confirmed',
         ];
     }
 
