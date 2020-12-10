@@ -22,6 +22,7 @@
   <body>
     <div id="app">
       <main role="main">
+        @include('components.langswitch')
         @yield('content')
       </main>
     </div>
