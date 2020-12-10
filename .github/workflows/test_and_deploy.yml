@@ -10,19 +10,19 @@ jobs:
 
     services:
       mysql:
-        image: "mysql:5.7.32"
+        image: mysql:5.7.32
         ports:
-          - "3307:3306"
+          - 3306
         env:
-          MYSQL_DATABASE: "komarch_testing"
-          MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+          MYSQL_DATABASE: komarch_testing
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
 
       elasticsearch:
-        image: "slovaknationalgallery/elasticsearch-webumenia:7.3.1"
+        image: slovaknationalgallery/elasticsearch-webumenia:7.3.1
         ports:
-          - "9200:9200"
+          - 9200
         env:
-          discovery.type: "single-node"
+          discovery.type: single-node
 
     steps:
       - uses: actions/checkout@v2
@@ -52,7 +52,7 @@ jobs:
       - run: ./vendor/bin/phpunit
         env:
           APP_KEY: base64:HXaE/pTpPoSNdHFMl5SpgX2XKtdph3EjrdmvWFDKisE=
-          DB_URL: mysql://root:@127.0.0.1:${{ job.services.mysql.ports[3307] }}/komarch_testing
+          DB_URL: mysql://root:@127.0.0.1:${{ job.services.mysql.ports[3306] }}/komarch_testing
           SCOUT_ELASTIC_HOST: 127.0.0.1:${{ job.services.elasticsearch.ports[9200] }}
 
   deploy:
