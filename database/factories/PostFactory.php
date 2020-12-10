@@ -39,7 +39,6 @@ class PostFactory extends Factory
             return [
                 'author' =>  $this->faker->name(),
                 'published_at' => $this->faker->boolean(50) ? $this->faker->dateTimeBetween('-5 years') : null,
-                // 'tags' => $this->faker->words($nb = $this->faker->numberBetween(1,5))
             ];
         });
     }

@@ -17,7 +17,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
 {
 
     Route::get('/', function () {
-        return view('welcome');
+        return redirect('spravy');
     });
 
     Route::resource('spravy', '\App\Http\Controllers\PostsController')->names('posts')
