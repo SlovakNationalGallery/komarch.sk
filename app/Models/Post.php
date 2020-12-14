@@ -9,7 +9,7 @@ use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use Spatie\Tags\HasTags;
 use Spatie\Tags\Tag;
-use Spatie\Translatable\HasTranslations;
+use Backpack\CRUD\app\Models\Traits\SpatieTranslatable\HasTranslations;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 
 class Post extends Model
