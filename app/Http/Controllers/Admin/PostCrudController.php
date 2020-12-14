@@ -48,6 +48,9 @@ class PostCrudController extends CrudController
                 'name'      => 'tags',
                 'entity'    => 'tags',
                 'attribute' => 'name',
+                'searchLogic' => function ($query, $column, $searchTerm) {
+                    $query->withAnyTags([$searchTerm]);
+                }
             ]
         ]);
 
@@ -85,6 +88,18 @@ class PostCrudController extends CrudController
                 ],
             ],
         ]);
+
+        $this->crud->addFilter([
+          'name'  => 'tags',
+          'type'  => 'select2',
+          'label' => 'Tags'
+        ], function() {
+            return \Spatie\Tags\Tag::all()->pluck('name', 'id')->toArray();
+        }, function ($value) {
+            $this->crud->query = $this->crud->query->whereHas('tags', function ($query) use ($value) {
+                $query->where('tag_id', $value);
+            });
+        });
 
     }
 
