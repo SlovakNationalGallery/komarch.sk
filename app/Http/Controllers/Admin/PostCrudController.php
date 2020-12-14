@@ -34,10 +34,20 @@ class PostCrudController extends CrudController
             [
                 'name' => 'title',
                 'type' => 'article',
+                'searchLogic' => function ($query, $column, $searchTerm) {
+                    $query->orWhere('title->sk', 'like', '%'.$searchTerm.'%')
+                          ->orWhere('title->en', 'like', '%'.$searchTerm.'%');
+                }
             ],
             [
                 'name' => 'published',
                 'type' => 'published_at',
+            ],
+            [
+                'type'      => 'select_multiple',
+                'name'      => 'tags',
+                'entity'    => 'tags',
+                'attribute' => 'name',
             ]
         ]);
 
