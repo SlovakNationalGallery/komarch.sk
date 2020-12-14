@@ -10,14 +10,17 @@ use Spatie\Sluggable\SlugOptions;
 use Spatie\Tags\HasTags;
 use Spatie\Tags\Tag;
 use Spatie\Translatable\HasTranslations;
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
 
 class Post extends Model
 {
+    use \Backpack\CRUD\app\Models\Traits\CrudTrait;
     use HasFactory,
         HasSlug,
         HasTags,
         Publishable,
-        HasTranslations;
+        HasTranslations,
+        CrudTrait;
 
     public $with = ['tags'];
 
@@ -26,6 +29,7 @@ class Post extends Model
         'text',
     ];
 
+    protected $table = 'posts';
     protected $guarded = ['id'];
     protected $dates = ['published_at'];
 
