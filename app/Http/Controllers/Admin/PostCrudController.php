@@ -44,13 +44,11 @@ class PostCrudController extends CrudController
                 'type' => 'published_at',
             ],
             [
-                'type'      => 'select_multiple',
-                'name'      => 'tags',
-                'entity'    => 'tags',
-                'attribute' => 'name',
-                'searchLogic' => function ($query, $column, $searchTerm) {
-                    $query->withAnyTags([$searchTerm]);
-                }
+                'type'        => 'select_multiple',
+                'name'        => 'tags',
+                'entity'      => 'tags',
+                'attribute'   => 'name',
+                'searchLogic' => false,
             ]
         ]);
 
