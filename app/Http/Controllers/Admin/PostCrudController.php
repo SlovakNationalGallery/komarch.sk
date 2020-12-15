@@ -147,4 +147,14 @@ class PostCrudController extends CrudController
     {
         $this->setupCreateOperation();
     }
+
+    protected function setupShowOperation()
+    {
+        $this->crud->addColumn([
+            'name' => 'text',
+            'type' => 'text',
+            'escaped' => false,
+            'limit' => 10000
+        ]);
+    }
 }
