@@ -44,12 +44,17 @@ class PostCrudController extends CrudController
                 'type' => 'published_at',
             ],
             [
-                'type'        => 'select_multiple',
                 'name'        => 'tags',
+                'label'       => 'Tags',
+                'type'        => 'select_multiple',
                 'entity'      => 'tags',
                 'attribute'   => 'name',
-                'searchLogic' => false,
-            ]
+                'wrapper'   => [
+                    'href' => function ($crud, $column, $entry, $related_key) {
+                        return backpack_url('tag/'.$related_key.'/show');
+                    },
+                ],
+            ],
         ]);
 
         $this->crud->addFields([
@@ -84,6 +89,13 @@ class PostCrudController extends CrudController
                 'wrapper'   => [
                     'class' => 'col-sm-8 col-md-6 form-group',
                 ],
+            ],
+            [
+                'name'        => 'tags',
+                'label'       => 'Tags',
+                'type'        => 'select_multiple',
+                'entity'      => 'tags',
+                'attribute'   => 'name',
             ],
         ]);
 
