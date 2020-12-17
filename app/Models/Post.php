@@ -27,6 +27,8 @@ class Post extends Model
         'text',
     ];
 
+    public $with = ['tags'];
+
     protected $table = 'posts';
     protected $guarded = ['id'];
     protected $dates = ['published_at'];
