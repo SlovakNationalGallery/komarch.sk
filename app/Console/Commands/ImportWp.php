@@ -58,6 +58,7 @@ class ImportWp extends Command
                         'published_at' => Carbon::createFromFormat('Y-m-d H:i:s', $oldPost->post_date),
                         'menu_order' => $oldPost->menu_order,
                     ]);
+                    $this->attachTags($oldPost, $page);
                 }
             });
 
@@ -90,7 +91,7 @@ class ImportWp extends Command
         return $postContent;
     }
 
-    protected function attachTags(stdClass $oldPost, Post $post)
+    protected function attachTags(stdClass $oldPost, \Illuminate\Database\Eloquent\Model $model)
     {
         $tags = $this->db->select(DB::raw("SELECT * FROM wp_terms
                  INNER JOIN wp_term_taxonomy
@@ -103,8 +104,8 @@ class ImportWp extends Command
             ->map(function (stdClass $tag) {
                 return $tag->name;
             })
-            ->pipe(function (Collection $tags) use ($post) {
-                return $post->attachTags($tags);
+            ->pipe(function (Collection $tags) use ($model) {
+                return $model->attachTags($tags);
             });
     }
 }
