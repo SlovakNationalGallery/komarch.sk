@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Post;
+use App\Models\Page;
 use App\Models\Redirect;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
@@ -32,21 +33,32 @@ class ImportWp extends Command
 
         $oldPosts = $this->db->table('wp_posts')
             ->where('post_status', 'publish')
-            ->where('post_type', 'post')
+            ->whereIn('post_type', ['post', 'page'])
             ->get();
 
         collect($oldPosts)
             ->each(function (stdClass $oldPost) {
-                $post = Post::create([
-                    'title' => $oldPost->post_title,
-                    'text' => $this->sanitizePostContent($oldPost->post_content),
-                    'wp_post_name' => $oldPost->post_name,
-                    'published_at' => Carbon::createFromFormat('Y-m-d H:i:s', $oldPost->post_date),
-                ]);
+                if ($oldPost->post_type == 'post') {
+                    $post = Post::create([
+                        'title' => $oldPost->post_title,
+                        'text' => $this->sanitizePostContent($oldPost->post_content),
+                        'wp_post_name' => $oldPost->post_name,
+                        'published_at' => Carbon::createFromFormat('Y-m-d H:i:s', $oldPost->post_date),
+                    ]);
+                    $this->attachTags($oldPost, $post);
+                    $this->createRedirect($post);
 
-                $this->attachTags($oldPost, $post);
-
-                $this->createRedirect($post);
+                } else {
+                    $page = Page::create([
+                        'id' => $oldPost->ID,
+                        'parent_id' => $oldPost->post_parent,
+                        'title' => $oldPost->post_title,
+                        'text' => $this->sanitizePostContent($oldPost->post_content),
+                        'wp_post_name' => $oldPost->post_name,
+                        'published_at' => Carbon::createFromFormat('Y-m-d H:i:s', $oldPost->post_date),
+                        'menu_order' => $oldPost->menu_order,
+                    ]);
+                }
             });
 
         $this->info("Done 🎉");
@@ -56,6 +68,7 @@ class ImportWp extends Command
     {
         Schema::disableForeignKeyConstraints();
 
+        Page::truncate();
         Post::truncate();
         Tag::truncate();
         Redirect::truncate();
