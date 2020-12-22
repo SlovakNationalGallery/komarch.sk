@@ -9,6 +9,8 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use Spatie\Tags\Tag;
 use stdClass;
 
@@ -16,38 +18,77 @@ class ImportWp extends Command
 {
     protected $signature = 'import:wp';
 
-    protected $description = 'Import the WordPress database';
+    protected $description = 'Import the WordPress database and images';
 
-    protected $db;
+    protected $wordpressDb;
 
     public function handle()
     {
-        if (!$this->confirm('⚠️ This will truncate all current posts! Do you wish to continue?')) {
-            return $this->info('OK. Bye.');
+        // XXX: Add params here so that just a part of the import is runnable.
+
+        // if (!$this->confirm('⚠️ This will truncate all current posts! Do you wish to continue?')) {
+        //     return $this->info('OK. Bye.');
+        // }
+
+        // $this->info('Truncating local tables');
+        // $this->truncateTables();
+
+        // $this->info('Connecting to wordpress database');
+        // $this->wordpressDb = DB::connection('wordpress');
+
+        // $this->info('Querying posts in wordpress database');
+        // $oldPosts = $this->wordpressDb->table('wp_posts')
+        //     ->where('post_status', 'publish')
+        //     ->where('post_type', 'post')
+        //     ->get();
+
+        // collect($oldPosts)
+        //     ->each(function (stdClass $oldPost) {
+        //         $post = Post::create([
+        //             'title' => $oldPost->post_title,
+        //             'text' => $this->sanitizePostContent($oldPost->post_content),
+        //             'wp_post_name' => $oldPost->post_name,
+        //             'published_at' => Carbon::createFromFormat('Y-m-d H:i:s', $oldPost->post_date),
+        //         ]);
+
+        //         $this->attachTags($oldPost, $post);
+
+        //         $this->createRedirect($post);
+        //     });
+
+        // XXX: Rename upstream to wordpress
+        $this->info("Connecting to wordpress filesystem");
+        $upstreamFs = Storage::disk('wordpress');
+
+        $files = $upstreamFs->allFiles('wp-content/uploads/');
+        $extensions = [
+            'jpg' => 'jpg',
+            'jpeg' => 'jpg',
+            'JPG' => 'jpg',
+            'png' => 'png',
+            'PNG' => 'png',
+        ];
+
+        $copiedCount = 0;
+
+        foreach ($files as $file) {
+            $fileExtension = pathinfo($file, PATHINFO_EXTENSION);
+
+            // XXX: Do we want to fix extensions?
+
+            if (array_key_exists($fileExtension, $extensions)) {
+                $this->info('Copying file: ' . $file);
+                try {
+                    $contents = $upstreamFs->get($file);
+                    Storage::put($file, $contents);
+
+                    $copiedCount++;
+                } catch (Exception $e) { // XXX: This catch doesn't catch FileNotFoundException
+                    $this->warn('Failed to copy file: ' . $file);
+                }
+            }
         }
-
-        $this->truncateTables();
-
-        $this->db = DB::connection('wordpress');
-
-        $oldPosts = $this->db->table('wp_posts')
-            ->where('post_status', 'publish')
-            ->where('post_type', 'post')
-            ->get();
-
-        collect($oldPosts)
-            ->each(function (stdClass $oldPost) {
-                $post = Post::create([
-                    'title' => $oldPost->post_title,
-                    'text' => $this->sanitizePostContent($oldPost->post_content),
-                    'wp_post_name' => $oldPost->post_name,
-                    'published_at' => Carbon::createFromFormat('Y-m-d H:i:s', $oldPost->post_date),
-                ]);
-
-                $this->attachTags($oldPost, $post);
-
-                $this->createRedirect($post);
-            });
+        $this->info('Copied ' . $copiedCount . ' images');
 
         $this->info("Done 🎉");
     }
@@ -79,7 +120,7 @@ class ImportWp extends Command
 
     protected function attachTags(stdClass $oldPost, Post $post)
     {
-        $tags = $this->db->select(DB::raw("SELECT * FROM wp_terms
+        $tags = $this->wordpressDb->select(DB::raw("SELECT * FROM wp_terms
                  INNER JOIN wp_term_taxonomy
                  ON wp_term_taxonomy.term_id = wp_terms.term_id
                  INNER JOIN wp_term_relationships

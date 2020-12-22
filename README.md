@@ -17,6 +17,10 @@ installs as well as long as you configure them equivalently (see
 
 ## First time setup
 
+- Enable these extensions in your php installation
+  - exif
+  - ftp
+  - pdo_mysql
 - Clone the repository
 - Create `.env` and `.env.testing` files based on `.env.example`
   1) Create `.env` and `.env.testing` files as copies of `.env.example`

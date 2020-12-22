@@ -55,6 +55,13 @@ return [
             'visibility' => 'public',
         ],
 
+        'wordpress' => [
+            'driver' => 'ftp',
+            'host' => env('FTP_WORDPRESS_HOST'),
+            'username' => env('FTP_WORDPRESS_USERNAME'),
+            'password' => env('FTP_WORDPRESS_PASSWORD'),
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),
