@@ -44,6 +44,8 @@ class ImportWp extends Command
                     'published_at' => Carbon::createFromFormat('Y-m-d H:i:s', $oldPost->post_date),
                 ]);
 
+                $post->searchable();
+
                 $this->attachTags($oldPost, $post);
 
                 $this->createRedirect($post);
