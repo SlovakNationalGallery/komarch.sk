@@ -44,6 +44,18 @@ class PageCrudController extends CrudController
                 'type' => 'published_at',
             ],
             [
+                'name'        => 'parent',
+                'label'       => 'Parent',
+                'type'        => 'select',
+                'entity'      => 'parent',
+                'attribute'   => 'title',
+                'wrapper'   => [
+                    'href' => function ($crud, $column, $entry, $related_key) {
+                        return backpack_url('page/'.$related_key.'/show');
+                    },
+                ],
+            ],
+            [
                 'name'        => 'tags',
                 'label'       => 'Tags',
                 'type'        => 'select_multiple',
@@ -67,6 +79,13 @@ class PageCrudController extends CrudController
                 'label' => 'Slug (URL)',
                 'type' => 'text',
                 'hint' => 'Will be automatically generated from your title, if left empty.'
+            ],
+            [
+                'name'        => 'parent',
+                'label'       => 'Parent',
+                'type'        => 'select',
+                'entity'      => 'parent',
+                'attribute'   => 'title',
             ],
             [
                 'name' => 'text',
@@ -167,6 +186,18 @@ class PageCrudController extends CrudController
             'type' => 'text',
             'escaped' => false,
             'limit' => 10000
+        ]);
+        $this->crud->addColumn([
+            'name'        => 'children',
+            'label'       => 'Children',
+            'type'        => 'select_multiple',
+            'entity'      => 'children',
+            'attribute'   => 'title',
+            'wrapper'   => [
+                'href' => function ($crud, $column, $entry, $related_key) {
+                    return backpack_url('page/'.$related_key.'/show');
+                },
+            ],
         ]);
     }
 }
