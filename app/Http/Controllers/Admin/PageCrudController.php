@@ -112,7 +112,7 @@ class PageCrudController extends CrudController
             [
                 'name'        => 'tags',
                 'label'       => 'Tags',
-                'type'        => 'select_multiple',
+                'type'        => 'select2_multiple',
                 'entity'      => 'tags',
                 'attribute'   => 'name',
             ],
