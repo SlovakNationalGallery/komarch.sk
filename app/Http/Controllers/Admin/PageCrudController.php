@@ -81,9 +81,9 @@ class PageCrudController extends CrudController
                 'hint' => 'Will be automatically generated from your title, if left empty.'
             ],
             [
-                'name'        => 'parent',
+                'name'        => 'parent_id',
                 'label'       => 'Parent',
-                'type'        => 'select',
+                'type'        => 'select2',
                 'entity'      => 'parent',
                 'attribute'   => 'title',
             ],
