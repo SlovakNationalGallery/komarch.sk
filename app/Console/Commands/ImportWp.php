@@ -16,7 +16,7 @@ use stdClass;
 
 class ImportWp extends Command
 {
-    protected $signature = 'import:wp';
+    protected $signature = 'import:wp {--download-images}';
 
     protected $description = 'Import the WordPress database and images';
 
@@ -24,71 +24,71 @@ class ImportWp extends Command
 
     public function handle()
     {
-        // XXX: Add params here so that just a part of the import is runnable.
+        if (!$this->confirm('⚠️ This will truncate all current posts! Do you wish to continue?')) {
+            return $this->info('OK. Bye.');
+        }
 
-        // if (!$this->confirm('⚠️ This will truncate all current posts! Do you wish to continue?')) {
-        //     return $this->info('OK. Bye.');
-        // }
+        if ($this->option('download-images')) {
+            $this->info('Downloading images to temporary directory');
+            $this->info("Connecting to wordpress filesystem");
+            $wordpressFs = Storage::disk('wordpress');
 
-        // $this->info('Truncating local tables');
-        // $this->truncateTables();
+            $files = $wordpressFs->allFiles('wp-content/uploads/');
+            $extensions = [
+                'jpg',
+                'JPG',
+                'jpeg',
+                'JPEG',
+                'png',
+                'PNG',
+            ];
 
-        // $this->info('Connecting to wordpress database');
-        // $this->wordpressDb = DB::connection('wordpress');
+            $copiedCount = 0;
 
-        // $this->info('Querying posts in wordpress database');
-        // $oldPosts = $this->wordpressDb->table('wp_posts')
-        //     ->where('post_status', 'publish')
-        //     ->where('post_type', 'post')
-        //     ->get();
+            foreach ($files as $file) {
+                $fileExtension = pathinfo($file, PATHINFO_EXTENSION);
 
-        // collect($oldPosts)
-        //     ->each(function (stdClass $oldPost) {
-        //         $post = Post::create([
-        //             'title' => $oldPost->post_title,
-        //             'text' => $this->sanitizePostContent($oldPost->post_content),
-        //             'wp_post_name' => $oldPost->post_name,
-        //             'published_at' => Carbon::createFromFormat('Y-m-d H:i:s', $oldPost->post_date),
-        //         ]);
+                if (in_array($fileExtension, $extensions)) {
+                    $this->info('Copying file: ' . $file);
+                    try {
+                        $contents = $wordpressFs->get($file);
+                        Storage::put($file, $contents);
 
-        //         $this->attachTags($oldPost, $post);
-
-        //         $this->createRedirect($post);
-        //     });
-
-        // XXX: Rename upstream to wordpress
-        $this->info("Connecting to wordpress filesystem");
-        $upstreamFs = Storage::disk('wordpress');
-
-        $files = $upstreamFs->allFiles('wp-content/uploads/');
-        $extensions = [
-            'jpg' => 'jpg',
-            'jpeg' => 'jpg',
-            'JPG' => 'jpg',
-            'png' => 'png',
-            'PNG' => 'png',
-        ];
-
-        $copiedCount = 0;
-
-        foreach ($files as $file) {
-            $fileExtension = pathinfo($file, PATHINFO_EXTENSION);
-
-            // XXX: Do we want to fix extensions?
-
-            if (array_key_exists($fileExtension, $extensions)) {
-                $this->info('Copying file: ' . $file);
-                try {
-                    $contents = $upstreamFs->get($file);
-                    Storage::put($file, $contents);
-
-                    $copiedCount++;
-                } catch (Exception $e) { // XXX: This catch doesn't catch FileNotFoundException
-                    $this->warn('Failed to copy file: ' . $file);
+                        $copiedCount++;
+                    } catch (Exception $e) {
+                        // XXX: This catch doesn't catch FileNotFoundException
+                        $this->warn('Failed to copy file: ' . $file);
+                    }
                 }
             }
+            $this->info('Copied ' . $copiedCount . ' images');
         }
-        $this->info('Copied ' . $copiedCount . ' images');
+
+        $this->info('Truncating local tables');
+        $this->truncateTables();
+
+        $this->info('Connecting to wordpress database');
+        $this->wordpressDb = DB::connection('wordpress');
+
+        $this->info('Querying posts in wordpress database');
+        $oldPosts = $this->wordpressDb->table('wp_posts')
+            ->where('post_status', 'publish')
+            ->where('post_type', 'post')
+            ->get();
+
+        collect($oldPosts)
+            ->each(function (stdClass $oldPost) {
+                $post = Post::create([
+                    'title' => $oldPost->post_title,
+                    'text' => $this->sanitizePostContent($oldPost->post_content),
+                    'wp_post_name' => $oldPost->post_name,
+                    'published_at' => Carbon::createFromFormat('Y-m-d H:i:s', $oldPost->post_date),
+                ]);
+
+                $this->attachTags($oldPost, $post);
+
+                $this->createRedirect($post);
+            });
 
         $this->info("Done 🎉");
     }
