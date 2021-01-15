@@ -71,6 +71,15 @@ class ImportWp extends Command
                 if (in_array($fileExtension, $extensions)) {
                     $this->info('Copying file: ' . $file);
                     try {
+                        if (!$wordpressFs->exists($file)) {
+                            // Some files have invalid characters in their
+                            // filesnames and the Laravel FPT client doesn't
+                            // like that. We just skip those files.
+
+                            $this->info('Skipping missing file: ' . $file);
+                            continue;
+                        }
+
                         $contents = $wordpressFs->get($file);
 
                         $destDir = $downloadDir . '/' . $fileDirname;
@@ -78,7 +87,7 @@ class ImportWp extends Command
 
                         if (file_exists($destDir)) {
                             if (!is_dir($destDir)) {
-                                $this->warn('Cannot create directory: ' . $destDir . '. Will skip files');
+                                $this->warn('Cannot create directory: ' . $destDir . ' ... skipping files');
                                 continue;
                             }
                         } else {
@@ -90,8 +99,7 @@ class ImportWp extends Command
 
                         $copiedCount++;
                     } catch (Exception $e) {
-                        // XXX: This catch doesn't catch FileNotFoundException
-                        $this->warn('Failed to copy file: ' . $file);
+                        $this->warn('Failed to copy file: ' . $file . ' ... skipping');
                     }
                 }
             }
