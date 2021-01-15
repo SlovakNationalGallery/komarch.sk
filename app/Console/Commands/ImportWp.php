@@ -30,8 +30,23 @@ class ImportWp extends Command
 
         if ($this->option('download-images')) {
             $this->info('Downloading images to temporary directory');
-            $this->info("Connecting to wordpress filesystem");
+            $this->info('Connecting to wordpress filesystem');
+
             $wordpressFs = Storage::disk('wordpress');
+            $tempDir = sys_get_temp_dir();
+            $downloadDir = $tempDir . '/komarch.sk/image-import-download';
+
+            if (file_exists($downloadDir)) {
+                if (!is_dir($downloadDir)) {
+                    $this->warn('Cannot create download dir: file ' . $downloadDir . ' already exists');
+                    return;
+                }
+
+                $this->info('Using existing download dir: ' . $downloadDir);
+            } else {
+                $this->info('Creating download dir: ' . $downloadDir);
+                mkdir($downloadDir, 0777, true);
+            }
 
             $files = $wordpressFs->allFiles('wp-content/uploads/');
             $extensions = [
@@ -46,13 +61,32 @@ class ImportWp extends Command
             $copiedCount = 0;
 
             foreach ($files as $file) {
-                $fileExtension = pathinfo($file, PATHINFO_EXTENSION);
+                $pathinfo = pathinfo($file);
+                $fileDirname = $pathinfo['dirname'];
+                $fileBasename = $pathinfo['basename'];
+                $fileExtension = $pathinfo['extension'];
+
+                assert($file == $fileDirname . '/' . $fileBasename);
 
                 if (in_array($fileExtension, $extensions)) {
                     $this->info('Copying file: ' . $file);
                     try {
                         $contents = $wordpressFs->get($file);
-                        Storage::put($file, $contents);
+
+                        $destDir = $downloadDir . '/' . $fileDirname;
+                        $destFile = $downloadDir . '/' . $file;
+
+                        if (file_exists($destDir)) {
+                            if (!is_dir($destDir)) {
+                                $this->warn('Cannot create directory: ' . $destDir . '. Will skip files');
+                                continue;
+                            }
+                        } else {
+                            $this->info('Creating directory: ' . $destDir);
+                            mkdir($destDir, 0777, true);
+                        }
+
+                        file_put_contents($destFile, $contents);
 
                         $copiedCount++;
                     } catch (Exception $e) {
