@@ -73,7 +73,7 @@ class ImportWp extends Command
                     try {
                         if (!$wordpressFs->exists($file)) {
                             // Some files have invalid characters in their
-                            // filesnames and the Laravel FPT client doesn't
+                            // filesnames and the Laravel FTP client doesn't
                             // like that. We just skip those files.
 
                             $this->info('Skipping missing file: ' . $file);
