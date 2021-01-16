@@ -14,11 +14,8 @@ final class CreatePostsIndex implements MigrationInterface
     public function up(): void
     {
         Index::create('posts', function (Mapping $mapping, Settings $settings) {
-            // XXX(reviewer): How do we define localized fields in elastic? Can
-            // it deal with JSON well enough for us to not care?
-
-            $mapping->text('title');
-            $mapping->text('text');
+            $mapping->object('title');
+            $mapping->object('text');
             $mapping->date('published_at');
 
             $settings->analysis([
