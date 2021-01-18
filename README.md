@@ -30,7 +30,7 @@ installs as well as long as you configure them equivalently (see
 - Run `npm install`
 - Run `php artisan migrate`
 - Run `php artisan elastic:migrate`
-- Run `php artisan scout:import`
+- Run `php artisan scout:import <model>`
 
 ## Development
 
