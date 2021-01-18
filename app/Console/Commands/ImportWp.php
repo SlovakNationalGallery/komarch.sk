@@ -37,14 +37,18 @@ class ImportWp extends Command
 
         collect($oldPosts)
             ->each(function (stdClass $oldPost) {
+                $now = Carbon::now();
+                $publishedAt = Carbon::createFromFormat('Y-m-d H:i:s', $oldPost->post_date);
                 $post = Post::create([
                     'title' => $oldPost->post_title,
                     'text' => $this->sanitizePostContent($oldPost->post_content),
                     'wp_post_name' => $oldPost->post_name,
-                    'published_at' => Carbon::createFromFormat('Y-m-d H:i:s', $oldPost->post_date),
+                    'published_at' => $publishedAt,
                 ]);
 
-                $post->searchable();
+                if ($now->isAfter($publishedAt)) {
+                    $post->searchable();
+                }
 
                 $this->attachTags($oldPost, $post);
 
