@@ -9,16 +9,18 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use Spatie\Tags\Tag;
 use stdClass;
 
 class ImportWp extends Command
 {
-    protected $signature = 'import:wp';
+    protected $signature = 'import:wp {--download-images}';
 
-    protected $description = 'Import the WordPress database';
+    protected $description = 'Import the WordPress database and images';
 
-    protected $db;
+    protected $wordpressDb;
 
     public function handle()
     {
@@ -26,11 +28,92 @@ class ImportWp extends Command
             return $this->info('OK. Bye.');
         }
 
+        if ($this->option('download-images')) {
+            $this->info('Downloading images to temporary directory');
+            $this->info('Connecting to wordpress filesystem');
+
+            $wordpressFs = Storage::disk('wordpress');
+            $tempDir = sys_get_temp_dir();
+            $downloadDir = $tempDir . '/komarch.sk/image-import-download';
+
+            if (file_exists($downloadDir)) {
+                if (!is_dir($downloadDir)) {
+                    $this->warn('Cannot create download dir: file ' . $downloadDir . ' already exists');
+                    return;
+                }
+
+                $this->info('Using existing download dir: ' . $downloadDir);
+            } else {
+                $this->info('Creating download dir: ' . $downloadDir);
+                mkdir($downloadDir, 0777, true);
+            }
+
+            $files = $wordpressFs->allFiles('wp-content/uploads/');
+            $extensions = [
+                'jpg',
+                'JPG',
+                'jpeg',
+                'JPEG',
+                'png',
+                'PNG',
+            ];
+
+            $copiedCount = 0;
+
+            foreach ($files as $file) {
+                $pathinfo = pathinfo($file);
+                $fileDirname = $pathinfo['dirname'];
+                $fileBasename = $pathinfo['basename'];
+                $fileExtension = $pathinfo['extension'];
+
+                assert($file == $fileDirname . '/' . $fileBasename);
+
+                if (in_array($fileExtension, $extensions)) {
+                    $this->info('Copying file: ' . $file);
+                    try {
+                        if (!$wordpressFs->exists($file)) {
+                            // Some files have invalid characters in their
+                            // filesnames and the Laravel FTP client doesn't
+                            // like that. We just skip those files.
+
+                            $this->info('Skipping missing file: ' . $file);
+                            continue;
+                        }
+
+                        $contents = $wordpressFs->get($file);
+
+                        $destDir = $downloadDir . '/' . $fileDirname;
+                        $destFile = $downloadDir . '/' . $file;
+
+                        if (file_exists($destDir)) {
+                            if (!is_dir($destDir)) {
+                                $this->warn('Cannot create directory: ' . $destDir . ' ... skipping files');
+                                continue;
+                            }
+                        } else {
+                            $this->info('Creating directory: ' . $destDir);
+                            mkdir($destDir, 0777, true);
+                        }
+
+                        file_put_contents($destFile, $contents);
+
+                        $copiedCount++;
+                    } catch (Exception $e) {
+                        $this->warn('Failed to copy file: ' . $file . ' ... skipping');
+                    }
+                }
+            }
+            $this->info('Copied ' . $copiedCount . ' images');
+        }
+
+        $this->info('Truncating local tables');
         $this->truncateTables();
 
-        $this->db = DB::connection('wordpress');
+        $this->info('Connecting to wordpress database');
+        $this->wordpressDb = DB::connection('wordpress');
 
-        $oldPosts = $this->db->table('wp_posts')
+        $this->info('Querying posts in wordpress database');
+        $oldPosts = $this->wordpressDb->table('wp_posts')
             ->where('post_status', 'publish')
             ->where('post_type', 'post')
             ->get();
@@ -85,7 +168,7 @@ class ImportWp extends Command
 
     protected function attachTags(stdClass $oldPost, Post $post)
     {
-        $tags = $this->db->select(DB::raw("SELECT * FROM wp_terms
+        $tags = $this->wordpressDb->select(DB::raw("SELECT * FROM wp_terms
                  INNER JOIN wp_term_taxonomy
                  ON wp_term_taxonomy.term_id = wp_terms.term_id
                  INNER JOIN wp_term_relationships
