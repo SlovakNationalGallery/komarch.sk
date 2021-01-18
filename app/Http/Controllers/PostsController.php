@@ -15,7 +15,7 @@ class PostsController extends Controller
         if (empty($search)) {
             $posts = Post::published()->orderBy('published_at', 'desc')->paginate(10);
         } else {
-            $posts = Post::search($search)->orderBy('published_at', 'desc')->paginate(10);
+            $posts = Post::search($search)->paginate(10);
         }
 
         return view('posts.index', compact('posts'));
