@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Post;
+use App\Models\Page;
 use App\Models\Redirect;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
@@ -115,27 +116,43 @@ class ImportWp extends Command
         $this->info('Querying posts in wordpress database');
         $oldPosts = $this->wordpressDb->table('wp_posts')
             ->where('post_status', 'publish')
-            ->where('post_type', 'post')
+            ->whereIn('post_type', ['post', 'page'])
             ->get();
 
         collect($oldPosts)
             ->each(function (stdClass $oldPost) {
                 $now = Carbon::now();
                 $publishedAt = Carbon::createFromFormat('Y-m-d H:i:s', $oldPost->post_date);
-                $post = Post::create([
-                    'title' => $oldPost->post_title,
-                    'text' => $this->sanitizePostContent($oldPost->post_content),
-                    'wp_post_name' => $oldPost->post_name,
-                    'published_at' => $publishedAt,
-                ]);
 
-                if ($now->isAfter($publishedAt)) {
-                    $post->searchable();
+                if ($oldPost->post_type == 'post') {
+                    $post = Post::create([
+                        'title' => $oldPost->post_title,
+                        'text' => $this->sanitizePostContent($oldPost->post_content),
+                        'wp_post_name' => $oldPost->post_name,
+                        'published_at' => Carbon::createFromFormat('Y-m-d H:i:s', $oldPost->post_date),
+                    ]);
+
+                    if ($now->isAfter($publishedAt)) {
+                        $post->searchable();
+                    }
+
+                    $this->attachTags($oldPost, $post);
+                    $this->createRedirect($post);
+                } else {
+                    $page = Page::create([
+                        'id' => $oldPost->ID,
+                        'parent_id' => $oldPost->post_parent,
+                        'title' => $oldPost->post_title,
+                        'text' => $this->sanitizePostContent($oldPost->post_content),
+                        'wp_post_name' => $oldPost->post_name,
+                        'published_at' => Carbon::createFromFormat('Y-m-d H:i:s', $oldPost->post_date),
+                        'menu_order' => $oldPost->menu_order,
+                    ]);
+
+                    // TODO: Make searchable
+
+                    $this->attachTags($oldPost, $page);
                 }
-
-                $this->attachTags($oldPost, $post);
-
-                $this->createRedirect($post);
             });
 
         $this->info("Done 🎉");
@@ -145,6 +162,7 @@ class ImportWp extends Command
     {
         Schema::disableForeignKeyConstraints();
 
+        Page::truncate();
         Post::truncate();
         Tag::truncate();
         Redirect::truncate();
@@ -166,7 +184,7 @@ class ImportWp extends Command
         return $postContent;
     }
 
-    protected function attachTags(stdClass $oldPost, Post $post)
+    protected function attachTags(stdClass $oldPost, \Illuminate\Database\Eloquent\Model $model)
     {
         $tags = $this->wordpressDb->select(DB::raw("SELECT * FROM wp_terms
                  INNER JOIN wp_term_taxonomy
@@ -179,8 +197,8 @@ class ImportWp extends Command
             ->map(function (stdClass $tag) {
                 return $tag->name;
             })
-            ->pipe(function (Collection $tags) use ($post) {
-                return $post->attachTags($tags);
+            ->pipe(function (Collection $tags) use ($model) {
+                return $model->attachTags($tags);
             });
     }
 }

@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\PostRequest;
+use App\Http\Requests\PageRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 /**
- * Class PostCrudController
+ * Class PageCrudController
  * @package App\Http\Controllers\Admin
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
-class PostCrudController extends CrudController
+class PageCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
@@ -26,9 +26,9 @@ class PostCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\Post::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/post');
-        CRUD::setEntityNameStrings('post', 'posts');
+        CRUD::setModel(\App\Models\Page::class);
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/page');
+        CRUD::setEntityNameStrings('page', 'pages');
 
         $this->crud->setColumns([
             [
@@ -42,6 +42,18 @@ class PostCrudController extends CrudController
             [
                 'name' => 'published',
                 'type' => 'published_at',
+            ],
+            [
+                'name'        => 'parent',
+                'label'       => 'Parent',
+                'type'        => 'select',
+                'entity'      => 'parent',
+                'attribute'   => 'title',
+                'wrapper'   => [
+                    'href' => function ($crud, $column, $entry, $related_key) {
+                        return backpack_url('page/'.$related_key.'/show');
+                    },
+                ],
             ],
             [
                 'name'        => 'tags',
@@ -67,6 +79,13 @@ class PostCrudController extends CrudController
                 'label' => 'Slug (URL)',
                 'type' => 'text',
                 'hint' => 'Will be automatically generated from your title, if left empty.'
+            ],
+            [
+                'name'        => 'parent_id',
+                'label'       => 'Parent',
+                'type'        => 'select2',
+                'entity'      => 'parent',
+                'attribute'   => 'title',
             ],
             [
                 'name' => 'text',
@@ -138,7 +157,7 @@ class PostCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(PostRequest::class);
+        CRUD::setValidation(PageRequest::class);
 
 
 
@@ -167,6 +186,18 @@ class PostCrudController extends CrudController
             'type' => 'text',
             'escaped' => false,
             'limit' => 10000
+        ]);
+        $this->crud->addColumn([
+            'name'        => 'children',
+            'label'       => 'Children',
+            'type'        => 'select_multiple',
+            'entity'      => 'children',
+            'attribute'   => 'title',
+            'wrapper'   => [
+                'href' => function ($crud, $column, $entry, $related_key) {
+                    return backpack_url('page/'.$related_key.'/show');
+                },
+            ],
         ]);
     }
 }
