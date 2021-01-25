@@ -188,6 +188,10 @@ class PageCrudController extends CrudController
             'limit' => 10000
         ]);
         $this->crud->addColumn([
+            'name' => 'breadcrumbs',
+            'type' => 'breadcrumbs',
+        ]);
+        $this->crud->addColumn([
             'name'        => 'children',
             'label'       => 'Children',
             'type'        => 'select_multiple',

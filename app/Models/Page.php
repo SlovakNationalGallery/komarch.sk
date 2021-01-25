@@ -71,4 +71,18 @@ class Page extends Model
         return $this->hasMany(self::class, 'parent_id');
     }
 
+    public function getBreadcrumbsAttribute()
+    {
+        $breadcrumbs = [];
+        $id = $this->id;
+        while ($id!=0) {
+            $model = self::find($id);
+            $breadcrumbs[] = self::find($id);
+            $id = $model->parent_id;
+        }
+        $breadcrumbs = array_reverse($breadcrumbs);
+
+        return collect($breadcrumbs);
+    }
+
 }
