@@ -22,6 +22,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
 
     Route::resource('spravy', '\App\Http\Controllers\PostsController')->names('posts')
                 ->parameter('spravy', 'post');
+
+    Route::get('{slug}', 'App\Http\Controllers\PagesController@show');
 });
 
 Route::get('/styleguide', function () {
