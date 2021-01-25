@@ -117,6 +117,10 @@ class ImportWp extends Command
         $oldPosts = $this->wordpressDb->table('wp_posts')
             ->where('post_status', 'publish')
             ->whereIn('post_type', ['post', 'page'])
+            ->leftJoin('wp_postmeta', function ($join) {
+                $join->on('wp_postmeta.post_id', '=', 'wp_posts.ID')
+                    ->where('wp_postmeta.meta_key', '=', '_amfp_exclude_from_menu');
+            })
             ->get();
 
         collect($oldPosts)
@@ -146,7 +150,7 @@ class ImportWp extends Command
                         'text' => $this->sanitizePostContent($oldPost->post_content),
                         'wp_post_name' => $oldPost->post_name,
                         'published_at' => Carbon::createFromFormat('Y-m-d H:i:s', $oldPost->post_date),
-                        'menu_order' => $oldPost->menu_order,
+                        'menu_order' => ($oldPost->meta_value==0) ? $oldPost->menu_order : null,
                     ]);
 
                     // TODO: Make searchable
