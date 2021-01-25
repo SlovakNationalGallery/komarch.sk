@@ -74,7 +74,7 @@ class Page extends Model
     public function getBreadcrumbsAttribute()
     {
         $breadcrumbs = [];
-        $id = $this->id;
+        $id = $this->parent_id;
         while ($id!=0) {
             $model = self::find($id);
             $breadcrumbs[] = self::find($id);
