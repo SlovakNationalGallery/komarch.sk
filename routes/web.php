@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/styleguide', function () {
+    return view('styleguide');
+});
+
 Route::group(['prefix' => LaravelLocalization::setLocale()], function()
 {
 
@@ -24,8 +28,4 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
                 ->parameter('spravy', 'post');
 
     Route::get('{slug}', 'App\Http\Controllers\PagesController@show');
-});
-
-Route::get('/styleguide', function () {
-    return view('styleguide');
 });
