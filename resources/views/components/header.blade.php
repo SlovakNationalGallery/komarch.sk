@@ -34,7 +34,7 @@
   </div>
 </nav>
 
-<nav class="navbar navbar-expand navbar-light bg-light">
+<nav class="navbar navbar-expand navbar-light bg-light border-top border-bottom">
   <div class="container">
     <div class="collapse navbar-collapse" id="navbar2">
       <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
@@ -45,6 +45,5 @@
         @endforeach
       </ul>
     </div>
-    @include('components.langswitch')
   </div>
 </nav>
