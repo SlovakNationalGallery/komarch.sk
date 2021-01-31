@@ -20,6 +20,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
         return redirect('spravy');
     });
 
+    Route::get('/search', 'App\Http\Controllers\SearchController@index');
+
     Route::resource('spravy', '\App\Http\Controllers\PostsController')->names('posts')
                 ->parameter('spravy', 'post');
 });
