@@ -8,12 +8,11 @@
         <div class="col-12 py-4">
             <ul>
                 @foreach($posts as $post)
-                    @include('posts._partials.listItem')
+                    @include('search._partials.item')
                 @endforeach
             </ul>
         </div>
 
-        {{-- XXX: links() also generates the "query" query param. Can we not? --}}
         {{ $posts->withQueryString()->links() }}
     </div>
     </div>
