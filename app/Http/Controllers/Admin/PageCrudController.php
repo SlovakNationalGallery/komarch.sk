@@ -49,6 +49,10 @@ class PageCrudController extends CrudController
                 'type'        => 'select',
                 'entity'      => 'parent',
                 'attribute'   => 'title',
+                'orderable' => true,
+                'orderLogic' => function ($query, $column, $columnDirection) {
+                        return $query->orderBy('parent_id', $columnDirection);
+                    },
                 'wrapper'   => [
                     'href' => function ($crud, $column, $entry, $related_key) {
                         return backpack_url('page/'.$related_key.'/show');
@@ -186,6 +190,10 @@ class PageCrudController extends CrudController
             'type' => 'text',
             'escaped' => false,
             'limit' => 10000
+        ]);
+        $this->crud->addColumn([
+            'name' => 'breadcrumbs',
+            'type' => 'breadcrumbs',
         ]);
         $this->crud->addColumn([
             'name'        => 'children',

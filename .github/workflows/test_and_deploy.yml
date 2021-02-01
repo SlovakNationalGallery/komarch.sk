@@ -51,7 +51,7 @@ jobs:
         env:
           APP_KEY: base64:HXaE/pTpPoSNdHFMl5SpgX2XKtdph3EjrdmvWFDKisE=
           DATABASE_URL: mysql://root:@127.0.0.1:${{ job.services.mysql.ports[3306] }}/komarch_testing
-          SCOUT_ELASTIC_HOST: 127.0.0.1:${{ job.services.elasticsearch.ports[9200] }}
+          ELASTIC_HOST: 127.0.0.1:${{ job.services.elasticsearch.ports[9200] }}
 
   deploy:
     name: Deploy

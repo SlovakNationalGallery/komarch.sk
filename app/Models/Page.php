@@ -53,7 +53,7 @@ class Page extends Model
 
     public function getUrlAttribute(): string
     {
-        // return action('\App\Http\Controllers\PagesController@show', $this->slug);
+        return action('\App\Http\Controllers\PagesController@show', $this->slug);
     }
 
     public function tags()
@@ -69,6 +69,27 @@ class Page extends Model
     public function children()
     {
         return $this->hasMany(self::class, 'parent_id');
+    }
+
+    public function getBreadcrumbsAttribute()
+    {
+        $breadcrumbs = [];
+        $id = $this->parent_id;
+        while ($id!=0) {
+            $model = self::find($id);
+            $breadcrumbs[] = self::find($id);
+            $id = $model->parent_id;
+        }
+        $breadcrumbs = array_reverse($breadcrumbs);
+
+        return collect($breadcrumbs);
+    }
+
+    public function scopeMenu($query)
+    {
+        return $query->where('parent_id', '=', 0)
+                     ->whereNotNull('menu_order')
+                     ->orderBy('menu_order');
     }
 
 }
