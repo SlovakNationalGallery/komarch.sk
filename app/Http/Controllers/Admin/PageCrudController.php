@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\PageRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
-
+use App\Models\Page;
 /**
  * Class PageCrudController
  * @package App\Http\Controllers\Admin
@@ -15,7 +15,7 @@ class PageCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation { update as traitUpdate; }
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
 
@@ -60,6 +60,10 @@ class PageCrudController extends CrudController
                 ],
             ],
             [
+                'name' => 'menu_order',
+                'type' => 'text',
+            ],
+            [
                 'name'        => 'tags',
                 'label'       => 'Tags',
                 'type'        => 'select_multiple',
@@ -90,6 +94,11 @@ class PageCrudController extends CrudController
                 'type'        => 'select2',
                 'entity'      => 'parent',
                 'attribute'   => 'title',
+            ],
+            [
+                'name' => 'menu_order',
+                'type' => 'number',
+                'hint' => 'Leave empty to hide from navigation'
             ],
             [
                 'name' => 'text',
@@ -221,5 +230,33 @@ class PageCrudController extends CrudController
                 },
             ],
         ]);
+    }
+
+    public function update()
+    {
+        if ($this->crud->getRequest()->input('menu_order') !== null) {
+            $this->shiftPages($this->crud->getCurrentEntry());
+        }
+        $response = $this->traitUpdate();
+        $this->reorderPages($this->crud->getCurrentEntry());
+        return $response;
+    }
+
+    private function reorderPages($page)
+    {
+        $pages = Page::where('parent_id', $page->parent_id)->menu()->get();
+        foreach ($pages as $i => $page) {
+            $page->menu_order = $i;
+            $page->save();
+        }
+    }
+
+    private function shiftPages($page)
+    {
+        $pages = Page::menu()->where('parent_id', $page->parent_id)->where('menu_order', '>=', $page->menu_order)->get();
+        foreach ($pages as $i => $page) {
+            $page->menu_order++;
+            $page->save();
+        }
     }
 }

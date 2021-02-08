@@ -85,10 +85,14 @@ class Page extends Model
         return collect($breadcrumbs);
     }
 
+    public function scopeTopMenu($query)
+    {
+        return $query->menu()->where('parent_id', '=', 0);
+    }
+
     public function scopeMenu($query)
     {
-        return $query->where('parent_id', '=', 0)
-                     ->whereNotNull('menu_order')
+        return $query->whereNotNull('menu_order')
                      ->orderBy('menu_order');
     }
 
