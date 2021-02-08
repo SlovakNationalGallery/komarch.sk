@@ -185,15 +185,29 @@ class PageCrudController extends CrudController
 
     protected function setupShowOperation()
     {
+        $this->crud->set('show.setFromDb', false);
+
         $this->crud->addColumn([
-            'name' => 'text',
+            'name' => 'url',
             'type' => 'text',
-            'escaped' => false,
-            'limit' => 10000
+            'wrapper'   => [
+                'href' => function ($crud, $column, $entry, $related_key) {
+                  return $entry->url;
+                },
+                'target' => '_blank',
+            ],
         ]);
+
         $this->crud->addColumn([
             'name' => 'breadcrumbs',
             'type' => 'breadcrumbs',
+        ]);
+
+        $this->crud->addColumn([
+            'name' => 'text',
+            'type' => 'html',
+            'escaped' => false,
+            'limit' => 100000
         ]);
         $this->crud->addColumn([
             'name'        => 'children',
