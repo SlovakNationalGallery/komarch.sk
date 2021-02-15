@@ -9,8 +9,10 @@ class HomeController extends Controller
 {
     public function index(Request $request)
     {
-        $posts = Post::search('*');
-        $posts = $posts->paginate(10);
-        return view('home', compact('posts'));
+        $posts = Post::search('*')->orderBy('published_at', 'desc');
+        $posts = $posts->paginate(4);
+        $featured_post = Post::inRandomOrder()->first();
+
+        return view('home', compact('posts', 'featured_post'));
     }
 }

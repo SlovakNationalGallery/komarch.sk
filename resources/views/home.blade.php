@@ -7,8 +7,8 @@
 
 @include('components.notification_bar')
 
-<div class="container py-5">
-    <div class="row">
+<div class="container">
+    <div class="row py-5">
         <div class="col-md-8 border-right">
             <h1>Podporujeme rozvoj architektúry na&nbsp;Slovensku</h1>
             <p>Slovenská Komora Architektov je odbornou organizáciou, ktorá sa zameriava na vzdelávanie a informovanie verejnosti o potrebách kvalitnej architektúry</p>
@@ -68,48 +68,28 @@ adipiscing',
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-3" id="filters">
-            <div class="d-flex justify-content-between">
-                <h5 class="display-5">Filter</h5>
-                <div>
-                    <a href="{{ route('posts.index') }}" class="link-underline text-dark">Zmazať filter</a>
-                </div>
-            </div>
-            <form action="{{ route('posts.index') }}">
-                <h6 class="mt-3">Kategória</h6>
-                @foreach (\Spatie\Tags\Tag::all() as $tag)
-                    @include('components.filter-checkbox', ['tag' => $tag])
-                @endforeach
-            </form>
-
-            <h5 class="display-5 mt-5">Rýchle odkazy</h5>
-            <ul class="list-unstyled">
-                <li><a href="#">CE ZA AR 2020 →</a></li>
-                <li><a href="#">Informácie o COVID 19 →</a></li>
-                <li><a href="#">Lorem ipsum dolor sit amet →</a></li>
-                <li><a href="#">Lorem ipsum dolor sit amet →</a></li>
-            </ul>
+    <div class="row py-5 border-top">
+        <div class="col-md-4">
+            @include('components.article-big', ['post' => $featured_post])
         </div>
-        <div class="col-md-9 border-left">
+        <div class="col-md-4">
+            @foreach($posts as $post)
+                @include('components.article-small', ['post' => $post])
+            @endforeach
 
-            <div class="d-flex justify-content-between pb-4 text-secondary">
-                <div>Zobrazených {{ $posts->count() }} z {{ $posts->total() }}</div>
-                <div>Zoradiť podľa: dátumu (od najnovších)</div>
+            <div class="mt-2">
+                <a href="{{ route('posts.index') }}">Viac noviniek →</a>
             </div>
 
-            <ul class="list-unstyled">
-                @foreach($posts as $post)
-                    @include('posts._partials.listItem')
-                @endforeach
-            </ul>
-
+        </div>
+        <div class="col-md-4">
+            <h5 class="display-5">Najnovšie publikácie</h5>
             <div class="text-center">
-                {{ $posts->withQueryString()->links() }}
+                <img src="https://placekitten.com/150/200" class="img-fluid my-3 mx-auto" />
             </div>
         </div>
 
-    </div>
+
     </div>
 </div>
 @endsection
