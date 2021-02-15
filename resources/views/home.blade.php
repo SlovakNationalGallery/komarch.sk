@@ -9,9 +9,38 @@
 
 <div class="container py-4">
     <div class="row">
-        <div class="col-md-12 pb-4">
-            <h1>Novinky o činnosti</h1>
-            <p>Lorem ipsum minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</p>
+        <div class="col-md-8 ">
+            <h1>Podporujeme rozvoj architektúry na&nbsp;Slovensku</h1>
+            <p>Slovenská Komora Architektov je odbornou organizáciou, ktorá sa zameriava na vzdelávanie a informovanie verejnosti o potrebách kvalitnej architektúry</p>
+
+            <div class="card-deck mb-4">
+                @include('components.tile', [
+                    'title' => 'Ako sa stať autorizovaným členom?',
+                    'text' => 'Pozrite ako na to',
+                    'url' => '#',
+                ])
+                @include('components.tile', [
+                    'title' => 'Hľadáte zoznam architektonických diel?',
+                    'text' => 'Ukázať zoznam',
+                    'url' => '#',
+                ])
+            </div>
+            <div class="card-deck mb-4">
+                @include('components.tile', [
+                    'title' => 'Potrebujete pomôcť s vyhlasovaním súťaže?',
+                    'text' => 'Radi vám pomôžeme',
+                    'url' => '#',
+                ])
+                @include('components.tile', [
+                    'title' => 'Lorem ipsum dolor sit amet, consectur
+adipiscing',
+                    'text' => 'Lorem ipsum dolor',
+                    'url' => '#',
+                ])
+            </div>
+        </div>
+        <div class="col-md-4 ">
+            Súťaže
         </div>
     </div>
     <div class="row">

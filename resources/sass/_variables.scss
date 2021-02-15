@@ -17,9 +17,11 @@ $green:  #38c172;
 $teal:   #4dc0b5;
 $cyan:   #6cb2eb;
 
-
 $color-primary:   $cyan;
 $color-secondary: $teal;
 $color-success:   $green;
 $color-info:      $indigo;
 $color-warning:   $yellow;
+
+// Options
+$enable-rounded: false;
