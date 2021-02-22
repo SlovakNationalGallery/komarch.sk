@@ -69,9 +69,11 @@ adipiscing',
         </div>
     </div>
     <div class="row py-5 border-top">
-        <div class="col-md-4">
-            @include('components.article-big', ['post' => $featured_post])
-        </div>
+        @if ($featured_post)
+            <div class="col-md-4">
+                @include('components.article-big', ['post' => $featured_post])
+            </div>
+        @endif
         <div class="col-md-4">
             @foreach($posts as $post)
                 @include('components.article-small', ['post' => $post])
