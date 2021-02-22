@@ -1,3 +1,13 @@
+@php
+  $tags = Spatie\Tags\Tag::factory(5)->make();
+
+  $post = App\Models\Post::inRandomOrder()->first();
+  if (empty($post)) {
+      $post = App\Models\Post::factory()->rich()->hasTags(3)->make();
+      $post->generateSlug();
+  }
+@endphp
+
 @extends('layouts.app')
 
 @section('title')
@@ -121,10 +131,7 @@
     </div>
 </section>
 
-<section id="tags-card" class="col m-1">
-    @php
-      $tags = Spatie\Tags\Tag::factory(5)->make();
-    @endphp
+<section id="card-tags" class="col m-1">
     <h2>Component: tags</h2>
 
     <div class="cd-box">
@@ -133,6 +140,94 @@
 
     <div class="cd-box code lang-php hljs xml">
         @@include('components.tags', ['tags' => $tags])
+    </div>
+</section>
+
+</div>
+
+<div class="row">
+
+<section id="card-article-big" class="col m-1">
+    <h2>Component: article-big</h2>
+
+    <div class="cd-box">
+        @include('components.article-big')
+    </div>
+
+    <div class="cd-box code lang-php hljs xml">
+        @@include('components.article-big', ['post' => $post])
+    </div>
+</section>
+
+<section id="card-article-small" class="col m-1">
+    <h2>Component: article-small</h2>
+
+    <div class="cd-box">
+        @include('components.article-small')
+    </div>
+
+    <div class="cd-box code lang-php hljs xml">
+        @@include('components.article-small', ['post' => $post])
+    </div>
+</section>
+
+</div>
+
+<div class="row">
+
+<section id="card-filter-checkbox" class="col m-1">
+    <h2>Component: filter-checkbox</h2>
+
+    <div class="cd-box">
+        @include('components.filter-checkbox', ['tag' => $tags->first()])
+    </div>
+
+    <div class="cd-box code lang-php hljs xml">
+        @@include('components.filter-checkbox', ['tag' => $tag])
+    </div>
+</section>
+
+<section id="card-tender-small" class="col m-1">
+    <h2>Component: tender-small</h2>
+
+    <div class="cd-box">
+        @include('components.tender-small', [
+                        'date' => '11. 1. 2021 – 10. 12. 2020',
+                        'text' => 'Výsledky krajinársko-urbanistickej súťaže Revitalizácia Mlynského náhonu v Košiciach',
+                        'url' => '#',
+                    ])
+    </div>
+
+    <div class="cd-box code lang-php hljs xml">
+        @@include('components.tender-small', [
+                        'date' => '11. 1. 2021 – 10. 12. 2020',
+                        'text' => 'Výsledky krajinársko-urbanistickej súťaže Revitalizácia Mlynského náhonu v Košiciach',
+                        'url' => '#',
+                    ])
+    </div>
+</section>
+
+</div>
+
+<div class="row">
+
+<section id="card-tile" class="col m-1">
+    <h2>Component: tile</h2>
+
+    <div class="cd-box">
+        @include('components.tile', [
+                    'title' => 'Ako sa stať autorizovaným členom?',
+                    'text' => 'Pozrite ako na to',
+                    'url' => '#',
+                ])
+    </div>
+
+    <div class="cd-box code lang-php hljs xml">
+        @@include('components.tile', [
+                    'title' => 'Ako sa stať autorizovaným členom?',
+                    'text' => 'Pozrite ako na to',
+                    'url' => '#',
+                ])
     </div>
 </section>
 
