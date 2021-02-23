@@ -4,9 +4,13 @@ namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use Tests\RefreshSearchIndex;
 
 class ExampleTest extends TestCase
 {
+    use RefreshDatabase;
+    use RefreshSearchIndex;
+
     /**
      * A basic test example.
      *
