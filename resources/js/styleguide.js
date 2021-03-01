@@ -27,7 +27,7 @@ jQuery(document).ready(function($) {
     $.map(buttonsHtmlText, function(value){
         if(value.indexOf('button') >= 0 ) {
             var splitText = value.split('class="'),
-                block1 = splitText[0]+'class="';
+                block1 = splitText[0]+'class="',
                 block2 = splitText[1].split('"');
 
             var wrapperElement = $('<p></p>').text(block1),

@@ -24,7 +24,7 @@ class PostFactory extends Factory
     {
         return [
             'title' => Str::title($this->faker->words($nb = $this->faker->numberBetween(2,8), $asText = true)),
-            'text' => $this->faker->paragraph($nbSentences = 10, $variableNbSentences = true)
+            'text' => $this->faker->paragraph($nbSentences = 10, $variableNbSentences = true),
         ];
     }
 
@@ -38,7 +38,7 @@ class PostFactory extends Factory
         return $this->state(function (array $attributes) {
             return [
                 'author' =>  $this->faker->name(),
-                'published_at' => $this->faker->boolean(50) ? $this->faker->dateTimeBetween('-5 years') : null,
+                'published_at' => $this->faker->dateTimeBetween('-5 years'),
             ];
         });
     }

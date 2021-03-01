@@ -15,14 +15,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/styleguide', function () {
     return view('styleguide');
-});
+})->name('styleguide');
 
 Route::group(['prefix' => LaravelLocalization::setLocale()], function()
 {
 
-    Route::get('/', function () {
-        return redirect('spravy');
-    });
+    Route::get('/', 'App\Http\Controllers\HomeController@index')->name('home');
 
     Route::get('/search', 'App\Http\Controllers\SearchController@index');
 

@@ -55,7 +55,7 @@ class Post extends Model
 
     public function getUrlAttribute(): string
     {
-        return action('\App\Http\Controllers\PostsController@show', $this->slug);
+        return action('\App\Http\Controllers\PostsController@show', $this);
     }
 
     public function tags()

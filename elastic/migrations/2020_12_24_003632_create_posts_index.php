@@ -13,7 +13,7 @@ final class CreatePostsIndex implements MigrationInterface
      */
     public function up(): void
     {
-        Index::create('posts', function (Mapping $mapping, Settings $settings) {
+        Index::createIfNotExists('posts', function (Mapping $mapping, Settings $settings) {
             $mapping->object('title');
             $mapping->object('text');
             $mapping->date('published_at');
@@ -71,6 +71,6 @@ final class CreatePostsIndex implements MigrationInterface
      */
     public function down(): void
     {
-        Index::drop('posts');
+        Index::dropIfExists('posts');
     }
 }

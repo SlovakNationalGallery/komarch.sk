@@ -11,6 +11,8 @@ class Tag extends Model
     use CrudTrait,
         HasTranslations;
 
+    use \Spatie\Tags\HasTags;
+
     /*
     |--------------------------------------------------------------------------
     | GLOBAL VARIABLES
@@ -35,6 +37,11 @@ class Tag extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
+
+    public static function getTagClassName(): string
+    {
+        return App\Models\Tag::class;
+    }
 
     /*
     |--------------------------------------------------------------------------

@@ -3,9 +3,24 @@
 namespace Tests;
 
 use Illuminate\Contracts\Console\Kernel;
+use Tests\RefreshSearchIndex;
 
 trait CreatesApplication
 {
+
+    /**
+     * Boot the testing helper traits.
+     *
+     * @return array
+     */
+    protected function setUpTraits()
+    {
+        $uses = parent::setUpTraits();
+        if (isset($uses[RefreshSearchIndex::class])) {
+            $this->refreshSearchIndex();
+        }
+    }
+
     /**
      * Creates the application.
      *

@@ -38,7 +38,7 @@
   <div class="container">
     <div class="collapse navbar-collapse" id="navbar2">
       <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-        @foreach (\App\Models\Page::menu()->get() as $page)
+        @foreach (\App\Models\Page::topMenu()->get() as $page)
           <li class="nav-item">
             <a class="nav-link" href="{{ $page->url }}">{{ $page->title }}</a>
           </li>
