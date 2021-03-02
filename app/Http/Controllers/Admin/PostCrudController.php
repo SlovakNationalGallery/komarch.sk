@@ -69,6 +69,10 @@ class PostCrudController extends CrudController
                 'hint' => 'Will be automatically generated from your title, if left empty.'
             ],
             [
+                'name' => 'perex',
+                'type' => 'textarea',
+            ],
+            [
                 'name' => 'text',
                 'type' => 'tinymce',
                 'options' => [

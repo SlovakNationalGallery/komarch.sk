@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Tags\Tag;
 use stdClass;
+use Illuminate\Support\Str;
 
 class ImportWp extends Command
 {
@@ -129,8 +130,10 @@ class ImportWp extends Command
                 $publishedAt = Carbon::createFromFormat('Y-m-d H:i:s', $oldPost->post_date);
 
                 if ($oldPost->post_type == 'post') {
+                    $perex = $this->getPerex($oldPost->post_content);
                     $post = Post::create([
                         'title' => $oldPost->post_title,
+                        'perex' => $perex,
                         'text' => $this->sanitizePostContent($oldPost->post_content),
                         'wp_post_name' => $oldPost->post_name,
                         'published_at' => Carbon::createFromFormat('Y-m-d H:i:s', $oldPost->post_date),
@@ -186,6 +189,17 @@ class ImportWp extends Command
     {
         // @TODO
         return $postContent;
+    }
+
+    protected function getPerex(string $postContent): ?string
+    {
+        $more_separator_tag = '<!--more-->';
+        if (!Str::contains($postContent, $more_separator_tag)) {
+            return null;
+        }
+        $slice = Str::before($postContent, $more_separator_tag);
+        return strip_tags($slice);
+
     }
 
     protected function attachTags(stdClass $oldPost, \Illuminate\Database\Eloquent\Model $model)
