@@ -3,15 +3,16 @@
 namespace App\Models;
 
 use App\Traits\Publishable;
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
+use Backpack\CRUD\app\Models\Traits\SpatieTranslatable\HasTranslations;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 use Laravel\Scout\Searchable;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use Spatie\Tags\HasTags;
 use Spatie\Tags\Tag;
-use Backpack\CRUD\app\Models\Traits\SpatieTranslatable\HasTranslations;
-use Backpack\CRUD\app\Models\Traits\CrudTrait;
 
 class Post extends Model
 {
@@ -26,6 +27,7 @@ class Post extends Model
 
     public $translatable = [
         'title',
+        'perex',
         'text',
     ];
 
@@ -56,6 +58,14 @@ class Post extends Model
     public function getUrlAttribute(): string
     {
         return action('\App\Http\Controllers\PostsController@show', $this);
+    }
+
+    public function getExcerptAttribute(): ?string
+    {
+        if ($this->perex) {
+            return $this->perex;
+        }
+        return Str::words(strip_tags($post->text), 70);
     }
 
     public function tags()

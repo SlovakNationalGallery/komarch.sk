@@ -11,7 +11,7 @@
         <h4>{{ $post->title }}</h4>
     </a>
     <div>
-        {{ Str::words(strip_tags($post->text), 70) }}
+        {{ $post->excerpt }}
     </div>
 
 </li>
