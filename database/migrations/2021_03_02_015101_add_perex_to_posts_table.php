@@ -14,7 +14,7 @@ class AddPerexToPostsTable extends Migration
     public function up()
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->text('perex')->nullable()->after('slug');
+            $table->json('perex')->nullable()->after('slug');
         });
     }
 

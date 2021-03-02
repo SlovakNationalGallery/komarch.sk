@@ -26,6 +26,7 @@ class Post extends Model
 
     public $translatable = [
         'title',
+        'perex',
         'text',
     ];
 
