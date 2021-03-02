@@ -44,6 +44,9 @@
           </li>
         @endforeach
       </ul>
+      <form class="form-inline my-2 my-lg-0 ml-2" action="{{ route('search') }}">
+          <input class="form-control mr-sm-2" type="search" name="query" placeholder="Hľadať..." aria-label="Hľadať...">
+      </form>
     </div>
   </div>
 </nav>
