@@ -122,7 +122,7 @@ return [
         'webumenia.sk' => [
             'deploy_path' => '/var/www/komarch.sk',
             'user' => 'lab_sng',
-            'branch' => 'feature/KOMARCH-52-menu-reorder-and-link-to-detail',
+            'branch' => 'master',
         ],
     ],
 
