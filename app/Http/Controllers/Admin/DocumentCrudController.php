@@ -87,6 +87,12 @@ class DocumentCrudController extends CrudController
                 'name' => 'name',
                 'type' => 'text',
             ],
+            [
+                'name' => 'file',
+                'label' => 'File',
+                'type'  => 'upload_media',
+                'upload' => true,
+            ],
             // [
             //     'name'        => 'types',
             //     'type'        => 'select2_from_array',

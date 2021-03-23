@@ -84,11 +84,30 @@ class Document extends Model implements HasMedia
     |--------------------------------------------------------------------------
     */
 
+    public function getFileAttribute()
+    {
+        return $this->getFirstMedia('file');
+    }
+
+
     /*
     |--------------------------------------------------------------------------
     | MUTATORS
     |--------------------------------------------------------------------------
     */
+
+    public function setFileAttribute($uploaded_file)
+    {
+
+        $this->clearMediaCollection('file');
+        if (isSet($uploaded_file)) {
+            $this
+                ->addMedia($uploaded_file)
+                // ->usingFileName($uploaded_file->hashName())
+                ->toMediaCollection('file');
+        }
+    }
+
 
 
 }
