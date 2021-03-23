@@ -17,24 +17,25 @@ installs as well as long as you configure them equivalently (see
 
 ## First time setup
 
-- Enable these extensions in your php installation
-  - exif
-  - ftp
-  - pdo_mysql
-- Clone the repository
-- Create `.env` and `.env.testing` files based on `.env.example`
-  1) Create `.env` and `.env.testing` files as copies of `.env.example`
-  2) Run `php artisan key:generate`
-  3) Run `php artisan key:generate --env testing`
-  4) Configure `DB_PORT`, `DB_DATABASE`, `DB_USERNAME` and `DB_PASSWORD` in `.env` based on
-  `mysql-development` in `docker-compose.yml`
-  5) Configure `DB_PORT`, `DB_DATABASE`, `DB_USERNAME` and `DB_PASSWORD` in `.env.testing` based on
-  `mysql-testing` in `docker-compose.yml`
-- Run `composer install`
-- Run `npm install`
-- Run `php artisan migrate`
-- Run `php artisan elastic:migrate`
-- Run `php artisan scout:import <model>`
+1. Enable these extensions in your php installation
+    - exif
+    - ftp
+    - pdo_mysql
+1. Clone the repository
+1. Create `.env` and `.env.testing` files (as copies of `.env.example`) 
+1. Configure env variables `DB_PORT`, `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD`
+    - in `.env` based on `mysql-development` in `docker-compose.yml`
+    - in `.env.testing` based on `mysql-testing` in `docker-compose.yml`
+1. Run `docker-compose up`
+1. Run `composer install`
+1. Run `npm install`
+1. Generate app keys:
+    - Run `php artisan key:generate`
+    - Run `php artisan key:generate --env testing`
+1. Run `php artisan migrate`
+1. Run `php artisan elastic:migrate`
+1. Run `php artisan scout:import <model>`
+1. Run `npm run dev`
 
 ## Development
 
