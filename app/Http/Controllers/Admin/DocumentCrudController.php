@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\DocumentRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
+// use Spatie\Tags\Tag;
 
 /**
  * Class DocumentCrudController
@@ -15,7 +16,7 @@ class DocumentCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation { update as traitUpdate; }
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
 
@@ -86,6 +87,72 @@ class DocumentCrudController extends CrudController
                 'name' => 'name',
                 'type' => 'text',
             ],
+            // [
+            //     'name'        => 'types',
+            //     'type'        => 'select2_from_array',
+            //     'fake'     => true,
+            //     'attributes' => [
+            //         'data-tags' => true
+            //     ],
+            //     'options'   => \Spatie\Tags\Tag::whereType('document-type')->get()->pluck('name', 'name'),
+            // ],
+            // [
+            //     'name'        => 'topics',
+            //     'type'        => 'select2_from_array',
+            //     'fake'     => true,
+            //     'attributes' => [
+            //         'data-tags' => true
+            //     ],
+            //     'options'   => \Spatie\Tags\Tag::whereType('document-topic')->get()->pluck('name', 'name'),
+            // ],
+            // [
+            //     'name'        => 'roles',
+            //     'type'        => 'select2_from_array',
+            //     'fake'     => true,
+            //     'attributes' => [
+            //         'data-tags' => true
+            //     ],
+            //     'options'   => \Spatie\Tags\Tag::whereType('document-role')->get()->pluck('name', 'name'),
+            // ],
+            [
+                'name'        => 'types',
+                'type'        => 'select2_multiple_tags',
+                'entity'      => 'types',
+                'attribute'   => 'name',
+                'fake'     => true,
+                'attributes' => [
+                    'data-tags' => true
+                ],
+                'options'   => (function ($query) {
+                    return $query->where('type', 'document-type')->get();
+                }),
+            ],
+            [
+                'name'        => 'topics',
+                'type'        => 'select2_multiple_tags',
+                'entity'      => 'topics',
+                'attribute'   => 'name',
+                'fake'     => true,
+                'attributes' => [
+                    'data-tags' => true
+                ],
+                'options'   => (function ($query) {
+                    return $query->where('type', 'document-topic')->get();
+                }),
+            ],
+            [
+                'name'        => 'roles',
+                'type'        => 'select2_multiple_tags',
+                'entity'      => 'roles',
+                'attribute'   => 'name',
+                'fake'     => true,
+                'attributes' => [
+                    'data-tags' => true
+                ],
+                'options'   => (function ($query) {
+                    return $query->where('type', 'document-role')->get();
+                }),
+            ],
             [
                 'name'  => 'user_id',
                 'type'  => 'hidden',
@@ -104,5 +171,15 @@ class DocumentCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
+    }
+
+    public function update()
+    {
+        $response = $this->traitUpdate();
+        $this->crud->getCurrentEntry()->syncTagsWithType($this->crud->getRequest()->input('types', []), 'document-type');
+        $this->crud->getCurrentEntry()->syncTagsWithType($this->crud->getRequest()->input('topics', []), 'document-topic');
+        $this->crud->getCurrentEntry()->syncTagsWithType($this->crud->getRequest()->input('roles', []), 'document-role');
+
+        return $response;
     }
 }

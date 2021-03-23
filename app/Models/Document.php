@@ -6,11 +6,14 @@ use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\Tags\HasTags;
+use Spatie\Tags\Tag;
 
 class Document extends Model implements HasMedia
 {
-    use CrudTrait;
-    use InteractsWithMedia;
+    use HasTags,
+        InteractsWithMedia,
+        CrudTrait;
 
     /*
     |--------------------------------------------------------------------------
@@ -24,9 +27,6 @@ class Document extends Model implements HasMedia
     // protected $guarded = ['id'];
     protected $fillable = [
         'name',
-        'type',
-        'topic',
-        'role',
         'user_id',
         'file',
     ];
@@ -54,6 +54,21 @@ class Document extends Model implements HasMedia
     public function user()
     {
         return $this->belongsTo('App\Models\User');
+    }
+
+    public function types()
+    {
+        return $this->morphToMany(Tag::class, 'taggable')->where('type', 'document-type');
+    }
+
+    public function topics()
+    {
+        return $this->morphToMany(Tag::class, 'taggable')->where('type', 'document-topic');
+    }
+
+    public function roles()
+    {
+        return $this->morphToMany(Tag::class, 'taggable')->where('type', 'document-role');
     }
 
 
