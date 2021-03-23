@@ -100,6 +100,7 @@ return [
         'repository' => 'https://github.com/SlovakNationalGallery/komarch.sk.git',
         'php_fpm_service' => 'php7.4-fpm',
         'http_user' => 'www-data',
+        'bin/php' => 'php7.4',
         'bin/composer' => 'php7.4 $(which composer)',
         'shared_dirs' => [
             'storage'
