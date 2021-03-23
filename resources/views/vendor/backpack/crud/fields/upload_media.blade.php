@@ -25,7 +25,7 @@
         @else
             <a target="_blank" href="{{ $field['value']->getFullUrl() }}">
         @endif
-            <span>{{ $field['value']->file_name }}</span>
+            <span>{{ $field['value']->file_name }} ({{ $field['value']->human_readable_size }})</span>
         </a>
     	<a href="#" class="file_clear_button btn btn-light btn-sm float-right" title="Clear file"><i class="la la-remove"></i></a>
     	<div class="clearfix"></div>

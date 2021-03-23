@@ -47,6 +47,25 @@ class DocumentCrudController extends CrudController
                 'name' => 'name',
             ],
             [
+                'name' => 'types',
+                'type' => 'relationship',
+                'entity' => 'types',
+                'attribute' => 'name',
+            ],
+            [
+                'name' => 'roles',
+                'type' => 'relationship',
+                'entity' => 'roles',
+                'attribute' => 'name',
+            ],
+            [
+                'name' => 'file',
+                'type'     => 'closure',
+                'function' => function($entry) {
+                    return ($entry->file) ?  $entry->file->file_name : '';
+                }
+            ],
+            [
                 'name' => 'user',
                 'type' => 'relationship',
                 'entity' => 'user',
