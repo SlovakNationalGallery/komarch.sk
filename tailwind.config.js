@@ -1,3 +1,7 @@
+/*
+    Default configuration:
+    https://github.com/tailwindlabs/tailwindcss/blob/master/stubs/defaultConfig.stub.js
+ */
 module.exports = {
     purge: [
         './resources/**/*.blade.php',
