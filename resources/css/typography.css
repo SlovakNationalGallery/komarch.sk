@@ -1,4 +1,18 @@
 @font-face {
+    font-family: 'KomarchIcons';
+    src: url('../fonts/komarch-icons.eot?xfdiyl');
+    src: url('../fonts/komarch-icons.eot?xfdiyl#iefix') format('embedded-opentype'),
+    url('../fonts/komarch-icons.ttf?xfdiyl') format('truetype'),
+    url('../fonts/komarch-icons.woff?xfdiyl') format('woff'),
+    url('../fonts/komarch-icons.svg?xfdiyl#regarch-icons') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+}
+
+
+/* TODO: Icons are currently from register-achitektury.sk. Replace with the real thing once available. */
+@font-face {
     font-family: 'Komarch';
     src: url("../fonts/komarch-400.otf") format("opentype");
     font-weight: 400;
