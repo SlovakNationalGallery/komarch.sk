@@ -27,7 +27,25 @@ module.exports = {
                 900: '#040405',
             }
         },
-        fontFamily: {},  // add
+        fontFamily: {
+            komarch: [
+                'Komarch',
+                'ui-sans-serif',
+                'system-ui',
+                '-apple-system',
+                'BlinkMacSystemFont',
+                '"Segoe UI"',
+                'Roboto',
+                '"Helvetica Neue"',
+                'Arial',
+                '"Noto Sans"',
+                'sans-serif',
+                '"Apple Color Emoji"',
+                '"Segoe UI Emoji"',
+                '"Segoe UI Symbol"',
+                '"Noto Color Emoji"',
+            ],
+        },
         fontSize: {},  // add
         fontWeight: {},  // add
         letterSpacing: {},  // add
