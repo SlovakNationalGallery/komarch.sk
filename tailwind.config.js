@@ -54,7 +54,9 @@ module.exports = {
             xl: ['28px'],
             '2xl': ['40px'],
         },
-        fontWeight: {},  // add
+        fontWeight: {
+            normal: '400'
+        },
         letterSpacing: {},  // add
         lineHeight: {},  // add
         // spacing - default
