@@ -1,7 +1,6 @@
 /*
     Default configuration:
     https://github.com/tailwindlabs/tailwindcss/blob/master/stubs/defaultConfig.stub.js
-
  */
 module.exports = {
     purge: [
@@ -17,6 +16,7 @@ module.exports = {
             xl: '1280px',
         },
         colors: {
+            transparent: 'transparent',
             white: '#FFFFFF',
             black: '#000000',
             blue: '#001DFF',
@@ -26,7 +26,28 @@ module.exports = {
                 500: '#707070',
                 900: '#040405',
             }
-        }
+        },
+        fontFamily: {},  // add
+        fontSize: {},  // add
+        fontWeight: {},  // add
+        letterSpacing: {},  // add
+        lineHeight: {},  // add
+        // spacing - default
+        // borderRadius - default
+        // borderWidth - default
+        // opacity - default
+        // height - default
+        // width - default
+        // transitions - default
+        // z-index - default
+        // everything rest default
+        animation: {},
+        keyframes: {},
+        backgroundImage: {},
+        backgroundPosition: {},
+        backgroundSize: {},
+        boxShadow: {},
+        objectPosition: {},
     },
     variants: {},
     plugins: [],
