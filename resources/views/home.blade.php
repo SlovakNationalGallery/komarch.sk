@@ -7,7 +7,7 @@
 
 @include('components.notification_bar')
 
-<div class="container">
+<div class="container mx-auto">
     <div class="row py-5">
         <div class="col-md-8 border-right">
             <h1>Podporujeme rozvoj architektúry na&nbsp;Slovensku</h1>

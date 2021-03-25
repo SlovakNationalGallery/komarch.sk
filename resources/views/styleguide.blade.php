@@ -17,10 +17,10 @@
 
 @section('content')
 
-<main>
+<main class="container mx-auto">
 <h1>Style Guide</h1>
 
-<div class="container">
+<div>
 <div class="row">
 <section id="styleguide-branding" class="col m-1">
   <h2>Branding</h2>
