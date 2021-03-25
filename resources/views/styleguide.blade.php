@@ -240,7 +240,7 @@
 @endsection
 
 @push('styles')
-  <link rel="stylesheet" href="{{ mix('/css/styleguide.css') }}">
+  <link rel="stylesheet" href="{{ mix('/css/app.css') }}">
   <link rel="stylesheet"
       href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/default.min.css">
 @endpush
