@@ -14,6 +14,7 @@ installs as well as long as you configure them equivalently (see
 - docker-compose
 - php 7.4
 - composer (tested with `Composer version 1.10.16 2020-10-24 09:55`)
+- node 12.13 or higher
 
 ## First time setup
 
