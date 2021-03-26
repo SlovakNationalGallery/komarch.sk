@@ -1,7 +1,14 @@
-<header class="container mx-auto p-4 flex">
+<header class="container mx-auto p-4 md:flex">
     @include('components.header.header-logo')
     @include('components.header.header-navigation', [
         'navigation_items_1' => [
+            ['title' => 'O Komore', 'url' => '#'],
+            ['title' => 'Autorizácia a členstvo', 'url' => '#'],
+            ['title' => 'Výkon a podpora povolania', 'url' => '#'],
+            ['title' => 'Právne dokumenty', 'url' => '#'],
+            ['title' => 'Verejná správa', 'url' => '#'],
+        ],
+        'navigation_items_2' => [
             ['title' => 'Informácie SKA', 'url' => '#'],
             ['title' => 'Register diel', 'url' => '#'],
             ['title' => 'Zoznam architektov', 'url' => '#'],
@@ -9,10 +16,6 @@
             ['title' => 'CE ZA AR', 'url' => '#'],
             ['title' => 'ISKA', 'url' => '#'],
             ['title' => 'Kontakt', 'url' => '#'],
-        ],
-        'navigation_items_2' => [
-            ['title' => 'Informácie SKA', 'url' => '#'],
-            ['title' => 'Register diel', 'url' => '#'],
         ]
     ])
 </header>
