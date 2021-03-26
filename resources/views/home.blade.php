@@ -7,54 +7,53 @@
 
 @include('components.notification_bar')
 
-<div class="container mx-auto">
-    <div class="row py-5">
-        <div class="col-md-8 border-right">
-            <h1>Podporujeme rozvoj architektúry na&nbsp;Slovensku</h1>
-            <p>Slovenská Komora Architektov je odbornou organizáciou, ktorá sa zameriava na vzdelávanie a informovanie verejnosti o potrebách kvalitnej architektúry</p>
+<div class="container mx-auto px-4">
+    <div>
+        @include('components.intro', [
+            'title' => 'Podporujeme rozvoj architektúry na Slovensku',
+            'text' => 'Slovenská Komora Architektov je odbornou organizáciou, ktorá sa zameriava na vzdelávanie a informovanie verejnosti o potrebách kvalitnej architektúry'
+        ])
 
-            <div class="card-deck mb-4">
-                @include('components.tile', [
-                    'title' => 'Ako sa stať autorizovaným členom?',
-                    'text' => 'Pozrite ako na to',
-                    'url' => '#',
-                ])
-                @include('components.tile', [
-                    'title' => 'Hľadáte zoznam architektonických diel?',
-                    'text' => 'Ukázať zoznam',
-                    'url' => '#',
-                ])
-            </div>
-            <div class="card-deck mb-4">
-                @include('components.tile', [
-                    'title' => 'Potrebujete pomôcť s vyhlasovaním súťaže?',
-                    'text' => 'Radi vám pomôžeme',
-                    'url' => '#',
-                ])
-                @include('components.tile', [
-                    'title' => 'Lorem ipsum dolor sit amet, consectur
-adipiscing',
-                    'text' => 'Lorem ipsum dolor',
-                    'url' => '#',
-                ])
-            </div>
+        <div class="mt-10">
+            @include('components.tile', [
+                'title' => 'Ako sa stať autorizovaným členom?',
+                'text' => 'Pozrite ako na to',
+                'url' => '#',
+            ])
+            @include('components.tile', [
+                'title' => 'Hľadáte zoznam architektonických diel?',
+                'text' => 'Ukázať zoznam',
+                'url' => '#',
+            ])
         </div>
-        <div class="col-md-4 ">
+        <div>
+            @include('components.tile', [
+                'title' => 'Potrebujete pomôcť s vyhlasovaním súťaže?',
+                'text' => 'Radi vám pomôžeme',
+                'url' => '#',
+            ])
+            @include('components.tile', [
+                'title' => 'Lorem ipsum dolor sit amet, consectur adipiscing',
+                'text' => 'Lorem ipsum dolor',
+                'url' => '#',
+            ])
+        </div>
+    <div>
 
-            <h5 class="display-5">Súťaže</h5>
-            <ul class="nav justify-content-between">
-                <li class="nav-item">
-                    <a class="nav-link p-0 active" href="#">Ukončené</a>
+            <h5>Súťaže</h5>
+            <ul>
+                <li>
+                    <a href="#">Ukončené</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link p-0" href="#">Prebiehajúce</a>
+                <li>
+                    <a href="#">Prebiehajúce</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link p-0" href="#">Pripravované</a>
+                <li>
+                    <a href="#">Pripravované</a>
                 </li>
             </ul>
 
-            <div class="tenders mb-2">
+            <div>
                 @for ($i = 0; $i < 4; $i++)
                     @include('components.tender-small', [
                         'date' => '11. 1. 2021 – 10. 12. 2020',
@@ -68,29 +67,28 @@ adipiscing',
             </div>
         </div>
     </div>
-    <div class="row py-5 border-top">
+    <div>
         @if ($featured_post)
-            <div class="col-md-4">
+            <div>
                 @include('components.article-big', ['post' => $featured_post])
             </div>
         @endif
-        <div class="col-md-4">
+        <div>
             @foreach($posts as $post)
                 @include('components.article-small', ['post' => $post])
             @endforeach
 
-            <div class="mt-2">
+            <div>
                 <a href="{{ route('posts.index') }}">Viac noviniek →</a>
             </div>
 
         </div>
-        <div class="col-md-4">
-            <h5 class="display-5">Najnovšie publikácie</h5>
-            <div class="text-center">
-                <img src="https://placekitten.com/150/200" class="img-fluid my-3 mx-auto" />
+        <div>
+            <h5>Najnovšie publikácie</h5>
+            <div>
+                <img src="https://placekitten.com/150/200" />
             </div>
         </div>
-
 
     </div>
 </div>
