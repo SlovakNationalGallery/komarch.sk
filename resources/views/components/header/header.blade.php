@@ -1,4 +1,4 @@
-<header class="container mx-auto p-4 md:flex">
+<header class="container mx-auto px-4 py-12 md:flex">
     @include('components.header.header-logo')
     @include('components.header.header-navigation', [
         'navigation_items_1' => [
