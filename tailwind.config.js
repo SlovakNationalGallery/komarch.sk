@@ -74,6 +74,10 @@ module.exports = {
         boxShadow: {},
         objectPosition: {},
     },
-    variants: {},
+    variants: {
+        extend: {
+            translate: ['group-hover'],
+        }
+    },
     plugins: [],
 }
