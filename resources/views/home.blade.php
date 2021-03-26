@@ -3,7 +3,7 @@
 
 @section('content')
 
-@include('components.header')
+@include('components.header.header')
 
 @include('components.notification_bar')
 
