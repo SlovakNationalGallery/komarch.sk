@@ -14,15 +14,12 @@
         "autoprefixer": "^9.8.6",
         "axios": "^0.19",
         "cross-env": "^7.0",
-        "jquery": "^3.2",
         "laravel-mix": "^5.0.1",
         "laravel-mix-polyfill": "^2.0.0",
-        "lodash": "^4.17.19",
-        "popper.js": "^1.12",
         "postcss": "^7.0.35",
         "resolve-url-loader": "^3.1.0",
         "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.4",
-        "vue-template-compiler": "^2.6.12",
-        "vue": "^2.6.12"
+        "vue": "^2.6.12",
+        "vue-template-compiler": "^2.6.12"
     }
 }
