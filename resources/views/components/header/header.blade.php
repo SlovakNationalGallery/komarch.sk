@@ -2,20 +2,20 @@
     @include('components.header.header-logo')
     @include('components.header.header-navigation', [
         'navigation_items_1' => [
-            ['title' => 'O Komore', 'url' => '#'],
-            ['title' => 'Autorizácia a členstvo', 'url' => '#'],
-            ['title' => 'Výkon a podpora povolania', 'url' => '#'],
-            ['title' => 'Právne dokumenty', 'url' => '#'],
-            ['title' => 'Verejná správa', 'url' => '#'],
+            ['title' => 'O Komore', 'url' => '/'],
+            ['title' => 'Autorizácia a členstvo', 'url' => '/test'],
+            ['title' => 'Výkon a podpora povolania', 'url' => '/test'],
+            ['title' => 'Právne dokumenty', 'url' => '/test'],
+            ['title' => 'Verejná správa', 'url' => '/test'],
         ],
         'navigation_items_2' => [
-            ['title' => 'Informácie SKA', 'url' => '#'],
-            ['title' => 'Register diel', 'url' => '#'],
-            ['title' => 'Zoznam architektov', 'url' => '#'],
-            ['title' => 'Súťaže', 'url' => '#'],
-            ['title' => 'CE ZA AR', 'url' => '#'],
-            ['title' => 'ISKA', 'url' => '#'],
-            ['title' => 'Kontakt', 'url' => '#'],
+            ['title' => 'Informácie SKA', 'url' => '/test'],
+            ['title' => 'Register diel', 'url' => '/test'],
+            ['title' => 'Zoznam architektov', 'url' => '/test'],
+            ['title' => 'Súťaže', 'url' => '/test'],
+            ['title' => 'CE ZA AR', 'url' => '/test'],
+            ['title' => 'ISKA', 'url' => '/test'],
+            ['title' => 'Kontakt', 'url' => '/test'],
         ]
     ])
 </header>

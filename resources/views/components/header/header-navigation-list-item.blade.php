@@ -1,4 +1,4 @@
-<li class="{{ Route::is('posts.*') ? 'text-blue' : '' }}">
+<li class="{{ Request::is($item['url']) ? 'text-blue' : '' }}">
     <a
         href="{{ $item['url'] }}"
         class="group block leading-loose flex"
