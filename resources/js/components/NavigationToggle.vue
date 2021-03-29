@@ -2,7 +2,7 @@
     <button
         type="button"
         aria-label="Toggle navigation"
-        class="w-full md:hidden p-4 focus:outline-none"
+        class="w-full md:hidden px-4 py-2 focus:outline-none"
         @click="onClicked"
     >
         Menu
@@ -15,13 +15,11 @@
           onClicked () {
               const navContent = document.querySelector('#nav-content')
 
-              if (!navContent) {
-                  return
+              if (navContent) {
+                  navContent.classList.contains('max-h-screen')
+                      ? navContent.classList.remove('max-h-screen')
+                      : navContent.classList.add('max-h-screen')
               }
-
-              navContent.classList.contains('max-h-screen')
-                  ? navContent.classList.remove('max-h-screen')
-                  : navContent.classList.add('max-h-screen')
           }
       },
   }
