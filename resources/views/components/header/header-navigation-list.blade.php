@@ -1,7 +1,7 @@
 <ul>
     @foreach ($items as $item)
         <li>
-            <x-header.header-navigation-list-item :item="$item" />
+            <x-link-arrow :link="$item" />
         </li>
     @endforeach
 </ul>
