@@ -65,14 +65,14 @@ module.exports = {
             relaxed: '1.625',
             loose: '2',
         },
-        letterSpacing: {},
-        animation: {},
-        keyframes: {},
-        backgroundImage: {},
-        backgroundPosition: {},
-        backgroundSize: {},
-        boxShadow: {},
-        objectPosition: {},
+        extend: {
+            transitionProperty: {
+                'max-h': 'max-height'
+            },
+            maxHeight: {
+                'navigation': '700px'
+            },
+        }
     },
     variants: {
         extend: {
