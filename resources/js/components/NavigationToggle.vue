@@ -19,9 +19,9 @@
                   return
               }
 
-              navContent.classList.contains('hidden')
-                  ? navContent.classList.remove('hidden')
-                  : navContent.classList.add('hidden')
+              navContent.classList.contains('max-h-screen')
+                  ? navContent.classList.remove('max-h-screen')
+                  : navContent.classList.add('max-h-screen')
           }
       },
   }
