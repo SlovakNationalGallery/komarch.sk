@@ -7,11 +7,12 @@
 
 @include('components.notification_bar')
 
-<div class="container mx-auto">
+<div class="container mx-auto px-4">
     <div class="row py-5">
-        <div class="col-md-8 border-right">
-            <h1>Podporujeme rozvoj architektúry na&nbsp;Slovensku</h1>
-            <p>Slovenská Komora Architektov je odbornou organizáciou, ktorá sa zameriava na vzdelávanie a informovanie verejnosti o potrebách kvalitnej architektúry</p>
+        <x-intro
+            title="Podporujeme rozvoj architektúry na Slovensku"
+            text="Slovenská Komora Architektov je odbornou organizáciou, ktorá sa zameriava na vzdelávanie a informovanie verejnosti o potrebách kvalitnej architektúry"
+        />
 
         <div class="mt-10">
             @include('components.tile', [
