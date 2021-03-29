@@ -1,4 +1,4 @@
-<a href="{{ route('home') }}" class="mr-10">
+<a href="{{ route('home') }}">
     <span class="block">
         S &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         K &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

@@ -1,5 +1,7 @@
 <ul>
     @foreach ($navigation_items as $item)
-        @include('components.header.header-navigation-list-item', $item)
+        <li>
+            @include('components.header.header-navigation-list-item', $item)
+        </li>
     @endforeach
 </ul>
