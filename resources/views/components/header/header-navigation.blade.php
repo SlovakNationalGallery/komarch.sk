@@ -5,11 +5,11 @@
         class="nav-menu px-4 md:px-0 md:flex"
     >
         <div class="flex-1 lg:ml-32">
-            @include('components.header.header-navigation-list', ['navigation_items' => $navigation_items_1])
-            @include('components.header.header-navigation-search')
+            <x-header.header-navigation-list :items="$navItems1" />
+            <x-header.header-navigation-search />
         </div>
         <div class="flex-1 md:ml-24 lg:ml-24 pb-4">
-            @include('components.header.header-navigation-list', ['navigation_items' => $navigation_items_2])
+            <x-header.header-navigation-list :items="$navItems2" />
         </div>
     </div>
 </nav>

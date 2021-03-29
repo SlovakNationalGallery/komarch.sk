@@ -1,7 +1,7 @@
 <ul>
-    @foreach ($navigation_items as $item)
+    @foreach ($items as $item)
         <li>
-            @include('components.header.header-navigation-list-item', $item)
+            <x-header.header-navigation-list-item :item="$item" />
         </li>
     @endforeach
 </ul>
