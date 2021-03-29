@@ -2,7 +2,7 @@
     <button
         type="button"
         aria-label="Toggle navigation"
-        class="w-full md:hidden py-4"
+        class="w-full md:hidden p-4 focus:outline-none"
         @click="onClicked"
     >
         Menu
