@@ -16,9 +16,9 @@
               const navContent = document.querySelector('#nav-content')
 
               if (navContent) {
-                  navContent.classList.contains('max-h-navigation')
-                      ? navContent.classList.remove('max-h-navigation')
-                      : navContent.classList.add('max-h-navigation')
+                  navContent.classList.contains('nav-menu-expanded')
+                      ? navContent.classList.remove('nav-menu-expanded')
+                      : navContent.classList.add('nav-menu-expanded')
               }
           }
       },

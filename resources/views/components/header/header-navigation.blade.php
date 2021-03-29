@@ -2,7 +2,7 @@
     <navigation-toggle></navigation-toggle>
     <div
         id="nav-content"
-        class="max-h-0 transition-max-h duration-500 overflow-hidden px-4 md:px-0 md:max-h-screen md:flex"
+        class="nav-menu px-4 md:px-0 md:flex"
     >
         <div class="flex-1 lg:ml-32">
             @include('components.header.header-navigation-list', ['navigation_items' => $navigation_items_1])
