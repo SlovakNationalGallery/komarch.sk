@@ -1,7 +1,6 @@
 <template>
     <button
         type="button"
-        aria-label="Toggle navigation"
         class="w-full md:hidden px-4 py-2 focus:outline-none"
         @click="onClicked"
     >
