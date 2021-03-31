@@ -79,6 +79,7 @@ module.exports = {
     variants: {
         extend: {
             translate: ['group-hover'],
+            backgroundColor: ['checked'],
         }
     },
     plugins: [],

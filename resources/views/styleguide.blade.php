@@ -187,26 +187,6 @@
     </div>
 </section>
 
-<section id="card-tender-small" class="col m-1">
-    <h2>Component: tender-small</h2>
-
-    <div class="cd-box">
-        @include('components.tender-small', [
-                        'date' => '11. 1. 2021 – 10. 12. 2020',
-                        'text' => 'Výsledky krajinársko-urbanistickej súťaže Revitalizácia Mlynského náhonu v Košiciach',
-                        'url' => '#',
-                    ])
-    </div>
-
-    <div class="cd-box code lang-php hljs xml">
-        @@include('components.tender-small', [
-                        'date' => '11. 1. 2021 – 10. 12. 2020',
-                        'text' => 'Výsledky krajinársko-urbanistickej súťaže Revitalizácia Mlynského náhonu v Košiciach',
-                        'url' => '#',
-                    ])
-    </div>
-</section>
-
 </div>
 
 <div class="row">
