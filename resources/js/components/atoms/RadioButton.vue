@@ -5,7 +5,7 @@
             :value="option.key"
             :checked="value.key === option.key"
             @change="$emit('input', option)"
-            class="h-5 w-5 border border-black rounded-full bg-white checked:bg-black appearance-none focus:outline-none"
+            class="cursor-pointer h-5 w-5 border border-black rounded-full bg-white checked:bg-black appearance-none focus:outline-none"
         >
         <span class="ml-4">
             {{ option.title }}
