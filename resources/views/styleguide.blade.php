@@ -175,22 +175,6 @@
 
 <div class="row">
 
-<section id="card-filter-checkbox" class="col m-1">
-    <h2>Component: filter-checkbox</h2>
-
-    <div class="cd-box">
-        @include('components.filter-checkbox', ['tag' => $tags->first()])
-    </div>
-
-    <div class="cd-box code lang-php hljs xml">
-        @@include('components.filter-checkbox', ['tag' => $tag])
-    </div>
-</section>
-
-</div>
-
-<div class="row">
-
 <section id="card-tile" class="col m-1">
     <h2>Component: tile</h2>
 
