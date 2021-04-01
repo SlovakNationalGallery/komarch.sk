@@ -14,13 +14,13 @@
     />
 
     <div class="lg:flex">
-        <div class="flex-1 mt-20">
+        <div class="flex-1 mt-20 md:mr-4">
             <filter-listing-tenders />
         </div>
-        <div class="flex-1 mt-20">
+        <div class="flex-1 mt-20 md:mr-4">
             <filter-listing-ska />
         </div>
-        <div class="flex-1 mt-20">
+        <div class="flex-1 mt-20 md:mr-4">
             <x-heading-section>
                 Videá
             </x-heading-section>
