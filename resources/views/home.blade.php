@@ -18,9 +18,7 @@
             <filter-listing-tenders />
         </div>
         <div class="flex-1 mt-20">
-            <x-heading-section>
-                Informácie SKA
-            </x-heading-section>
+            <filter-listing-ska />
         </div>
         <div class="flex-1 mt-20">
             <x-heading-section>
