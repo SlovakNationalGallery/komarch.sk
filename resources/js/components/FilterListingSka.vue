@@ -1,7 +1,7 @@
 <template>
     <FilterListing
         :options="options"
-        :items="tenders"
+        :items="skaInformation"
     >
         <template v-slot:before-list>
             <h2 class="text-xl mb-10">
@@ -9,7 +9,7 @@
             </h2>
         </template>
         <template v-slot:list-item="{ item }">
-            <TeaserTender :tender="item" />
+            <TeaserSka :ska-information="item" />
         </template>
         <template v-slot:after-list>
             <link-arrow url="/informacie-ska">
@@ -20,15 +20,15 @@
 </template>
 
 <script>
-import TeaserTender from "./TeaserTender"
 import LinkArrow from "./atoms/LinkArrow"
 import FilterListing from "./FilterListing";
+import TeaserSka from "./TeaserSka";
 
 export default {
     components: {
+        TeaserSka,
         FilterListing,
         LinkArrow,
-        TeaserTender
     },
     props: {
         options: {
@@ -39,19 +39,17 @@ export default {
                 { key: 'COVID-19', title: 'COVID-19' },
             ]
         },
-        tenders: {
+        skaInformation: {
             type: Array,
             default: () => [
-                { key: 'newest',  date: '11. 2. 2021 – 10. 12. 2020', days: '3 dni', title: 'Výsledky krajinársko-urbanistickej súťaže Revitalizácia Mlynského náhonu', url: '#' },
-                { key: 'newest',  date: '12. 1. 2021 – 10. 12. 2020', days: '3 dni', title: 'Výsledky krajinársko-urbanistickej súťaže Revitalizácia Mlynského náhonu', url: '#' },
-                { key: 'newest',  date: '13. 1. 2021 – 10. 12. 2020', days: '3 dni', title: 'Výsledky krajinársko-urbanistickej súťaže Revitalizácia Mlynského náhonu', url: '#' },
-                { key: 'newest',  date: '14. 1. 2021 – 10. 12. 2020', days: '3 dni', title: 'Výsledky krajinársko-urbanistickej súťaže Revitalizácia Mlynského náhonu', url: '#' },
-                { key: 'important',  date: '15. 1. 2021 – 10. 12. 2020', days: '3 dni', title: 'Výsledky krajinársko-urbanistickej súťaže Revitalizácia Mlynského náhonu', url: '#' },
-                { key: 'important',  date: '16. 1. 2021 – 10. 12. 2020', days: '3 dni', title: 'Výsledky krajinársko-urbanistickej súťaže Revitalizácia Mlynského náhonu', url: '#' },
-                { key: 'important',  date: '17. 1. 2021 – 10. 12. 2020', days: '3 dni', title: 'Výsledky krajinársko-urbanistickej súťaže Revitalizácia Mlynského náhonu', url: '#' },
-                { key: 'important',  date: '18. 1. 2021 – 10. 12. 2020', days: '3 dni', title: 'Výsledky krajinársko-urbanistickej súťaže Revitalizácia Mlynského náhonu', url: '#' },
-                { key: 'COVID-19',  date: '19. 1. 2021 – 10. 12. 2020', days: '3 dni', title: 'Výsledky krajinársko-urbanistickej súťaže Revitalizácia Mlynského náhonu', url: '#' },
-                { key: 'COVID-19',  date: '20. 1. 2021 – 10. 12. 2020', days: '3 dni', title: 'Výsledky krajinársko-urbanistickej súťaže Revitalizácia Mlynského náhonu', url: '#' },
+                { key: 'newest', hashTag: 'Vzdelávanie', date: '29. Januára 2021', title: 'Cena Miesa van der Rohe 2022', url: '#' },
+                { key: 'newest', hashTag: 'Vzdelávanie', date: '29. Januára 2021', title: 'Cena Miesa van der Rohe 2022', url: '#' },
+                { key: 'newest', hashTag: 'Vzdelávanie', date: '29. Januára 2021', title: 'Cena Miesa van der Rohe 2022', url: '#' },
+                { key: 'important', hashTag: 'Vzdelávanie', date: '29. Januára 2021', title: 'Cena Miesa van der Rohe 2022', url: '#' },
+                { key: 'important', hashTag: 'Vzdelávanie', date: '29. Januára 2021', title: 'Cena Miesa van der Rohe 2022', url: '#' },
+                { key: 'COVID-19', hashTag: 'Vzdelávanie', date: '29. Januára 2021', title: 'Cena Miesa van der Rohe 2022', url: '#' },
+                { key: 'COVID-19', hashTag: 'Vzdelávanie', date: '29. Januára 2021', title: 'Cena Miesa van der Rohe 2022', url: '#' },
+                { key: 'COVID-19', hashTag: 'Vzdelávanie', date: '29. Januára 2021', title: 'Cena Miesa van der Rohe 2022', url: '#' },
             ]
         }
     }
