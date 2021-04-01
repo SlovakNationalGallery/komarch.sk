@@ -14,7 +14,7 @@
                 :key="option.key"
                 class="mt-10"
             >
-                <div v-for="(item, index) in items.filter(it => it.key === option.key)" :key="index">
+                <div v-for="(item, index) in items.filter(it => it.filterTags.includes(option.key))" :key="index">
                     <slot name="list-item" :item="item"></slot>
                 </div>
             </div>

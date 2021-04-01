@@ -42,14 +42,14 @@ export default {
         skaInformation: {
             type: Array,
             default: () => [
-                { key: 'newest', hashTag: 'Vzdelávanie', date: '29. Januára 2021', title: 'Cena Miesa van der Rohe 2022 - nominovaní slovenskí architekti', url: '#' },
-                { key: 'newest', hashTag: 'Vzdelávanie', date: '29. Januára 2021', title: 'Cena Miesa van der Rohe 2022 - nominovaní slovenskí architekti', url: '#' },
-                { key: 'newest', hashTag: 'Vzdelávanie', date: '29. Júna 2021', title: 'Cena Miesa van der Rohe 2022 - nominovaní slovenskí architekti', url: '#' },
-                { key: 'important', hashTag: 'Vzdelávanie', date: '29. Júna 2021', title: 'Cena Miesa van der Rohe 2022 - nominovaní slovenskí architekti', url: '#' },
-                { key: 'important', hashTag: 'Vzdelávanie', date: '29. Júna 2021', title: 'Cena Miesa van der Rohe 2022 - nominovaní slovenskí architekti', url: '#' },
-                { key: 'COVID-19', hashTag: 'Vzdelávanie', date: '29. Septembra 2021', title: 'Cena Miesa van der Rohe 2022 - nominovaní slovenskí architekti', url: '#' },
-                { key: 'COVID-19', hashTag: 'Vzdelávanie', date: '29. Januára 2021', title: 'Cena Miesa van der Rohe 2022 - nominovaní slovenskí architekti', url: '#' },
-                { key: 'COVID-19', hashTag: 'Vzdelávanie', date: '29. Januára 2021', title: 'Cena Miesa van der Rohe 2022 - nominovaní slovenskí architekti', url: '#' },
+                { filterTags: ['newest'],  hashTag: 'Vzdelávanie', date: '29. Januára 2021', title: 'Cena Miesa van der Rohe 2022 - nominovaní slovenskí architekti', url: '#' },
+                { filterTags: ['newest'], hashTag: 'Vzdelávanie', date: '29. Januára 2021', title: 'Cena Miesa van der Rohe 2022 - nominovaní slovenskí architekti', url: '#' },
+                { filterTags: ['newest'], hashTag: 'Vzdelávanie', date: '29. Júna 2021', title: 'Cena Miesa van der Rohe 2022 - nominovaní slovenskí architekti', url: '#' },
+                { filterTags: ['important'], hashTag: 'Vzdelávanie', date: '29. Júna 2021', title: 'Cena Miesa van der Rohe 2022 - nominovaní slovenskí architekti', url: '#' },
+                { filterTags: ['important'], hashTag: 'Vzdelávanie', date: '29. Júna 2021', title: 'Cena Miesa van der Rohe 2022 - nominovaní slovenskí architekti', url: '#' },
+                { filterTags: ['COVID-19'], hashTag: 'Vzdelávanie', date: '29. Septembra 2021', title: 'Cena Miesa van der Rohe 2022 - nominovaní slovenskí architekti', url: '#' },
+                { filterTags: ['COVID-19'], hashTag: 'Vzdelávanie', date: '29. Januára 2021', title: 'Cena Miesa van der Rohe 2022 - nominovaní slovenskí architekti', url: '#' },
+                { filterTags: ['COVID-19'], hashTag: 'Vzdelávanie', date: '29. Januára 2021', title: 'Cena Miesa van der Rohe 2022 - nominovaní slovenskí architekti', url: '#' },
             ]
         }
     }
