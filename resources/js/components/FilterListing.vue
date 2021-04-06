@@ -54,7 +54,7 @@ export default {
 }
 
 .items-list-enter-active {
-    @apply transition duration-200 ease-out;
+    @apply transition duration-300 ease-out;
 }
 
 .items-list-leave-to {
