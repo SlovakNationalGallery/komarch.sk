@@ -12,15 +12,15 @@
             <TeaserSka :ska-information="item" />
         </template>
         <template v-slot:after-list>
-            <link-arrow url="/informacie-ska">
+            <LinkArrow url="/informacie-ska">
                 Informácie SKA
-            </link-arrow>
+            </LinkArrow>
         </template>
     </FilterListing>
 </template>
 
 <script>
-import LinkArrow from "./atoms/LinkArrow"
+import LinkArrow from "./atoms/links/LinkArrow"
 import FilterListing from "./FilterListing";
 import TeaserSka from "./TeaserSka";
 

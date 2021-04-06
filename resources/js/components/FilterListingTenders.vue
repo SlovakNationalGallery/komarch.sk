@@ -12,16 +12,16 @@
             <TeaserTender :tender="item" />
         </template>
         <template v-slot:after-list>
-            <link-arrow url="/sutaze">
+            <LinkArrow url="/sutaze">
                 Viac súťaží
-            </link-arrow>
+            </LinkArrow>
         </template>
     </FilterListing>
 </template>
 
 <script>
 import TeaserTender from "./TeaserTender"
-import LinkArrow from "./atoms/LinkArrow"
+import LinkArrow from "./atoms/links/LinkArrow"
 import FilterListing from "./FilterListing";
 
 export default {
