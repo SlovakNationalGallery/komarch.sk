@@ -1,5 +1,5 @@
 <template>
-    <label class="py-1 cursor-pointer flex items-center">
+    <label class="py-1 cursor-pointer flex items-center hover:underline">
         <input
             type="radio"
             :value="option.key"
