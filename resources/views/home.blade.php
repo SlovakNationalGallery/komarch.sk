@@ -5,7 +5,7 @@
 
 @include('components.header.header')
 
-@include('components.notification_bar')
+<!--@include('components.notification_bar')-->
 
 <div class="container mx-auto px-4">
     <x-intro
