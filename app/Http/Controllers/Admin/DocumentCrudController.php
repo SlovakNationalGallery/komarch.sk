@@ -66,6 +66,11 @@ class DocumentCrudController extends CrudController
                 }
             ],
             [
+                'name' => 'download_count',
+                'type'     => 'number',
+                'searchLogic' => false,
+            ],
+            [
                 'name' => 'creator',
                 'type' => 'relationship',
                 'entity' => 'creator',
@@ -208,6 +213,11 @@ class DocumentCrudController extends CrudController
                         return ($entry->file) ?  $entry->file->getFullUrl() : '';
                     },
                 ],
+            ],
+            [
+                'name' => 'download_count',
+                'type'     => 'number',
+                'searchLogic' => false,
             ],
             [
                 'name' => 'creator',
