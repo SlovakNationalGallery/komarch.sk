@@ -13,8 +13,8 @@
         text="Slovenská Komora Architektov je odbornou organizáciou, ktorá sa zameriava na vzdelávanie a informovanie verejnosti o potrebách kvalitnej architektúry"
     />
 
-    <div class="mt-20 md:flex flex-wrap">
-        <div class="w-1/2 flex" style="height: 350px">
+    <div class="mt-24 md:grid grid-cols-2 gap-10">
+        <div class="flex" style="height: 300px">
             <span class="m-auto">Clock here</span>
         </div>
         <x-tile
