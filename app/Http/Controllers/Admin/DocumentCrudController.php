@@ -66,16 +66,16 @@ class DocumentCrudController extends CrudController
                 }
             ],
             [
-                'name' => 'user',
+                'name' => 'creator',
                 'type' => 'relationship',
-                'entity' => 'user',
+                'entity' => 'creator',
                 'attribute' => 'name',
                 'orderLogic' => function ($query, $column, $columnDirection) {
                         return $query->leftJoin('users', 'users.id', '=', 'projects.select')
                             ->orderBy('users.name', $columnDirection)->select('projects.*');
                 },
                 'searchLogic' => function ($query, $column, $searchTerm) {
-                        $query->orWhereHas('user', function ($q) use ($column, $searchTerm) {
+                        $query->orWhereHas('creator', function ($q) use ($column, $searchTerm) {
                             $q->where('name', 'like', '%'.$searchTerm.'%');
                         });
                     }
@@ -178,11 +178,6 @@ class DocumentCrudController extends CrudController
                     return $query->where('type', 'document-role')->get();
                 }),
             ],
-            [
-                'name'  => 'user_id',
-                'type'  => 'hidden',
-                'value' => backpack_user()->id,
-            ]
         ]);
 
     }

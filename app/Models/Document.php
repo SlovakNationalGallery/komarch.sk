@@ -8,12 +8,14 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Tags\HasTags;
 use Spatie\Tags\Tag;
+use App\Traits\CreatedBy;
 
 class Document extends Model implements HasMedia
 {
     use HasTags,
         InteractsWithMedia,
-        CrudTrait;
+        CrudTrait,
+        CreatedBy;
 
     /*
     |--------------------------------------------------------------------------
@@ -27,9 +29,11 @@ class Document extends Model implements HasMedia
     // protected $guarded = ['id'];
     protected $fillable = [
         'name',
-        'user_id',
         'file',
+        'created_by',
+        'updated_by',
     ];
+
     protected $hidden = [];
     // protected $dates = [];
 
@@ -50,11 +54,6 @@ class Document extends Model implements HasMedia
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-
-    public function user()
-    {
-        return $this->belongsTo('App\Models\User');
-    }
 
     public function types()
     {

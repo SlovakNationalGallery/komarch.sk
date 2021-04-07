@@ -17,9 +17,11 @@ class CreateDocumentsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('note')->nullable();
-            $table->integer('user_id');
-            $table->integer('download_count')->nullable();
+            $table->integer('download_count')->default(0);
             $table->timestamps();
+
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->unsignedBigInteger('updated_by')->nullable();
         });
     }
 
