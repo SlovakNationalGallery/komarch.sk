@@ -3,7 +3,7 @@
 
 @section('content')
 
-@include('components.header')
+@include('components.header.header')
 
 <div class="container py-4">
     <div class="row">
