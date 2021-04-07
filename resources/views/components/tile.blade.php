@@ -1,7 +1,9 @@
-<div class="card bg-light border-0">
-    <div class="card-body">
-        <h5 class="h4 card-title font-weight-bold">{{ $title }}</h5>
-        <a href="{{ $url }}" class="float-right btn btn-dark"><span class="icon icon-chevron-right "></span></a>
-        <p class="card-text">{{ $text }}</p>
+<div class="md:w-1/2 group mt-12 relative">
+    <div class="border-t h-full pt-8 pb-12 mr-10 group-hover:bg-blue transition duration-100">
+        <h3 class="text-2xl leading-snug px-4 group-hover:text-white transition duration-100">
+            <a href="{{ $url }}" class="block link-area">
+                {{ $title }} <span>→</span>
+            </a>
+        </h3>
     </div>
 </div>

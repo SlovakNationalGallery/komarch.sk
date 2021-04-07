@@ -13,6 +13,24 @@
         text="Slovenská Komora Architektov je odbornou organizáciou, ktorá sa zameriava na vzdelávanie a informovanie verejnosti o potrebách kvalitnej architektúry"
     />
 
+    <div class="mt-20 md:flex flex-wrap">
+        <div class="w-1/2 flex" style="height: 350px">
+            <span class="m-auto">Clock here</span>
+        </div>
+        <x-tile
+            title="Ako sa stať autorizovaným členom"
+            url="#"
+        />
+        <x-tile
+            title="Ako sa stať autorizovaným členom"
+            url="#"
+        />
+        <x-tile
+            title="Ako sa stať autorizovaným členom"
+            url="#"
+        />
+    </div>
+
     <div class="lg:flex">
         <div class="flex-1 mt-20 md:mr-4">
             <filter-listing-tenders />
@@ -25,19 +43,6 @@
                 Videá
             </x-heading-section>
         </div>
-    </div>
-
-    <div class="mt-10">
-        @include('components.tile', [
-        'title' => 'Ako sa stať autorizovaným členom?',
-        'text' => 'Pozrite ako na to',
-        'url' => '#',
-        ])
-        @include('components.tile', [
-        'title' => 'Hľadáte zoznam architektonických diel?',
-        'text' => 'Ukázať zoznam',
-        'url' => '#',
-        ])
     </div>
 
     <div>
