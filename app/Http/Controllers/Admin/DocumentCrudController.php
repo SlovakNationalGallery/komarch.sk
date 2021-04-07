@@ -15,7 +15,7 @@ use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 class DocumentCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation { store as traitStore; }
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation { update as traitUpdate; }
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
@@ -112,33 +112,6 @@ class DocumentCrudController extends CrudController
                 'type'  => 'upload_media',
                 'upload' => true,
             ],
-            // [
-            //     'name'        => 'types',
-            //     'type'        => 'select2_from_array',
-            //     'fake'     => true,
-            //     'attributes' => [
-            //         'data-tags' => true
-            //     ],
-            //     'options'   => \Spatie\Tags\Tag::whereType('document-type')->get()->pluck('name', 'name'),
-            // ],
-            // [
-            //     'name'        => 'topics',
-            //     'type'        => 'select2_from_array',
-            //     'fake'     => true,
-            //     'attributes' => [
-            //         'data-tags' => true
-            //     ],
-            //     'options'   => \Spatie\Tags\Tag::whereType('document-topic')->get()->pluck('name', 'name'),
-            // ],
-            // [
-            //     'name'        => 'roles',
-            //     'type'        => 'select2_from_array',
-            //     'fake'     => true,
-            //     'attributes' => [
-            //         'data-tags' => true
-            //     ],
-            //     'options'   => \Spatie\Tags\Tag::whereType('document-role')->get()->pluck('name', 'name'),
-            // ],
             [
                 'name'        => 'types',
                 'type'        => 'select2_multiple_tags',
@@ -182,6 +155,75 @@ class DocumentCrudController extends CrudController
 
     }
 
+    protected function setupShowOperation()
+    {
+        $this->crud->set('show.setFromDb', false);
+
+        $this->crud->setColumns([
+            [
+                'name' => 'name',
+            ],
+            [
+                'name' => 'types',
+                'type' => 'relationship',
+                'entity' => 'types',
+                'attribute' => 'name',
+                'wrapper'   => [
+                    'href' => function ($crud, $column, $entry, $related_key) {
+                        return backpack_url('tag/'.$related_key.'/show');
+                    },
+                ],
+
+            ],
+            [
+                'name' => 'topics',
+                'type' => 'relationship',
+                'entity' => 'topics',
+                'attribute' => 'name',
+                'wrapper'   => [
+                    'href' => function ($crud, $column, $entry, $related_key) {
+                        return backpack_url('tag/'.$related_key.'/show');
+                    },
+                ],
+            ],
+            [
+                'name' => 'roles',
+                'type' => 'relationship',
+                'entity' => 'roles',
+                'attribute' => 'name',
+                'wrapper'   => [
+                    'href' => function ($crud, $column, $entry, $related_key) {
+                        return backpack_url('tag/'.$related_key.'/show');
+                    },
+                ],
+            ],
+            [
+                'name' => 'file',
+                'type'     => 'closure',
+                'function' => function($entry) {
+                    return ($entry->file) ?  $entry->file->file_name : '';
+                },
+                'wrapper'   => [
+                    'href' => function ($crud, $column, $entry, $related_key) {
+                        return ($entry->file) ?  $entry->file->getFullUrl() : '';
+                    },
+                ],
+            ],
+            [
+                'name' => 'creator',
+                'type' => 'relationship',
+                'entity' => 'creator',
+                'attribute' => 'name',
+            ],
+            [
+                'name' => 'updator',
+                'type' => 'relationship',
+                'entity' => 'updator',
+                'attribute' => 'name',
+            ],
+        ]);
+    }
+
     /**
      * Define what happens when the Update operation is loaded.
      *
@@ -193,13 +235,24 @@ class DocumentCrudController extends CrudController
         $this->setupCreateOperation();
     }
 
+    public function store()
+    {
+        $response = $this->traitStore();
+        $this->syncAllTags($this->crud->getCurrentEntry());
+        return $response;
+    }
+
     public function update()
     {
         $response = $this->traitUpdate();
-        $this->crud->getCurrentEntry()->syncTagsWithType($this->crud->getRequest()->input('types', []), 'document-type');
-        $this->crud->getCurrentEntry()->syncTagsWithType($this->crud->getRequest()->input('topics', []), 'document-topic');
-        $this->crud->getCurrentEntry()->syncTagsWithType($this->crud->getRequest()->input('roles', []), 'document-role');
-
+        $this->syncAllTags($this->crud->getCurrentEntry());
         return $response;
+    }
+
+    private function syncAllTags(\Illuminate\Database\Eloquent\Model $entry)
+    {
+        $entry->syncTagsWithType($this->crud->getRequest()->input('types', []), 'document-type');
+        $entry->syncTagsWithType($this->crud->getRequest()->input('topics', []), 'document-topic');
+        $entry->syncTagsWithType($this->crud->getRequest()->input('roles', []), 'document-role');
     }
 }
