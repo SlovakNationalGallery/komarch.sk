@@ -39,9 +39,7 @@
             <filter-listing-ska />
         </div>
         <div class="flex-1 mt-20 md:mr-4">
-            <x-heading-section>
-                Videá
-            </x-heading-section>
+            <x-section-videos />
         </div>
     </div>
 
