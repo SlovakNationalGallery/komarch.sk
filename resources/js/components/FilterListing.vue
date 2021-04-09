@@ -1,5 +1,5 @@
 <template>
-    <section>
+    <section class="mt-20">
         <slot name="before-list"></slot>
         <radio-button
             v-for="option in options"
