@@ -32,14 +32,19 @@
     </div>
 
     <div class="lg:flex">
-        <div class="flex-1 mt-20 md:mr-4">
+        <div class="flex-1 mt-20 md:mr-14">
             <filter-listing-tenders />
         </div>
-        <div class="flex-1 mt-20 md:mr-4">
+        <div class="flex-1 mt-20 md:mr-14">
             <filter-listing-ska />
         </div>
-        <div class="flex-1 mt-20 md:mr-4">
-            <x-section-videos />
+        <div class="flex-1 mt-20">
+            <x-section-videos
+                title="Videá"
+                embedUrl="https://www.youtube.com/embed/NL1XKbI3x68"
+                linkUrl="#"
+                linkTitle="Pozrite si ďalšie videá"
+            />
         </div>
     </div>
 
