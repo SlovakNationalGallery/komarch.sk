@@ -1,11 +1,15 @@
 <template>
-    <label class="group py-1 cursor-pointer flex items-center hover:text-blue">
+    <label
+        class="py-1 flex items-center"
+        :class="{'group cursor-pointer hover:text-blue': !isChecked}"
+    >
         <input
             type="radio"
             :value="option.key"
-            :checked="value.key === option.key"
+            :checked="isChecked"
             @change="$emit('input', option)"
-            class="cursor-pointer h-5 w-5 border border-black rounded-full bg-white group-hover:border-blue group-hover:border-2 checked:bg-black appearance-none focus:outline-none"
+            class="cursor-pointer h-5 w-5 border border-black rounded-full bg-white checked:bg-black appearance-none focus:outline-none"
+            :class="{'group-hover:border-blue group-hover:border-2': !isChecked}"
         >
         <span class="ml-4">
             {{ option.title }}
@@ -14,7 +18,7 @@
 </template>
 
 <script>
-  export default {
+export default {
     props: {
         value: {
             type: Object,
@@ -24,6 +28,11 @@
             type: Object,
             required: true
         }
+    },
+    computed: {
+        isChecked () {
+            return this.value.key === this.option.key
+        }
     }
-  }
+}
 </script>
