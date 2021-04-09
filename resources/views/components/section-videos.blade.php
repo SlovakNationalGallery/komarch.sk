@@ -8,10 +8,10 @@
         frameborder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowfullscreen
-        class="mt-10 w-full"
+        class="mt-10 w-full mb-10"
     >
     </iframe>
-    <a class="mt-10">
-        Pozrite si ďalšie videá na našom youtube kanáli ->
-    </a>
+    <x-link-arrow :url="'#'">
+        Pozrite si ďalšie videá na našom youtube kanáli
+    </x-link-arrow>
 </section>

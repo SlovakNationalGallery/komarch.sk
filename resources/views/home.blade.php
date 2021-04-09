@@ -43,7 +43,7 @@
         </div>
     </div>
 
-    <div>
+    <div class="mt-20">
         @if ($featured_post)
             <div>
                 @include('components.article-big', ['post' => $featured_post])
