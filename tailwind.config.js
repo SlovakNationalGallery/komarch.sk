@@ -80,6 +80,7 @@ module.exports = {
         extend: {
             translate: ['group-hover'],
             backgroundColor: ['checked'],
+            borderWidth: ['group-hover ']
         }
     },
     plugins: [
