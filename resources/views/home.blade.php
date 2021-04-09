@@ -45,6 +45,12 @@
                 linkUrl="#"
                 linkTitle="Pozrite si ďalšie videá"
             />
+            <x-section-publications
+                title="Publikácie"
+                imageUrl="https://placekitten.com/640/360"
+                linkUrl="#"
+                linkTitle="Čítajte na ISSU"
+            />
         </div>
     </div>
 
