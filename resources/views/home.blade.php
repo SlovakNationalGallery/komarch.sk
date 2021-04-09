@@ -48,6 +48,7 @@
             <x-section-publications
                 title="Publikácie"
                 imageUrl="https://placekitten.com/640/360"
+                imageAlt="Kitten"
                 linkUrl="#"
                 linkTitle="Čítajte na ISSU"
             />

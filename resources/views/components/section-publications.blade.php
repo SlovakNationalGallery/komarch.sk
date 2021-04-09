@@ -4,6 +4,7 @@
     </x-heading-section>
     <img
         src="{{ $imageUrl }}"
+        alt="{{ $imageAlt }}"
         class="object-cover my-10"
     />
     <x-link-arrow :url="$linkUrl">
