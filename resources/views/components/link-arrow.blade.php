@@ -1,9 +1,9 @@
 <a
-    href="{{ $link['url'] }}"
-    class="group block leading-loose flex {{ (url()->current() == $link['url']) ? 'text-blue' : '' }}"
+    href="{{ $url }}"
+    class="group leading-loose"
 >
-    {{ $link['title'] }}
-    <span class="opacity-0 transform group-hover:opacity-100 group-hover:translate-x-4 duration-200">
+    {{ $slot }}
+    <span class="inline-block transform group-hover:translate-x-2 ml-3 duration-200">
         →
     </span>
 </a>
