@@ -10,6 +10,7 @@
         id="newsletter-email"
         placeholder="zadajte váš e-mail"
         minlength="6"
+        required
         class="block mt-10 lg:m-0 w-full border-b flex-1 focus:outline-none h-8"
     >
     <button class="group flex text-xl px-4 -ml-4 mt-4 lg:m-0">
