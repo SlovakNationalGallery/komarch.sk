@@ -70,6 +70,6 @@
 <!--    </div>-->
 </div>
 
-<x-footer></x-footer>
+<x-footer.footer></x-footer.footer>
 
 @endsection
