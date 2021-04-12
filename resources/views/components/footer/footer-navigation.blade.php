@@ -8,25 +8,16 @@
             @endforeach
         </ul>
     </x-footer.footer-navigation-column>
-    <x-footer.footer-navigation-column title="Úradné hodiny">
+    <x-footer.footer-navigation-column :title="$openingTimes['title']">
         <table>
+            @foreach ($openingTimes['days'] as $day)
             <tr>
-                <td class="w-32 xl:w-24">Pondelok</td><td class="w-32">08:00 - 12:00</td><td>13:00 - 16:00</td>
+                <td class="w-32 xl:w-24">{{ $day['title'] }}</td>
+                <td>{!! $day['times'] !!}</td>
             <tr>
-            <tr>
-                <td>Utorok</td><td>08:00 - 12:00</td><td>13:00 - 16:00</td>
-            </tr>
-            <tr>
-                <td>Streda</td><td>08:00 - 12:00</td><td>13:00 - 16:00</td>
-            </tr>
-            <tr>
-                <td>Štvrtok</td><td>08:00 - 12:00</td><td>13:00 - 16:00</td>
-            </tr>
-            <tr>
-                <td>Piatok</td><td colspan="2">Nestránkový deň</td>
-            </tr>
+            @endforeach
         </table>
-        <span class="block mt-5">(Práve teraz máme otvorené)</span>
+        <span class="block mt-5">{{ $openingTimes['text'] }} </span>
     </x-footer.footer-navigation-column>
     <x-footer.footer-navigation-column title="Kontakt">
         Námeste SNP 18, 811 06 Bratislava
