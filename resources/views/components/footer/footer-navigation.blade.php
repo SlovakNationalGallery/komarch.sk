@@ -1,6 +1,6 @@
-<nav class="flex">
+<nav class="flex flex-col-reverse md:flex-row text-lg md:text-base">
     <x-footer.footer-navigation-column :title="$navigation['title']">
-        <ul class="mt-10">
+        <ul>
             @foreach ($navigation['navItems'] as $item)
                 <li>
                     <x-link-arrow :link="$item" />
@@ -31,11 +31,11 @@
     <x-footer.footer-navigation-column title="Kontakt">
         Námeste SNP 18, 811 06 Bratislava
         <!-- TODO: switch to arrow link components from filters -->
-        <a href="mailto:komarch@komarch.sk" target="_blank">komarch@gomarch.sk</a>
-        <a href="tel:+421254432080" target="_blank">+ 421 254 432 080</a>
-        <a href="tel:+421254432254" target="_blank">+ 421 254 432 254</a>
-        <a href="facebook.com" target="_blank">Facebook</a>
-        <a href="instagram.com" target="_blank">Instagram</a>
-        <a href="ISSU.com" target="_blank">ISSUU</a>
+        <a href="mailto:komarch@komarch.sk" target="_blank" class="block mt-6 md:mt-4">komarch@komarch.sk</a>
+        <a href="tel:+421254432080" target="_blank" class="block">+ 421 254 432 080</a>
+        <a href="tel:+421254432254" target="_blank" class="block">+ 421 254 432 254</a>
+        <a href="https://www.facebook.com/slovenskakomoraarchitektov" target="_blank" class="block mt-6 md:mt-4">Facebook</a>
+        <a href="https://www.instagram.com/slovenskakomoraarchitektov/" target="_blank" class="block">Instagram</a>
+        <a href="https://issuu.com/institutska" target="_blank" class="block">ISSUU</a>
     </x-footer.footer-navigation-column>
 </nav>
