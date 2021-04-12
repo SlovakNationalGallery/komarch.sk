@@ -1,4 +1,4 @@
-<nav class="flex flex-col-reverse md:flex-row text-lg md:text-base">
+<nav class="flex flex-col-reverse text-lg xl:flex-row xl:text-base">
     <x-footer.footer-navigation-column :title="$navigation['title']">
         <ul>
             @foreach ($navigation['navItems'] as $item)
@@ -11,19 +11,19 @@
     <x-footer.footer-navigation-column title="Úradné hodiny">
         <table>
             <tr>
-                <td class="w-20">Pon.</td><td class="w-16">8-12</td><td>13-16</td>
+                <td class="w-32 xl:w-24">Pondelok</td><td class="w-32">08:00 - 12:00</td><td>13:00 - 16:00</td>
             <tr>
             <tr>
-                <td>Ut.</td><td>8-12</td><td>13-16</td>
+                <td>Utorok</td><td>08:00 - 12:00</td><td>13:00 - 16:00</td>
             </tr>
             <tr>
-                <td>Str.</td><td>8-12</td><td>13-16</td>
+                <td>Streda</td><td>08:00 - 12:00</td><td>13:00 - 16:00</td>
             </tr>
             <tr>
-                <td>Štv.</td><td>8-12</td><td>13-16</td>
+                <td>Štvrtok</td><td>08:00 - 12:00</td><td>13:00 - 16:00</td>
             </tr>
             <tr>
-                <td>Pia.</td><td colspan="2">Nestránkový deň</td>
+                <td>Piatok</td><td colspan="2">Nestránkový deň</td>
             </tr>
         </table>
         <span class="block mt-5">(Práve teraz máme otvorené)</span>
