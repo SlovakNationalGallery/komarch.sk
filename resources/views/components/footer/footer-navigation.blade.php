@@ -23,12 +23,24 @@
     </x-footer.footer-navigation-column>
     <x-footer.footer-navigation-column title="Kontakt">
         Námeste SNP 18, 811 06 Bratislava
-        <!-- TODO: switch to arrow link components from filters -->
-        <a href="mailto:komarch@komarch.sk" target="_blank" class="block mt-6 md:mt-4">komarch@komarch.sk</a>
-        <a href="tel:+421254432080" target="_blank" class="block">+ 421 254 432 080</a>
-        <a href="tel:+421254432254" target="_blank" class="block">+ 421 254 432 254</a>
-        <a href="https://www.facebook.com/slovenskakomoraarchitektov" target="_blank" class="block mt-6 md:mt-4">Facebook</a>
-        <a href="https://www.instagram.com/slovenskakomoraarchitektov/" target="_blank" class="block">Instagram</a>
-        <a href="https://issuu.com/institutska" target="_blank" class="block">ISSUU</a>
+        <x-link-arrow url="mailto:komarch@komarch.sk" class="mt-6 md:mt-4">
+            komarch@komarch.sk
+        </x-link-arrow>
+        <x-link-arrow-hover url="tel:+421254432080" class="mt-6 md:mt-4">
+            + 421 254 432 080
+        </x-link-arrow-hover>
+        <x-link-arrow-hover url="tel:+421254432254">
+            + 421 254 432 254
+        </x-link-arrow-hover>
+        <x-link-arrow
+            url="https://www.facebook.com/slovenskakomoraarchitektov" class="block mt-6 md:mt-4">
+            Facebook
+        </x-link-arrow>
+        <x-link-arrow url="https://www.instagram.com/slovenskakomoraarchitektov">
+            Instagram
+        </x-link-arrow>
+        <x-link-arrow url="https://issuu.com/institutska">
+            ISSUU
+        </x-link-arrow>
     </x-footer.footer-navigation-column>
 </nav>
