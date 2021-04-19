@@ -65,6 +65,10 @@ module.exports = {
             relaxed: '1.625',
             loose: '2',
         },
+        letterSpacing: {
+            tight: '-0.02em',
+            normal: '0em',
+        },
         transitionProperty: {
             none: 'none',
             all: 'all',

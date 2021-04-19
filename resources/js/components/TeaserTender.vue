@@ -2,7 +2,7 @@
     <article class="py-10 grid grid-cols-2 place-items-start">
         <TagDate>{{ tender.date }}</TagDate>
         <TagDate>{{ tender.days }}</TagDate>
-        <h3 class="mt-1 text-xl col-span-2">
+        <h3 class="mt-1 text-xl col-span-2 tracking tight">
             <LinkTitle :url="tender.url">
                 {{ tender.title }}
             </LinkTitle>

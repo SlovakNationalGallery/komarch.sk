@@ -8,10 +8,7 @@
 {{-- @include('components.notification_bar') --}}
 
 <div class="container mx-auto px-4">
-    <x-intro
-        title="Podporujeme rozvoj architektúry na Slovensku"
-        text="Slovenská Komora Architektov je odbornou organizáciou, ktorá sa zameriava na vzdelávanie a informovanie verejnosti o potrebách kvalitnej architektúry"
-    />
+    <x-intro text="Slovenská Komora Architektov je odbornou organizáciou, ktorá sa zameriava na vzdelávanie a informovanie verejnosti o potrebách kvalitnej architektúry"/>
 
     <div class="mt-24 md:grid grid-cols-2 gap-10">
         <div class="flex" style="height: 300px">
