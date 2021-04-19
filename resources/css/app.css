@@ -6,7 +6,7 @@
 
 @layer base {
     body {
-        @apply font-komarch;
+        @apply font-komarch no-ligatures;
     }
 
     [class^="icon-"], [class*=" icon-"] {
@@ -42,6 +42,14 @@
 }
 
 @layer utilities {
+    .no-ligatures {
+        font-variant-ligatures: none;
+    }
+
+    .ligatures {
+        font-variant-ligatures: common-ligatures;
+    }
+
     .link-area:before {
         content: '';
         @apply absolute inset-0;
