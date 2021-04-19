@@ -3,9 +3,9 @@
         <TagHash :tag="skaInformation.hashTags[0]"></TagHash>
         <TagDate>{{ skaInformation.date }}</TagDate>
         <h3 class="mt-1 text-xl col-span-2">
-            <LinkUnderline :url="skaInformation.url">
+            <LinkTitle :url="skaInformation.url">
                 {{ skaInformation.title }}
-            </LinkUnderline>
+            </LinkTitle>
         </h3>
     </article>
 </template>
@@ -13,11 +13,11 @@
 <script>
 import TagHash from "./atoms/tags/TagHash";
 import TagDate from "./atoms/tags/TagDate";
-import LinkUnderline from "./atoms/links/LinkUnderline";
+import LinkTitle from "./atoms/links/LinkTitle";
 
 export default {
     components: {
-        LinkUnderline,
+        LinkTitle,
         TagDate,
         TagHash,
     },
