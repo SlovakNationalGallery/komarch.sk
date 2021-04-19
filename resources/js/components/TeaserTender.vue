@@ -1,8 +1,8 @@
 <template>
-    <article class="py-10">
+    <article class="py-10 grid grid-cols-2 place-items-start">
         <TagDate>{{ tender.date }}</TagDate>
         <TagDate>{{ tender.days }}</TagDate>
-        <h3 class="mt-1 text-xl">
+        <h3 class="mt-1 text-xl col-span-2">
             <LinkUnderline :url="tender.url">
                 {{ tender.title }}
             </LinkUnderline>

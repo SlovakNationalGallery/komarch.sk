@@ -1,8 +1,8 @@
 <template>
-    <article class="py-10">
+    <article class="py-10 grid grid-cols-2 place-items-start">
         <TagHash :tag="skaInformation.hashTags[0]"></TagHash>
         <TagDate>{{ skaInformation.date }}</TagDate>
-        <h3 class="mt-1 text-xl">
+        <h3 class="mt-1 text-xl col-span-2">
             <LinkUnderline :url="skaInformation.url">
                 {{ skaInformation.title }}
             </LinkUnderline>
