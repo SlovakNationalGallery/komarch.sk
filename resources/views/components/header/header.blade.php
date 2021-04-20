@@ -12,4 +12,5 @@
             ['title' => 'Kontakt', 'url' => '/test'],
         ]"
     />
+    <x-header.header-langswitch />
 </header>
