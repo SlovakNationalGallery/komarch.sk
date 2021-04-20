@@ -10,7 +10,6 @@
     }
 
     [class^="icon-"], [class*=" icon-"] {
-        @apply antialiased;
         /* use !important to prevent issues with browser extensions that change fonts */
         font-family: 'KomarchIcons' !important;
         speak: never;
