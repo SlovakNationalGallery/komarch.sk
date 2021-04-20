@@ -6,10 +6,11 @@
 
 @layer base {
     body {
-        @apply font-komarch no-ligatures;
+        @apply font-komarch no-ligatures antialiased;
     }
 
     [class^="icon-"], [class*=" icon-"] {
+        @apply antialiased;
         /* use !important to prevent issues with browser extensions that change fonts */
         font-family: 'KomarchIcons' !important;
         speak: never;
@@ -18,10 +19,6 @@
         font-variant: normal;
         text-transform: none;
         line-height: 1;
-
-        /* Better Font Rendering =========== */
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
     }
 }
 
