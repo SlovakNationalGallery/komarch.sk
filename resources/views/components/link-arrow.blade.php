@@ -4,6 +4,6 @@
 >
     {{ $slot }}
     <span class="inline-block transform group-hover:translate-x-2 duration-200">
-        →
+        {{ $external ?? false ? '→' : '->' }}
     </span>
 </a>
