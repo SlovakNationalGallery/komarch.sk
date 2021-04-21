@@ -26,5 +26,8 @@ Route::get('/posts', function (Request $request) {
     if ($request->has('categories')) {
         $posts->withAnyTags($request->input('categories', []));
     }
+    if ($request->has('featured')) {
+        $posts->featured();
+    }
     return $posts->limit(3)->get();
 });
