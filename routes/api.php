@@ -3,6 +3,9 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+// models
+use App\Models\Post;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -16,4 +19,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::get('/posts', function (Request $request) {
+    $posts = Post::orderBy('published_at', 'desc');
+    if ($request->has('categories')) {
+        $posts->withAnyTags($request->input('categories', []));
+    }
+    return $posts->limit(3)->get();
 });
