@@ -11,15 +11,7 @@
         </ul>
     </x-footer.footer-navigation-column>
     <x-footer.footer-navigation-column :title="$openingTimes['title']">
-        <table>
-            @foreach ($openingTimes['days'] as $day)
-            <tr>
-                <td class="w-32 xl:w-24">{{ $day['title'] }}</td>
-                <td>{!! $day['times'] !!}</td>
-            <tr>
-            @endforeach
-        </table>
-        <span class="block mt-5">{{ $openingTimes['text'] }} </span>
+        <x-footer.opening-hours />
     </x-footer.footer-navigation-column>
     <x-footer.footer-navigation-column title="Kontakt">
         Námeste SNP 18, 811 06 Bratislava
