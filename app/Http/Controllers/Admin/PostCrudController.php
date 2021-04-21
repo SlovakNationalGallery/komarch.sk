@@ -44,6 +44,10 @@ class PostCrudController extends CrudController
                 'type' => 'published_at',
             ],
             [
+                'name' => 'is_featured',
+                'type' => 'boolean',
+            ],
+            [
                 'name'        => 'tags',
                 'label'       => 'Tags',
                 'type'        => 'select_multiple',
@@ -101,6 +105,10 @@ class PostCrudController extends CrudController
                 'entity'      => 'tags',
                 'attribute'   => 'name',
             ],
+            [
+                'name' => 'is_featured',
+                'type' => 'boolean',
+            ],
         ]);
 
         $this->crud->addFilter([
@@ -113,6 +121,16 @@ class PostCrudController extends CrudController
             $this->crud->query = $this->crud->query->whereHas('tags', function ($query) use ($value) {
                 $query->where('tag_id', $value);
             });
+        });
+
+        $this->crud->addFilter([
+          'type'  => 'simple',
+          'name'  => 'featured',
+          'label' => 'Featured'
+        ],
+        false,
+        function() {
+            $this->crud->addClause('featured');
         });
 
     }

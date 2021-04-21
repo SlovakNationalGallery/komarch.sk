@@ -36,6 +36,9 @@ class Post extends Model
     protected $table = 'posts';
     protected $guarded = ['id'];
     protected $dates = ['published_at'];
+    protected $casts = [
+        'is_featured' => 'boolean',
+    ];
 
     public function getRouteKeyName()
     {
@@ -72,4 +75,10 @@ class Post extends Model
     {
         return $this->morphToMany(Tag::class, 'taggable');
     }
+
+    public function scopeFeatured($query)
+    {
+        return $query->where('is_featured', 1);
+    }
+
 }
