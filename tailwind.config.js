@@ -80,7 +80,10 @@ module.exports = {
         extend: {
             translate: ['group-hover'],
             backgroundColor: ['checked'],
+            borderWidth: ['group-hover ']
         }
     },
-    plugins: [],
+    plugins: [
+        require('@tailwindcss/aspect-ratio'),
+    ],
 }
