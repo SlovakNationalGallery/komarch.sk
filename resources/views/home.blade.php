@@ -55,6 +55,10 @@
         </div>
     </div>
 
+    <x-section-map
+        title="Register diel"
+    />
+
 <!--    <div>-->
 <!--        @if ($featured_post)-->
 <!--            <div>-->
