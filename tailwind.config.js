@@ -59,11 +59,10 @@ module.exports = {
         },
         lineHeight: {
             none: '1',
-            tight: '1.25',
-            snug: '1.375',
-            normal: '1.5',
-            relaxed: '1.625',
-            loose: '2',
+            tight: '1.08',
+            snug: '1.25',
+            normal: '1.4',
+            relaxed: '1.7',
         },
         letterSpacing: {
             tight: '-0.02em',

@@ -1,5 +1,5 @@
 <template>
-    <a :href="url" class="block hover:text-blue">
+    <a :href="url" class="block leading-snug hover:text-blue">
         <slot></slot>
     </a>
 </template>
