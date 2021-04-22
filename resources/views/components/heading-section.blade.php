@@ -1,3 +1,3 @@
-<h2 class="text-xl tracking-tight ligatures">
+<h2 class="text-xl tracking-tight">
     {{ $slot }}
 </h2>
