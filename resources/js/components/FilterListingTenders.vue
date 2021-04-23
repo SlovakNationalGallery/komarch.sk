@@ -5,7 +5,9 @@
     >
         <template v-slot:before-list>
             <h2 class="text-xl mb-10">
-                Súťaže
+                <LinkArrow url="/sutaze">
+                    Súťaže
+                </LinkArrow>
             </h2>
         </template>
         <template v-slot:list-item="{ item }">

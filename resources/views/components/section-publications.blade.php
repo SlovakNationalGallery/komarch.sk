@@ -1,6 +1,8 @@
 <section class="mt-20">
     <x-heading-section>
-        {{ $title }}
+        <x-link-arrow :url="$linkUrl">
+            {{ $title }}
+        </x-link-arrow>
     </x-heading-section>
     <img
         src="{{ $imageUrl }}"
