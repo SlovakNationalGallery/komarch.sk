@@ -1,40 +1,37 @@
 <template>
-    <div class="mt-10">
-        <div class="flex">
-            <button>+</button>
-            <button>-</button>
-            <LinkArrow url="#">
-                Zobraz celú mapu
-            </LinkArrow>
-        </div>
-        <div class="relative w-100 map-artworks mt-5">
-            <MglMap
-                :accessToken="accessToken"
-                :map-style="mapStyle"
-                :center="center"
-                :zoom="zoom"
-            />
-        </div>
+    <div class="relative w-100 map-artworks mt-5">
+        <MglMap
+            :accessToken="accessToken"
+            :map-style="mapStyle"
+            :center="center"
+            :zoom="zoom"
+            :attribution-control="false"
+        >
+            <MglNavigationControl position="top-right" />
+            <MglAttributionControl position="top-right" />
+        </MglMap>
     </div>
 </template>
 
 <script>
 import LinkArrow from "./atoms/links/LinkArrow";
-import { MglMap } from "vue-mapbox";
+import { MglMap, MglNavigationControl, MglAttributionControl } from "vue-mapbox";
 
 export default {
     components: {
         LinkArrow,
-        MglMap
+        MglMap,
+        MglNavigationControl,
+        MglAttributionControl
     },
     props: {
         center: {
           type: Array,
-          default: [19.696058, 48.6737532],
+          default: () => [19.696058, 48.6737532],
         },
         zoom: {
             type: Number,
-            default: 7
+            default: 6
         }
     },
     data () {
