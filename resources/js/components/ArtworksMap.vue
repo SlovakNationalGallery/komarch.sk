@@ -7,16 +7,26 @@
                 Zobraz celú mapu
             </LinkArrow>
         </div>
-        <div>
-            This is a map
+        <div class="relative w-100 h-64">
+            <MglMap :accessToken="accessToken" :map-style="mapStyle" />
         </div>
     </div>
 </template>
 
 <script>
 import LinkArrow from "./atoms/links/LinkArrow";
+import { MglMap } from "vue-mapbox";
 
 export default {
-    components: { LinkArrow }
+    components: {
+        LinkArrow,
+        MglMap
+    },
+    data () {
+        return {
+            accessToken: process.env.MIX_MAPBOX_TOKEN,
+            mapStyle: 'mapbox://styles/mapbox/light-v10'
+        };
+    }
 }
 </script>
