@@ -7,8 +7,13 @@
                 Zobraz celú mapu
             </LinkArrow>
         </div>
-        <div class="relative w-100 h-64">
-            <MglMap :accessToken="accessToken" :map-style="mapStyle" />
+        <div class="relative w-100 map-artworks mt-5">
+            <MglMap
+                :accessToken="accessToken"
+                :map-style="mapStyle"
+                :center="center"
+                :zoom="zoom"
+            />
         </div>
     </div>
 </template>
@@ -22,10 +27,20 @@ export default {
         LinkArrow,
         MglMap
     },
+    props: {
+        center: {
+          type: Array,
+          default: [19.696058, 48.6737532],
+        },
+        zoom: {
+            type: Number,
+            default: 7
+        }
+    },
     data () {
         return {
             accessToken: process.env.MIX_MAPBOX_TOKEN,
-            mapStyle: 'mapbox://styles/mapbox/light-v10'
+            mapStyle: 'mapbox://styles/mapbox/light-v10',
         };
     }
 }
