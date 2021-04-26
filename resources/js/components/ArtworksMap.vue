@@ -1,5 +1,5 @@
 <template>
-    <div class="relative w-100 map-artworks mt-5">
+    <div class="relative w-100 map-artworks mt-4">
         <MglMap
             :accessToken="accessToken"
             :map-style="mapStyle"
@@ -36,9 +36,10 @@ export default {
             type: Number,
             default: 6
         },
+        // https://docs.mapbox.com/api/maps/styles/
         mapStyle: {
             type: String,
-            default: 'mapbox://styles/mapbox/light-v10'
+            default: 'mapbox://styles/mapbox/streets-v11'
         }
     },
     computed: {
