@@ -7,8 +7,8 @@
             :zoom="zoom"
             :attribution-control="false"
         >
-            <MglNavigationControl position="top-right" />
-            <MglAttributionControl position="top-right" />
+            <MglNavigationControl position="top-left" :show-compass="false" />
+            <MglAttributionControl position="bottom-right" />
         </MglMap>
     </div>
 </template>
@@ -42,3 +42,7 @@ export default {
     }
 }
 </script>
+
+<style>
+    @import "../../css/mapbox.css";
+</style>
