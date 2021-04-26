@@ -54,7 +54,8 @@
 
     <x-section-map
         title="Register diel"
-        linkUrl="#"
+        titleUrl="#"
+        mapUrl="#"
     />
 </div>
 

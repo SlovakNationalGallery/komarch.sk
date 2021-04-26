@@ -17,6 +17,9 @@
 import LinkArrow from "./atoms/links/LinkArrow";
 import { MglMap, MglNavigationControl, MglAttributionControl } from "vue-mapbox";
 
+export const SVK_CENTER_LONGITUDE = 19.696058
+export const SVK_CENTER_LATITUDE = 48.6737532
+
 export default {
     components: {
         LinkArrow,
@@ -27,18 +30,21 @@ export default {
     props: {
         center: {
           type: Array,
-          default: () => [19.696058, 48.6737532],
+          default: () => [SVK_CENTER_LONGITUDE, SVK_CENTER_LATITUDE],
         },
         zoom: {
             type: Number,
             default: 6
+        },
+        mapStyle: {
+            type: String,
+            default: 'mapbox://styles/mapbox/light-v10'
         }
     },
-    data () {
-        return {
-            accessToken: process.env.MIX_MAPBOX_TOKEN,
-            mapStyle: 'mapbox://styles/mapbox/light-v10',
-        };
+    computed: {
+        accessToken () {
+            return process.env.MIX_MAPBOX_TOKEN
+        }
     }
 }
 </script>
