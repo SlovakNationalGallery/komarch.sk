@@ -1,0 +1,3 @@
+<div>
+    Related articles
+</div>

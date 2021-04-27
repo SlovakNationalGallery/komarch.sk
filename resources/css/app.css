@@ -35,6 +35,10 @@
             max-height: unset;
         }
     }
+
+    .container-article {
+        max-width: 762px;
+    }
 }
 
 @layer utilities {
