@@ -25,6 +25,16 @@ class PostsController extends Controller
         return view('posts.index', compact('posts'));
     }
 
+    public function getDetail($slug)
+    {
+        $post = Post::where('slug', '=', $slug)->firstOrFail();
+        if (empty($post)) {
+            abort(404);
+        }
+
+        return view('post', array('post'=>$post));
+    }
+
     public function show(Post $post)
     {
         $breadcrumbs = [
