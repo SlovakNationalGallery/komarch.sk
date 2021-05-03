@@ -1,5 +1,5 @@
 <template>
-    <article class="py-10 grid grid-cols-2 place-items-start">
+    <article class="py-10 grid grid-cols-2 place-items-start items-center">
         <TagHash :tag="skaInformation.hashTags[0]"></TagHash>
         <TagDate>{{ skaInformation.date }}</TagDate>
         <h3 class="mt-1 text-xl col-span-2 tracking-tight">

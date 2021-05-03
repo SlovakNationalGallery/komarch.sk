@@ -1,9 +1,9 @@
 <template>
     <a
-        class="text-sm border-l border-r px-2 py-1 mr-4 rounded-lg hover:text-blue"
+        class="px-1 py-1 mr-4 hover:text-blue flex items-center"
         :href="tag.url"
     >
-        #{{ tag.title }}
+        ❪<span class="text-sm">#{{ tag.title }}</span>❫
     </a>
 </template>
 
