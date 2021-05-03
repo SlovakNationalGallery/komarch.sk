@@ -1,7 +1,7 @@
 <template>
     <article class="py-10 grid grid-cols-2 place-items-start items-center">
         <TagDate>{{ tender.date }}</TagDate>
-        <TagDate class="h-8 flex items-center">{{ tender.days }}</TagDate>
+        <TagDate class="h-6 flex items-center">{{ tender.days }}</TagDate>
         <h3 class="mt-1 text-xl col-span-2 tracking tight">
             <LinkTitle :url="tender.url">
                 {{ tender.title }}
