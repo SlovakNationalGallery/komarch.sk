@@ -30,6 +30,10 @@
         max-height: 700px;
     }
 
+    .map-artworks {
+        height: 585px;
+    }
+
     @screen md {
         .nav-menu {
             max-height: unset;

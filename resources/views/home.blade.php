@@ -52,29 +52,11 @@
         </div>
     </div>
 
-<!--    <div>-->
-<!--        @if ($featured_post)-->
-<!--            <div>-->
-<!--                @include('components.article-big', ['post' => $featured_post])-->
-<!--            </div>-->
-<!--        @endif-->
-<!--        <div>-->
-<!--            @foreach($posts as $post)-->
-<!--                @include('components.article-small', ['post' => $post])-->
-<!--            @endforeach-->
-
-<!--            <div>-->
-<!--                <a href="{{ route('posts.index') }}">Viac noviniek →</a>-->
-<!--            </div>-->
-
-<!--        </div>-->
-<!--        <div>-->
-<!--            <h5>Najnovšie publikácie</h5>-->
-<!--            <div>-->
-<!--                <img src="https://placekitten.com/150/200" />-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
+    <x-section-map
+        title="Register diel"
+        titleUrl="#"
+        mapUrl="#"
+    />
 </div>
 
 <x-footer.footer></x-footer.footer>
