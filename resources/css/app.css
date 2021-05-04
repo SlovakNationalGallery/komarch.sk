@@ -43,6 +43,14 @@
     .container-article {
         max-width: 762px;
     }
+
+    .container-article p {
+        @apply mb-6;
+    }
+
+    .container-article img {
+        @apply mb-6;
+    }
 }
 
 @layer utilities {
