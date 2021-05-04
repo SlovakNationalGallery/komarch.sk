@@ -1,7 +1,8 @@
 <header class="container-article mx-auto">
-    <img src="https://placekitten.com/640/360" alt="cat">
     <div class="flex mt-16">
-        <span>{{ $post['tags'][0]['name'] }}</span>
+        @foreach ($post['tags'] as $tag)
+            <span class="mr-4">{{ $tag['name'] }}</span>
+        @endforeach
         <span>{{ $post['published_at'] }}</span>
         <span class="ml-auto">email</span>
         <span>link</span>
