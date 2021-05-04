@@ -1,7 +1,7 @@
 <header class="container-article mx-auto">
     <div class="flex mt-16">
         @foreach ($post['tags'] as $tag)
-            <span class="mr-4">{{ $tag['name'] }}</span>
+            <x-tag-hash :tag="$tag"></x-tag-hash>
         @endforeach
         <span>{{ $post['published_at'] }}</span>
         <a
