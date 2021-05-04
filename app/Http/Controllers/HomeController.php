@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Models\Publication;
+use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
@@ -13,6 +14,8 @@ class HomeController extends Controller
         $posts = $posts->paginate(4);
         $featured_post = Post::inRandomOrder()->first();
 
-        return view('home', compact('posts', 'featured_post'));
+        $publications = Publication::published()->orderBy('published_at','desc')->take(2)->get();
+
+        return view('home', compact('posts', 'featured_post', 'publications'));
     }
 }
