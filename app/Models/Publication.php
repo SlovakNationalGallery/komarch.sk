@@ -3,11 +3,17 @@
 namespace App\Models;
 
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
+use Backpack\CRUD\app\Models\Traits\SpatieTranslatable\HasTranslations;
 use Illuminate\Database\Eloquent\Model;
+
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
+use App\Traits\Publishable;
 
 class Publication extends Model
 {
-    use CrudTrait;
+    use CrudTrait, HasSlug, Publishable, HasTranslations;
+
 
     /*
     |--------------------------------------------------------------------------
@@ -16,18 +22,23 @@ class Publication extends Model
     */
 
     protected $table = 'publications';
-    // protected $primaryKey = 'id';
-    // public $timestamps = false;
     protected $guarded = ['id'];
-    // protected $fillable = [];
-    // protected $hidden = [];
-    // protected $dates = [];
+    protected $dates = ['published_at'];
+    protected $translatable = ['title', 'description'];
 
     /*
     |--------------------------------------------------------------------------
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
+
+    public function getSlugOptions(): SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('title')
+            ->saveSlugsTo('slug')
+            ->doNotGenerateSlugsOnUpdate();
+    }
 
     /*
     |--------------------------------------------------------------------------

@@ -9,3 +9,5 @@
 
 <li class="nav-title">Others</li>
 <li class="nav-item"><a class="nav-link" href="{{ url('telescope') }}"><i class="nav-icon la la-moon"></i> <span>Telescope</span> <i class="la la-external-link-alt"></i></a></li>
+
+<li class="nav-item"><a class="nav-link" href="{{ backpack_url('elfinder') }}\"><i class="nav-icon la la-files-o"></i> <span>{{ trans('backpack::crud.file_manager') }}</span></a></li>
