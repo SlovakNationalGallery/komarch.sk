@@ -4,12 +4,13 @@
         id="nav-content"
         class="nav-menu px-4 md:px-0 md:flex"
     >
-        <div class="flex-1 lg:ml-40">
-            <x-header.header-navigation-list :items="$navItems1" />
-            <x-header.header-navigation-search />
-        </div>
-        <div class="flex-1 md:ml-24 lg:ml-16 pb-4">
-            <x-header.header-navigation-list :items="$navItems2" />
-        </div>
+        @foreach($navItems->split(2) as $i=>$items)
+            <div class="flex-1 {{ ($i==0) ? 'lg:ml-40' : 'md:ml-24 lg:ml-16'}}">
+                <x-header.header-navigation-list :items="$items" />
+                @if ($i==0)
+                    <x-header.header-navigation-search />
+                @endif
+            </div>
+        @endforeach
     </div>
 </nav>
