@@ -1,20 +1,21 @@
+<!-- TODO: add share icons when they get added to the font -->
 <a
-    class="ml-auto w-20 flex items-center"
+    class="group ml-auto w-20 flex justify-center hover:text-blue"
     href="mailto:?to=&body={{ Request::url() }}"
     target="_blank"
 >
-    <span>i-mail</span>
-    <span class="hidden">Send</span>
+    <span class="group-hover:hidden">i-mail</span>
+    <span class="hidden group-hover:block">Send</span>
 </a>
-<a class="ml-4 w-20 flex items-center cursor-pointer">
-    <span>i-copy</span>
-    <span class="hidden">Copy link</span>
+<a class="group ml-4 w-20 flex justify-center cursor-pointer hover:text-blue">
+    <span class="group-hover:hidden">i-copy</span>
+    <span class="hidden group-hover:block">Copy link</span>
 </a>
 <a
-    class="ml-4 w-20 flex items-center"
+    class="group ml-4 w-20 flex justify-center hover:text-blue"
     href="https://www.facebook.com/sharer/sharer.php?u={{ Request::url() }}"
     target="_blank"
 >
-    <span>i-fb</span>
-    <span class="hidden">Share</span>
+    <span class="group-hover:hidden">i-fb</span>
+    <span class="hidden group-hover:block">Share</span>
 </a>
