@@ -23,13 +23,14 @@ installs as well as long as you configure them equivalently (see
     - ftp
     - pdo_mysql
 1. Clone the repository
-1. Create `.env` and `.env.testing` files (as copies of `.env.example`) 
+1. Create `.env` and `.env.testing` files (as copies of `.env.example`)
 1. Configure env variables `DB_PORT`, `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD`
     - in `.env` based on `mysql-development` in `docker-compose.yml`
     - in `.env.testing` based on `mysql-testing` in `docker-compose.yml`
 1. Run `docker-compose up`
 1. Run `composer install`
 1. Run `npm install`
+1. Run `php artisan storage:link`
 1. Generate app keys:
     - Run `php artisan key:generate`
     - Run `php artisan key:generate --env testing`

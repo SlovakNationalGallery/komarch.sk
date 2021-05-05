@@ -21,6 +21,8 @@
         "resolve-url-loader": "^3.1.0",
         "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.4",
         "vue": "^2.6.12",
-        "vue-template-compiler": "^2.6.12"
+        "vue-template-compiler": "^2.6.12",
+        "mapbox-gl": "^2.2.0",
+        "vue-mapbox": "^0.4.1"
     }
 }
