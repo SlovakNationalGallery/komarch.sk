@@ -119,18 +119,6 @@
 </div>
 
 <div class="row">
-<section id="langswitch-card" class="col m-1">
-    <h2>Component: langswitch</h2>
-
-    <div class="cd-box">
-        @include('components.langswitch')
-    </div>
-
-    <div class="cd-box code lang-php hljs xml">
-        @@include('components.langswitch')
-    </div>
-</section>
-
 <section id="card-tags" class="col m-1">
     <h2>Component: tags</h2>
 

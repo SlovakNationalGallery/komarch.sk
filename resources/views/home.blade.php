@@ -8,27 +8,18 @@
 {{-- @include('components.notification_bar') --}}
 
 <div class="container mx-auto px-4">
-    <x-intro
-        title="Podporujeme rozvoj architektúry na Slovensku"
-        text="Slovenská Komora Architektov je odbornou organizáciou, ktorá sa zameriava na vzdelávanie a informovanie verejnosti o potrebách kvalitnej architektúry"
-    />
+    <x-intro text="Slovenská Komora Architektov je odbornou organizáciou, ktorá sa zameriava na vzdelávanie a informovanie verejnosti o potrebách kvalitnej architektúry"/>
 
-    <div class="mt-24 md:grid grid-cols-2 gap-10">
+    <div class="mt-10 md:mt-32 md:grid grid-cols-2 gap-10">
         <div class="flex" style="height: 300px">
             <span class="m-auto">Clock here</span>
         </div>
-        <x-tile
-            title="Ako sa stať autorizovaným členom"
-            url="#"
+        @foreach ($tiles as $tile)
+            <x-tile
+            :title="$tile->title"
+            :url="$tile->url"
         />
-        <x-tile
-            title="Ako sa stať autorizovaným členom"
-            url="#"
-        />
-        <x-tile
-            title="Ako sa stať autorizovaným členom"
-            url="#"
-        />
+        @endforeach
     </div>
 
     <div class="lg:flex">
@@ -47,37 +38,18 @@
             />
             <x-section-publications
                 title="Publikácie"
-                imageUrl="https://placekitten.com/640/360"
-                imageAlt="Kitten"
+                :publications="$publications"
                 linkUrl="#"
                 linkTitle="Čítajte na ISSU"
             />
         </div>
     </div>
 
-<!--    <div>-->
-<!--        @if ($featured_post)-->
-<!--            <div>-->
-<!--                @include('components.article-big', ['post' => $featured_post])-->
-<!--            </div>-->
-<!--        @endif-->
-<!--        <div>-->
-<!--            @foreach($posts as $post)-->
-<!--                @include('components.article-small', ['post' => $post])-->
-<!--            @endforeach-->
-
-<!--            <div>-->
-<!--                <a href="{{ route('posts.index') }}">Viac noviniek →</a>-->
-<!--            </div>-->
-
-<!--        </div>-->
-<!--        <div>-->
-<!--            <h5>Najnovšie publikácie</h5>-->
-<!--            <div>-->
-<!--                <img src="https://placekitten.com/150/200" />-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
+    <x-section-map
+        title="Register diel"
+        titleUrl="#"
+        mapUrl="#"
+    />
 </div>
 
 <x-footer.footer></x-footer.footer>
