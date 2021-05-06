@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 // models
 use App\Models\Post;
+use App\Http\Resources\PostResource;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,5 +30,5 @@ Route::get('/posts', function (Request $request) {
     if ($request->has('featured')) {
         $posts->featured();
     }
-    return $posts->limit(3)->get();
+    return PostResource::collection($posts->limit(4)->get());
 });

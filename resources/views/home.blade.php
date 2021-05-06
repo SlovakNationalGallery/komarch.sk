@@ -27,7 +27,7 @@
             <filter-listing-tenders />
         </div>
         <div class="flex-1 md:mr-14">
-            <filter-listing-ska />
+            <filter-listing-posts />
         </div>
         <div class="flex-1">
             <x-section-videos
