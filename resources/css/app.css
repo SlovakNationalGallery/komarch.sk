@@ -8,17 +8,6 @@
     body {
         @apply font-komarch no-ligatures antialiased;
     }
-
-    [class^="icon-"], [class*=" icon-"] {
-        /* use !important to prevent issues with browser extensions that change fonts */
-        font-family: 'KomarchIcons' !important;
-        speak: never;
-        font-style: normal;
-        font-weight: normal;
-        font-variant: normal;
-        text-transform: none;
-        line-height: 1;
-    }
 }
 
 @layer components {
@@ -67,8 +56,34 @@
         @apply absolute inset-0;
     }
 
+    .icon {
+        @apply font-komarch;
+        line-height: 1;
+        font-size: 26px;
+    }
+
+    .icon-mail:before {
+        @apply icon;
+        content: "\E803";
+    }
+
+    .icon-link:before {
+        @apply icon;
+        content: "\E802";
+    }
+
+    .icon-share:before {
+        @apply icon;
+        content: "\F08E";
+    }
+
     /* TODO: REVISE: */
+    .icon-legacy {
+        font-family: 'KomarchIcons' !important;
+    }
+
     .icon-search:before {
+        @apply icon-legacy;
         content: "\1f50d";
     }
 }
