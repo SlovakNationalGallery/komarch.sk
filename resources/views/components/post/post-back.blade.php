@@ -1,8 +1,8 @@
 <div>
-    <div class="text-xl">
+    <div class="text-xl mb-2">
         {{ __('post.info_komarch') }}
     </div>
-    <a href="/spravy" target="_self" class="block mt-2">
-        ⟵ {{ __('post.navigate_back') }}
-    </a>
+    <x-link-arrow-back url="/spravy">
+        {{ __('post.navigate_back') }}
+    </x-link-arrow-back>
 </div>
