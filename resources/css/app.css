@@ -57,9 +57,27 @@
     }
 
     .icon {
-        @apply font-komarch;
         line-height: 1;
-        font-size: 26px;
+    }
+
+    .icon-arrow-r:before {
+        @apply icon;
+        content: "\2192";
+    }
+
+    .icon-arrow-r-long:before {
+        @apply icon;
+        content: "\27F6";
+    }
+
+    .icon-arrow-l:before {
+        @apply icon;
+        content: "\2190";
+    }
+
+    .icon-arrow-l-long:before {
+        @apply icon;
+        content: "\27F5";
     }
 
     .icon-mail:before {
