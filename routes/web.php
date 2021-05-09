@@ -24,8 +24,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
 
     Route::get('/search', 'App\Http\Controllers\SearchController@index')->name('search');
 
-    Route::get('posts/{slug}', '\App\Http\Controllers\PostsController@getDetail');
-
     Route::resource('spravy', '\App\Http\Controllers\PostsController')->names('posts')
                 ->parameter('spravy', 'post');
 

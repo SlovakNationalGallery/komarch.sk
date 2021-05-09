@@ -25,24 +25,8 @@ class PostsController extends Controller
         return view('posts.index', compact('posts'));
     }
 
-    public function getDetail($slug)
-    {
-        $post = Post::where('slug', '=', $slug)->firstOrFail();
-        if (empty($post)) {
-            abort(404);
-        }
-
-        return view('post', array('post'=>$post));
-    }
-
     public function show(Post $post)
     {
-        $breadcrumbs = [
-            'Domov' => route('home'),
-            'Novinky o činnosti' => route('posts.index'),
-            $post->title => null,
-        ];
-
-        return view('posts.show', compact('post', 'breadcrumbs'));
+        return view('posts.show', compact('post'));
     }
 }
