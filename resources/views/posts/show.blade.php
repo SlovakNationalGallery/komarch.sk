@@ -8,7 +8,7 @@
 
 @section('content')
 <x-header.header></x-header.header>
-<div class="container mx-auto px-4">
+<div class="container mx-auto px-6">
     <x-post.post-back :post="$post"></x-post.post-back>
     <x-post.post-header :post="$post"></x-post.post-header>
     <x-post.post-content :post="$post"></x-post.post-content>
