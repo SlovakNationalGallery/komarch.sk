@@ -95,6 +95,11 @@
         content: "\F08E";
     }
 
+    .icon-clock:before {
+        @apply icon;
+        content: '\01F551'
+    }
+
     /* TODO: REVISE: */
     .icon-legacy {
         font-family: 'KomarchIcons' !important;
