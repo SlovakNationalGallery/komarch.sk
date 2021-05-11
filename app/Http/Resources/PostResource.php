@@ -4,7 +4,6 @@ namespace App\Http\Resources;
 
 use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 class PostResource extends JsonResource
 {
@@ -16,7 +15,7 @@ class PostResource extends JsonResource
      */
     public function toArray($request)
     {
-        $locale = LaravelLocalization::getCurrentLocale();
+        $locale = $request->get('locale', app()->getLocale());
         Carbon::setlocale($locale);
 
         return [
