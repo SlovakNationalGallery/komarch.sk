@@ -1,8 +1,16 @@
 <template>
     <div>
         <div class="flex justify-between">
-            <button @click="onPrev" class="text-xl icon-arrow-l-long focus:outline-none"></button>
-            <button @click="onNext" class="text-xl icon-arrow-r-long focus:outline-none"></button>
+            <button
+                @click="onPrev"
+                class="text-xl icon-arrow-l-long focus:outline-none"
+                :class="{ 'hidden': isBeginning }"
+            />
+            <button
+                @click="onNext"
+                class="text-xl icon-arrow-r-long focus:outline-none ml-auto"
+                :class="{ 'hidden': isEnd }"
+            />
         </div>
         <Swiper :options="swiperOptions" :ref="swiperRef">
             <SwiperSlide v-for="post in posts">
@@ -26,6 +34,8 @@
       },
       data () {
           return {
+              isBeginning: false,
+              isEnd: false,
               swiperOptions: {
                   slidesPerView: 3,
                   spaceBetween: 30,
@@ -38,11 +48,18 @@
         }
       },
       methods: {
+          updateBounds () {
+              const { isBeginning, isEnd } = this.$refs[this.swiperRef].$swiper
+              this.isBeginning = isBeginning
+              this.isEnd = isEnd
+          },
           onPrev() {
               this.$refs[this.swiperRef].$swiper.slidePrev()
+              this.updateBounds()
           },
           onNext() {
               this.$refs[this.swiperRef].$swiper.slideNext()
+              this.updateBounds()
           }
       }
   }
