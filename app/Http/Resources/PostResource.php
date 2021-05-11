@@ -22,7 +22,7 @@ class PostResource extends JsonResource
             'id' => $this->id,
             'title' => $this->getTranslation('title', $locale),
             'perex' => $this->getTranslation('perex', $locale),
-            'date' => $this->published_at->formatLocalized('%d %B %Y'),
+            'date' => trim($this->published_at->formatLocalized('%e. %B %Y')),
             'url' => $this->url,
             'tags' => TagResource::collection($this->whenLoaded('tags')),
         ];
