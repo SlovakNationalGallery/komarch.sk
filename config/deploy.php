@@ -124,7 +124,7 @@ return [
         'webumenia.sk' => [
             'deploy_path' => '/var/www/komarch.sk',
             'user' => 'lab_sng',
-            'branch' => 'feature/KOMARCH-85-reactive-posts-component',
+            'branch' => 'master',
         ],
     ],
 
