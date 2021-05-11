@@ -1,10 +1,10 @@
 <template>
     <article class="py-10 grid grid-cols-2 place-items-start">
-        <TagHash :tag="skaInformation.hashTags[0]"></TagHash>
-        <TagDate>{{ skaInformation.date }}</TagDate>
+        <TagHash :tag="post.tags[0]"></TagHash>
+        <TagDate>{{ post.date }}</TagDate>
         <h3 class="mt-1 text-xl col-span-2 tracking-tight">
-            <LinkTitle :url="skaInformation.url">
-                {{ skaInformation.title }}
+            <LinkTitle :url="post.url">
+                {{ post.title }}
             </LinkTitle>
         </h3>
     </article>
@@ -22,7 +22,7 @@ export default {
         TagHash,
     },
     props: {
-        skaInformation: {
+        post: {
             type: Object,
             required: true
         }

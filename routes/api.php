@@ -3,8 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-// models
 use App\Models\Post;
+use App\Http\Resources\PostResource;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,12 +22,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/posts', function (Request $request) {
-    $posts = Post::orderBy('published_at', 'desc');
+    $posts = Post::published()->orderBy('published_at', 'desc');
     if ($request->has('categories')) {
         $posts->withAnyTags($request->input('categories', []));
     }
     if ($request->has('featured')) {
         $posts->featured();
     }
-    return $posts->limit(3)->get();
+    return PostResource::collection($posts->limit(4)->get());
 });
