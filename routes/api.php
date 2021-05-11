@@ -23,7 +23,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/posts', function (Request $request) {
-    $posts = Post::orderBy('published_at', 'desc');
+    $posts = Post::published()->orderBy('published_at', 'desc');
     if ($request->has('categories')) {
         $posts->withAnyTags($request->input('categories', []));
     }
