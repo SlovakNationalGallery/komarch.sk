@@ -14,18 +14,12 @@
         <div class="flex" style="height: 300px">
             <span class="m-auto">Clock here</span>
         </div>
-        <x-tile
-            title="Ako sa stať autorizovaným členom"
-            url="#"
+        @foreach ($tiles as $tile)
+            <x-tile
+            :title="$tile->title"
+            :url="$tile->url"
         />
-        <x-tile
-            title="Ako sa stať autorizovaným členom"
-            url="#"
-        />
-        <x-tile
-            title="Ako sa stať autorizovaným členom"
-            url="#"
-        />
+        @endforeach
     </div>
 
     <div class="lg:flex">
@@ -33,7 +27,7 @@
             <filter-listing-tenders />
         </div>
         <div class="flex-1 md:mr-14">
-            <filter-listing-ska />
+            <filter-listing-posts />
         </div>
         <div class="flex-1">
             <x-section-videos
@@ -44,8 +38,7 @@
             />
             <x-section-publications
                 title="Publikácie"
-                imageUrl="https://placekitten.com/640/360"
-                imageAlt="Kitten"
+                :publications="$publications"
                 linkUrl="#"
                 linkTitle="Čítajte na ISSU"
             />

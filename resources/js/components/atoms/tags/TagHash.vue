@@ -1,9 +1,9 @@
 <template>
     <a
         class="px-1 mr-4 hover:text-blue flex items-center"
-        :href="tag.url"
+        :href="tagUrl"
     >
-        ❪<span class="text-sm">#{{ tag.title }}</span>❫
+        ❪<span class="text-sm">#{{ tag.name }}</span>❫
     </a>
 </template>
 
@@ -13,6 +13,11 @@
           tag: {
               type: Object,
               required: true
+          }
+      },
+      computed: {
+          tagUrl() {
+            return 'spravy?category[]' + this.tag.slug;
           }
       }
   }

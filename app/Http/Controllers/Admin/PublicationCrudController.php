@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\PostRequest;
+use App\Http\Requests\PublicationRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 /**
- * Class PostCrudController
+ * Class PublicationCrudController
  * @package App\Http\Controllers\Admin
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
-class PostCrudController extends CrudController
+class PublicationCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
@@ -26,38 +26,22 @@ class PostCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\Post::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/post');
-        CRUD::setEntityNameStrings('post', 'posts');
+        CRUD::setModel(\App\Models\Publication::class);
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/publication');
+        CRUD::setEntityNameStrings('publication', 'publications');
 
         $this->crud->setColumns([
             [
                 'name' => 'title',
-                'type' => 'article',
-                'searchLogic' => function ($query, $column, $searchTerm) {
-                    $query->orWhere('title->sk', 'like', '%'.$searchTerm.'%')
-                          ->orWhere('title->en', 'like', '%'.$searchTerm.'%');
-                }
+                'type' => 'publication',
             ],
             [
                 'name' => 'published',
                 'type' => 'published_at',
             ],
             [
-                'name' => 'is_featured',
-                'type' => 'boolean',
-            ],
-            [
-                'name'        => 'tags',
-                'label'       => 'Tags',
-                'type'        => 'select_multiple',
-                'entity'      => 'tags',
-                'attribute'   => 'name',
-                'wrapper'   => [
-                    'href' => function ($crud, $column, $entry, $related_key) {
-                        return backpack_url('tag/'.$related_key.'/show');
-                    },
-                ],
+                'name' => 'updated_at',
+                'type' => 'updated_at',
             ],
         ]);
 
@@ -73,18 +57,21 @@ class PostCrudController extends CrudController
                 'hint' => 'Will be automatically generated from your title, if left empty.'
             ],
             [
-                'name' => 'perex',
-                'type' => 'textarea',
+                'name' => 'cover_image',
+                'type' => 'browse',
             ],
             [
-                'name' => 'text',
+                'name' => 'description',
                 'type' => 'tinymce',
                 'options' => [
                     'entity_encoding' => 'raw',
-                    'height' => 480,
-                    'plugins' => 'image,link,media,anchor,fullscreen',
-                    'toolbar' => 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | fullscreen'
+                    'height' => 480
                 ]
+            ],
+            [
+                'name' => 'issuu_url',
+                'label' => 'Issuu URL',
+                'type' => 'url',
             ],
             [
                 'name' => 'published_at',
@@ -98,41 +85,7 @@ class PostCrudController extends CrudController
                     'class' => 'col-sm-8 col-md-6 form-group',
                 ],
             ],
-            [
-                'name'        => 'tags',
-                'label'       => 'Tags',
-                'type'        => 'select2_multiple',
-                'entity'      => 'tags',
-                'attribute'   => 'name',
-            ],
-            [
-                'name' => 'is_featured',
-                'type' => 'boolean',
-            ],
         ]);
-
-        $this->crud->addFilter([
-          'name'  => 'tags',
-          'type'  => 'select2',
-          'label' => 'Tags'
-        ], function() {
-            return \Spatie\Tags\Tag::all()->pluck('name', 'id')->toArray();
-        }, function ($value) {
-            $this->crud->query = $this->crud->query->whereHas('tags', function ($query) use ($value) {
-                $query->where('tag_id', $value);
-            });
-        });
-
-        $this->crud->addFilter([
-          'type'  => 'simple',
-          'name'  => 'featured',
-          'label' => 'Featured'
-        ],
-        false,
-        function() {
-            $this->crud->addClause('featured');
-        });
-
     }
 
     /**
@@ -143,7 +96,7 @@ class PostCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-
+        // CRUD::setFromDb(); // columns
 
         /**
          * Columns can be defined using the fluent syntax or array syntax:
@@ -160,9 +113,9 @@ class PostCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(PostRequest::class);
+        CRUD::setValidation(PublicationRequest::class);
 
-
+        // CRUD::setFromDb(); // fields
 
         /**
          * Fields can be defined using the fluent syntax or array syntax:
@@ -180,15 +133,5 @@ class PostCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
-    }
-
-    protected function setupShowOperation()
-    {
-        $this->crud->addColumn([
-            'name' => 'text',
-            'type' => 'text',
-            'escaped' => false,
-            'limit' => 10000
-        ]);
     }
 }
