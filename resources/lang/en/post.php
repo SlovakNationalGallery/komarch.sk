@@ -6,5 +6,6 @@ return array(
     'share_copied' => 'Copied',
     'share_facebook' => 'Share',
     'info_komarch' => 'Information SKA',
-    'navigate_back' => 'Back to all information'
+    'navigate_back' => 'Back to all information',
+    'related' => 'Related',
 );
