@@ -14,11 +14,23 @@
             v-model="selectedOption"
         />
 
-        <!-- <transition name="items-list" mode="out-in"> -->
-            <div v-for="post in posts">
-                <TeaserSka :post="post" />
+         <transition name="items-list" mode="out-in">
+            <div
+                v-for="option in options"
+                v-if="displayOption.key === option.key"
+                :key="option.key"
+                class="mt-10"
+            >
+                <template v-if="posts.length > 0">
+                    <div v-for="post in posts">
+                        <TeaserSka :post="post" />
+                    </div>
+                </template>
+                <p class="py-10" v-else>
+                    Nenašli sa žiadne články.
+                </p>
             </div>
-        <!-- </transition> -->
+         </transition>
 
         <LinkArrow url="/informacie-ska">
             Informácie SKA
@@ -41,11 +53,9 @@ export default {
     data() {
         return {
             posts: [],
-            selectedOption: this.options[0]
+            selectedOption: this.options[0],
+            displayOption: this.options[0]
         }
-    },
-    created() {
-        //
     },
     props: {
         options: {
@@ -55,27 +65,15 @@ export default {
                 { key: 'important', title: 'Dôležité', params: '?featured' },
                 { key: 'COVID-19', title: 'COVID-19', params: '?categories=COVID-19' },
             ]
-        },
-        skaInformation: {
-            type: Array,
-            default: () => [
-                { filterTags: ['newest'],  hashTags: [{ title: 'Vzdelávanie', url: '#'}], date: '29. Januára 2021', title: 'Cena Miesa van der Rohe 2022 - nominovaní slovenskí architekti', url: '#' },
-                { filterTags: ['newest'], hashTags: [{ title: 'Vzdelávanie', url: '#'}], date: '29. Januára 2021', title: 'Cena Miesa van der Rohe 2022 - nominovaní slovenskí architekti', url: '#' },
-                { filterTags: ['newest'], hashTags: [{ title: 'Vzdelávanie', url: '#'}], date: '29. Júna 2021', title: 'Cena Miesa van der Rohe 2022 - nominovaní slovenskí architekti', url: '#' },
-                { filterTags: ['important'], hashTags: [{ title: 'Vzdelávanie', url: '#'}], date: '29. Júna 2021', title: 'Cena Miesa van der Rohe 2022 - nominovaní slovenskí architekti', url: '#' },
-                { filterTags: ['important'], hashTags: [{ title: 'Vzdelávanie', url: '#'}], date: '29. Júna 2021', title: 'Cena Miesa van der Rohe 2022 - nominovaní slovenskí architekti', url: '#' },
-                { filterTags: ['COVID-19'], hashTags: [{ title: 'Vzdelávanie', url: '#'}], date: '29. Septembra 2021', title: 'Cena Miesa van der Rohe 2022 - nominovaní slovenskí architekti', url: '#' },
-                { filterTags: ['COVID-19'], hashTags: [{ title: 'Vzdelávanie', url: '#'}], date: '29. Januára 2021', title: 'Cena Miesa van der Rohe 2022 - nominovaní slovenskí architekti', url: '#' },
-                { filterTags: ['COVID-19'], hashTags: [{ title: 'Vzdelávanie', url: '#'}], date: '29. Januára 2021', title: 'Cena Miesa van der Rohe 2022 - nominovaní slovenskí architekti', url: '#' },
-            ]
         }
     },
     watch: {
         selectedOption: {
             immediate: true,
-            handler(newValue) {
-                axios.get('./api/posts' + newValue.params)
-                .then(response => this.posts = response.data.data);
+            async handler(newValue) {
+                const response = await axios.get(`./api/posts${newValue.params}`)
+                this.displayOption = newValue
+                this.posts = response.data.data
             }
         }
     }
