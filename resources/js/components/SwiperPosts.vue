@@ -1,19 +1,34 @@
 <template>
-    <div>
-        <TeaserPostBig v-for="post in posts" :post="post" />
-    </div>
+    <Swiper :options="swiperOptions">
+        <SwiperSlide v-for="post in posts">
+            <TeaserPostBig :post="post" />
+        </SwiperSlide>
+    </Swiper>
 </template>
 
 <script>
-  import TeaserPostBig from "./TeaserPostBig";
+    import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
+    import TeaserPostBig from "./TeaserPostBig";
 
   export default {
-      components: { TeaserPostBig },
+      components: { Swiper, SwiperSlide, TeaserPostBig },
       props: {
           posts: {
               type: Array,
               default: []
           },
       },
+      data () {
+          return {
+              swiperOptions: {
+                  slidesPerView: 3,
+                  spaceBetween: 30
+              }
+          }
+      }
   }
 </script>
+
+<style>
+@import "../../../node_modules/swiper/swiper-bundle.css";
+</style>

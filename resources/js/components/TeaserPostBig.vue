@@ -4,10 +4,10 @@
         <TagDate>{{ post.published_at }}</TagDate>
         <h3 class="mt-1 text-xl col-span-2 tracking-tight">
             <LinkTitle :url="post.slug">
-                {{ post.title }}
+                {{ post.title.sk }}
             </LinkTitle>
         </h3>
-        <p class="col-span-2">{{ post.perex.sk }}</p>
+        <p class="mt-4 col-span-2">{{ post.perex.sk }}</p>
     </article>
 </template>
 
