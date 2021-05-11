@@ -1,3 +1,3 @@
 <div>
-    Related articles
+    {{ $related[0] }}
 </div>
