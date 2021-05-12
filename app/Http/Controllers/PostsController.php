@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Http\Resources\PostResource;
 
 class PostsController extends Controller
 {
@@ -25,14 +26,10 @@ class PostsController extends Controller
         return view('posts.index', compact('posts'));
     }
 
+
+
     public function show(Post $post)
     {
-        $related = [$post, $post, $post, $post, $post];
-
-        foreach ($related as $post) {
-            $post->dateFormatted = $post['published_at']->formatLocalized('%d %B %Y');
-        }
-
-        return view('posts.show', compact('post', 'related'));
+        return view('posts.show', compact('post'));
     }
 }

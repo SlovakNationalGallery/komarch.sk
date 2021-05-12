@@ -30,14 +30,9 @@
           SwiperSlide,
           TeaserPostBig
       },
-      props: {
-          posts: {
-              type: Array,
-              default: []
-          },
-      },
       data () {
           return {
+              posts: [],
               isBeginning: false,
               isEnd: false,
               swiperOptions: {
@@ -63,10 +58,15 @@
             return 'swiperPosts'
         }
       },
+      async created () {
+          const response = await axios.get(`/api/related-posts?locale=${document.documentElement.lang}`)
+          this.posts = response.data.data
+          await this.$nextTick()
+          this.updateControls()
+      },
       mounted () {
           this.swiper = this.$refs[this.swiperRef].$swiper
           this.swiper.on('slideChange', this.updateControls)
-          this.updateControls()
       },
       methods: {
           updateControls () {

@@ -12,7 +12,7 @@
     <x-post.post-back :post="$post"></x-post.post-back>
     <x-post.post-header :post="$post"></x-post.post-header>
     <x-post.post-content :post="$post"></x-post.post-content>
-    <x-post.post-related :related="$related"></x-post.post-related>
+    <x-post.post-related></x-post.post-related>
 </div>
 <x-footer.footer></x-footer.footer>
 @stop

@@ -1,13 +1,14 @@
 <template>
     <article class="py-10 grid grid-cols-2 place-items-start items-center">
         <TagHash :tag="post.tags[0]"></TagHash>
-        <TagDate>{{ post.dateFormatted }}</TagDate>
-        <h3 class="mt-1 text-xl col-span-2 tracking-tight">
+        <TagDate>{{ post.date }}</TagDate>
+        <h3 class="mt-2 text-xl col-span-2 tracking-tight leading-snug">
             <LinkTitle :url="post.slug">
-                {{ post.title.sk }}
+                {{ post.title }}
             </LinkTitle>
         </h3>
-        <p class="mt-4 col-span-2">{{ post.perex.sk }}</p>
+        <p class="mt-5 col-span-2 leading-snug">{{ post.perex }}</p>
+        <!-- TODO: add images when available -->
     </article>
 </template>
 
@@ -26,7 +27,7 @@ import LinkTitle from "./atoms/links/LinkTitle";
           post: {
               type: Object,
               required: true
-          },
-      },
+          }
+      }
   }
 </script>
