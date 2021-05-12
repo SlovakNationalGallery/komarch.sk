@@ -1,3 +1,3 @@
-<div class="container-article mx-auto mt-10">
+<div class="post-content mx-auto mt-10">
     {!! $post['text'] !!}
 </div>

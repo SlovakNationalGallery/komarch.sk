@@ -33,12 +33,20 @@
         max-width: 762px;
     }
 
-    .container-article p {
+    .post-content {
+        @apply container-article;
+    }
+
+    .post-content p {
         @apply mb-6;
     }
 
-    .container-article img {
-        @apply mb-6;
+    .post-content img {
+        @apply mt-6;
+    }
+
+    .post-content a {
+        @apply text-blue;
     }
 }
 
