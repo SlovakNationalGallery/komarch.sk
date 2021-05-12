@@ -13,7 +13,7 @@
             />
         </div>
         <Swiper :options="swiperOptions" :ref="swiperRef">
-            <SwiperSlide v-for="post in posts">
+            <SwiperSlide v-for="(post, index) in posts" :key="index">
                 <TeaserPostBig :post="post" />
             </SwiperSlide>
         </Swiper>
