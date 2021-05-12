@@ -25,7 +25,11 @@
     import TeaserPostBig from "./TeaserPostBig";
 
   export default {
-      components: { Swiper, SwiperSlide, TeaserPostBig },
+      components: {
+          Swiper,
+          SwiperSlide,
+          TeaserPostBig
+      },
       props: {
           posts: {
               type: Array,
@@ -47,6 +51,9 @@
             return 'swiperPosts'
         }
       },
+      mounted () {
+          this.$refs[this.swiperRef].$swiper.on('slideChange', this.updateBounds)
+      },
       methods: {
           updateBounds () {
               const { isBeginning, isEnd } = this.$refs[this.swiperRef].$swiper
@@ -55,11 +62,9 @@
           },
           onPrev() {
               this.$refs[this.swiperRef].$swiper.slidePrev()
-              this.updateBounds()
           },
           onNext() {
               this.$refs[this.swiperRef].$swiper.slideNext()
-              this.updateBounds()
           }
       }
   }
