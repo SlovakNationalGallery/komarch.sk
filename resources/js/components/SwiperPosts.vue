@@ -3,12 +3,12 @@
         <div class="flex justify-between">
             <button
                 @click="onPrev"
-                class="text-xl icon-arrow-l-long focus:outline-none"
+                class="text-xl icon-arrow-l-long focus:outline-none hover:text-blue"
                 :class="{ 'hidden': isBeginning }"
             />
             <button
                 @click="onNext"
-                class="text-xl icon-arrow-r-long focus:outline-none ml-auto"
+                class="text-xl icon-arrow-r-long focus:outline-none hover:text-blue ml-auto"
                 :class="{ 'hidden': isEnd }"
             />
         </div>
