@@ -52,19 +52,21 @@
         }
       },
       mounted () {
-          this.$refs[this.swiperRef].$swiper.on('slideChange', this.updateBounds)
+          this.swiper = this.$refs[this.swiperRef].$swiper
+          this.swiper.on('slideChange', this.updateControls)
+          this.updateControls()
       },
       methods: {
-          updateBounds () {
-              const { isBeginning, isEnd } = this.$refs[this.swiperRef].$swiper
+          updateControls () {
+              const { isBeginning, isEnd } = this.swiper
               this.isBeginning = isBeginning
               this.isEnd = isEnd
           },
           onPrev() {
-              this.$refs[this.swiperRef].$swiper.slidePrev()
+              this.swiper.slidePrev()
           },
           onNext() {
-              this.$refs[this.swiperRef].$swiper.slideNext()
+              this.swiper.slideNext()
           }
       }
   }
