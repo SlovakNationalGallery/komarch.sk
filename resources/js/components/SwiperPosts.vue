@@ -41,8 +41,20 @@
               isBeginning: false,
               isEnd: false,
               swiperOptions: {
-                  slidesPerView: 3,
+                  slidesPerView: 1,
                   spaceBetween: 30,
+                  breakpoints: {
+                      // when window width is >= 640px
+                      640: {
+                          slidesPerView: 1.5,
+                          spaceBetween: 30,
+                      },
+                      // when window width is >= 1024px
+                      1024: {
+                          slidesPerView: 3,
+                          spaceBetween: 30,
+                      }
+                  }
               }
           }
       },
@@ -73,5 +85,5 @@
 </script>
 
 <style>
-@import "../../../node_modules/swiper/swiper-bundle.css";
+@import "../../../node_modules/swiper/css/swiper.css";
 </style>
