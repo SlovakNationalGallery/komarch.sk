@@ -28,6 +28,11 @@ class PostsController extends Controller
     public function show(Post $post)
     {
         $related = [$post, $post, $post, $post, $post];
+
+        foreach ($related as $post) {
+            $post->dateFormatted = $post['published_at']->formatLocalized('%d %B %Y');
+        }
+
         return view('posts.show', compact('post', 'related'));
     }
 }

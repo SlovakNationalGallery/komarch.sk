@@ -1,7 +1,7 @@
 <template>
     <article class="py-10 grid grid-cols-2 place-items-start items-center">
         <TagHash :tag="post.tags[0]"></TagHash>
-        <TagDate>{{ post.published_at }}</TagDate>
+        <TagDate>{{ post.dateFormatted }}</TagDate>
         <h3 class="mt-1 text-xl col-span-2 tracking-tight">
             <LinkTitle :url="post.slug">
                 {{ post.title.sk }}
