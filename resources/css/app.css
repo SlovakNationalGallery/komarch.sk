@@ -112,4 +112,9 @@
         @apply icon;
         content: '\2123'
     }
+
+    .icon-close:before {
+        @apply icon;
+        content: '\00D7'
+    }
 }

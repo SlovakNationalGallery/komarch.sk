@@ -6,14 +6,15 @@
         :key="option.key"
         v-model="selectedOption"
         :option="option"
-        class="mr-12"
+        class="mr-12 py-2"
       />
     </div>
     <button
       v-show="selectedOption.key"
-      class="mt-10 focus:outline-none"
+      class="mt-10 focus:outline-none hover:text-blue"
       @click="onCancel"
     >
+      <span class="icon-close text-lg mr-1" />
       Zrušiť filter
     </button>
   </div>
