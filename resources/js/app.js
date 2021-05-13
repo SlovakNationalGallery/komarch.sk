@@ -10,6 +10,7 @@ Vue.component('filter-listing-tenders', require('./components/FilterListingTende
 Vue.component('artworks-map', require('./components/ArtworksMap').default);
 Vue.component('button-copy', require('./components/atoms/ButtonCopy').default);
 Vue.component('swiper-posts', require('./components/SwiperPosts').default);
+Vue.component('posts-overview', require('./components/PostsOverview').default);
 
 Vue.use(VueMapbox, { mapboxgl: Mapbox });
 
