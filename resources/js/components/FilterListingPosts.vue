@@ -18,13 +18,12 @@
       mode="out-in"
     >
       <div
-        v-for="option in resultsList"
-        :key="option.option.key"
+        :key="displayOption.key"
         class="mt-10"
       >
-        <template v-if="option.posts.length > 0">
+        <template v-if="posts.length > 0">
           <div
-            v-for="(post, index) in option.posts"
+            v-for="(post, index) in posts"
             :key="index"
           >
             <TeaserSka :post="post" />
@@ -68,8 +67,9 @@ export default {
   },
   data () {
     return {
+      posts: [],
       selectedOption: this.options[0],
-      resultsList: []
+      displayOption: this.options[0]
     }
   },
   watch: {
@@ -77,7 +77,8 @@ export default {
       immediate: true,
       async handler (newValue) {
         const response = await axios.get(`./api/posts${newValue.params}`)
-        this.resultsList = [{ option: newValue, posts: response.data.data }]
+        this.displayOption = newValue
+        this.posts = response.data.data
       }
     }
   }

@@ -12,12 +12,11 @@
       mode="out-in"
     >
       <div
-        v-for="option in resultsList"
-        :key="option.key"
+        :key="selectedOption.key"
         class="mt-10"
       >
         <div
-          v-for="(item, index) in items.filter(it => it.filterTags.includes(option.key))"
+          v-for="(item, index) in items.filter(it => it.filterTags.includes(selectedOption.key))"
           :key="index"
         >
           <slot
