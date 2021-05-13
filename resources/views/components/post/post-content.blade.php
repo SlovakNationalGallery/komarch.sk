@@ -1,3 +1,3 @@
 <div class="post-content mx-auto mt-10">
-    {!! $post['text'] !!}
+    {!! nl2br($post->text) !!}
 </div>

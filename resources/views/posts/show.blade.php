@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-{{ $post['title'] }}
+{{ $post->title }}
 @stop
 
 <x-post.post-og :post="$post"></x-post.post-og>

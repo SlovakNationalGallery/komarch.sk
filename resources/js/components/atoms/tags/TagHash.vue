@@ -17,7 +17,7 @@
       },
       computed: {
           tagUrl() {
-            return `${window.location.origin}/spravy?category[]${this.tag.slug}`;
+            return `${window.location.origin}/spravy?categories[]=${this.tag.name}`;
           }
       }
   }
