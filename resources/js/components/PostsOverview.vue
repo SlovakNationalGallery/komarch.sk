@@ -9,23 +9,45 @@
         class="mr-12 py-2"
       />
     </div>
-    <button
-      v-show="selectedOption.key"
-      class="mt-10 focus:outline-none hover:text-blue"
-      @click="onCancel"
+    <div class="h-20">
+      <button
+        v-show="selectedOption.key"
+        class="mt-5 focus:outline-none hover:text-blue"
+        @click="onCancel"
+      >
+        <span class="icon-close text-lg mr-1" />
+        Zrušiť filter
+      </button>
+    </div>
+
+    <div
+      v-if="posts.length > 0"
+      class="lg:flex flex-wrap items-start lg:-ml-6"
     >
-      <span class="icon-close text-lg mr-1" />
-      Zrušiť filter
-    </button>
+      <TeaserPostBig
+        v-for="(post, index) in posts"
+        :key="index"
+        :post="post"
+        class="lg:w-1/3 lg:p-3"
+      />
+    </div>
+    <p
+      v-else
+      class="py-10"
+    >
+      Nenašli sa žiadne články.
+    </p>
   </div>
 </template>
 
 <script>
 import RadioButton from './atoms/RadioButton'
+import TeaserPostBig from './TeaserPostBig'
 
 export default {
   components: {
-    RadioButton
+    RadioButton,
+    TeaserPostBig
   },
   props: {
     options: {
@@ -41,7 +63,17 @@ export default {
   },
   data () {
     return {
+      posts: [],
       selectedOption: {}
+    }
+  },
+  watch: {
+    selectedOption: {
+      immediate: true,
+      async handler (newValue) {
+        const response = await axios.get(`./api/posts${newValue.params || ''}`)
+        this.posts = response.data.data
+      }
     }
   },
   methods: {
