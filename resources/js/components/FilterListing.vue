@@ -1,50 +1,59 @@
 <template>
-    <section class="mt-20">
-        <slot name="before-list"></slot>
-        <radio-button
-            v-for="option in options"
-            :key="option.key"
-            :option="option"
-            v-model="selectedOption"
-        />
-        <transition name="items-list" mode="out-in">
-            <div
-                v-for="option in options"
-                v-if="selectedOption.key === option.key"
-                :key="option.key"
-                class="mt-10"
-            >
-                <div v-for="(item, index) in items.filter(it => it.filterTags.includes(option.key))" :key="index">
-                    <slot name="list-item" :item="item"></slot>
-                </div>
-            </div>
-        </transition>
-        <slot name="after-list"></slot>
-    </section>
+  <section class="mt-20">
+    <slot name="before-list" />
+    <radio-button
+      v-for="option in options"
+      :key="option.key"
+      v-model="selectedOption"
+      :option="option"
+    />
+    <transition
+      name="items-list"
+      mode="out-in"
+    >
+      <div
+        v-for="option in options"
+        v-if="selectedOption.key === option.key"
+        :key="option.key"
+        class="mt-10"
+      >
+        <div
+          v-for="(item, index) in items.filter(it => it.filterTags.includes(option.key))"
+          :key="index"
+        >
+          <slot
+            name="list-item"
+            :item="item"
+          />
+        </div>
+      </div>
+    </transition>
+    <slot name="after-list" />
+  </section>
 </template>
 
 <script>
-import RadioButton from "./atoms/RadioButton";
+import RadioButton from './atoms/RadioButton'
 
 export default {
-    components: {
-        RadioButton,
+  components: {
+    RadioButton
+  },
+  props: {
+    options: {
+      type: Array,
+      required: true
     },
-    data() {
-        return {
-            selectedOption: this.options[0]
-        }
-    },
-    props: {
-        options: {
-            type: Array,
-            required: true
-        },
-        items: {
-            type: Array,
-            required: true
-        }
+    items: {
+      type: Array,
+      required: true
     }
+  },
+  data () {
+    return {
+      selectedOption: this.options[0]
+    }
+  }
 }
 </script>
 

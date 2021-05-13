@@ -2,5 +2,10 @@
     "extends": [
         "standard",
          "plugin:vue/recommended"
-    ]
+    ],
+    "globals": {
+        "jQuery": "readonly",
+        "hljs": "readonly",
+        "axios": "readonly"
+    }
 }

@@ -1,5 +1,5 @@
 <template>
-    <span class="text-sm mr-4">
-        <slot></slot>
-    </span>
+  <span class="text-sm mr-4">
+    <slot />
+  </span>
 </template>

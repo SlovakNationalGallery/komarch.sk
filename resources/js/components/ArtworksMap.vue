@@ -1,52 +1,53 @@
 <template>
-    <div class="relative w-100 map-artworks mt-4">
-        <MglMap
-            :accessToken="accessToken"
-            :map-style="mapStyle"
-            :center="center"
-            :zoom="zoom"
-            :attribution-control="false"
-        >
-            <MglNavigationControl position="top-left" :show-compass="false" />
-            <MglAttributionControl position="bottom-right" />
-        </MglMap>
-    </div>
+  <div class="relative w-100 map-artworks mt-4">
+    <MglMap
+      :access-token="accessToken"
+      :map-style="mapStyle"
+      :center="center"
+      :zoom="zoom"
+      :attribution-control="false"
+    >
+      <MglNavigationControl
+        position="top-left"
+        :show-compass="false"
+      />
+      <MglAttributionControl position="bottom-right" />
+    </MglMap>
+  </div>
 </template>
 
 <script>
-import LinkArrow from "./atoms/links/LinkArrow";
-import { MglMap, MglNavigationControl, MglAttributionControl } from "vue-mapbox";
+import { MglMap, MglNavigationControl, MglAttributionControl } from 'vue-mapbox'
 
 export const SVK_CENTER_LONGITUDE = 19.696058
 export const SVK_CENTER_LATITUDE = 48.6737532
 
 export default {
-    components: {
-        LinkArrow,
-        MglMap,
-        MglNavigationControl,
-        MglAttributionControl
+  components: {
+    MglMap,
+    MglNavigationControl,
+    MglAttributionControl
+  },
+  props: {
+    center: {
+      type: Array,
+      default: () => [SVK_CENTER_LONGITUDE, SVK_CENTER_LATITUDE]
     },
-    props: {
-        center: {
-          type: Array,
-          default: () => [SVK_CENTER_LONGITUDE, SVK_CENTER_LATITUDE],
-        },
-        zoom: {
-            type: Number,
-            default: 6
-        },
-        // https://docs.mapbox.com/api/maps/styles/
-        mapStyle: {
-            type: String,
-            default: 'mapbox://styles/mapbox/streets-v11'
-        }
+    zoom: {
+      type: Number,
+      default: 6
     },
-    computed: {
-        accessToken () {
-            return process.env.MIX_MAPBOX_TOKEN
-        }
+    // https://docs.mapbox.com/api/maps/styles/
+    mapStyle: {
+      type: String,
+      default: 'mapbox://styles/mapbox/streets-v11'
     }
+  },
+  computed: {
+    accessToken () {
+      return process.env.MIX_MAPBOX_TOKEN
+    }
+  }
 }
 </script>
 
