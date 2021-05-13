@@ -108,13 +108,8 @@
         content: '\01F551'
     }
 
-    /* TODO: REVISE: */
-    .icon-legacy {
-        font-family: 'KomarchIcons' !important;
-    }
-
     .icon-search:before {
-        @apply icon-legacy;
-        content: "\1f50d";
+        @apply icon;
+        content: '\2123'
     }
 }
