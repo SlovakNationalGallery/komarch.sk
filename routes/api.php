@@ -31,3 +31,8 @@ Route::get('/posts', function (Request $request) {
     }
     return PostResource::collection($posts->limit(4)->get());
 });
+
+Route::get('/related-posts', function (Request $request) {
+    $related = Post::take(10)->inRandomOrder()->get();
+    return PostResource::collection($related);
+});

@@ -7,7 +7,7 @@
 
 {{-- @include('components.notification_bar') --}}
 
-<div class="container mx-auto px-4">
+<div class="container mx-auto px-6">
     <x-intro text="Slovenská Komora Architektov je odbornou organizáciou, ktorá sa zameriava na vzdelávanie a informovanie verejnosti o potrebách kvalitnej architektúry"/>
 
     <div class="mt-10 md:mt-32 md:grid grid-cols-2 gap-10">

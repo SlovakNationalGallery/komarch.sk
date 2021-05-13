@@ -1,4 +1,4 @@
-<footer class="container mx-auto px-4 py-20 mt-20">
+<footer class="container mx-auto px-6 py-20 mt-20">
     <x-footer.footer-newsletter></x-footer.footer-newsletter>
     <x-footer.footer-navigation
         :navigation="[

@@ -15,8 +15,6 @@
     >
     <button class="group flex text-xl tracking-tight px-4 -ml-4 mt-4 lg:m-0">
         odoslať
-        <span class="ml-2 transform group-hover:translate-x-3 duration-200">
-            →
-        </span>
+        <span class="ml-2 transform group-hover:translate-x-3 duration-200 icon-arrow-r-long"></span>
     </button>
 </form>

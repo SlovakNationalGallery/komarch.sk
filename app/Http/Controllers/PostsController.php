@@ -25,14 +25,10 @@ class PostsController extends Controller
         return view('posts.index', compact('posts'));
     }
 
+
+
     public function show(Post $post)
     {
-        $breadcrumbs = [
-            'Domov' => route('home'),
-            'Novinky o činnosti' => route('posts.index'),
-            $post->title => null,
-        ];
-
-        return view('posts.show', compact('post', 'breadcrumbs'));
+        return view('posts.show', compact('post'));
     }
 }

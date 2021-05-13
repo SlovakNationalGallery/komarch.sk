@@ -23,6 +23,8 @@
         "vue": "^2.6.12",
         "vue-template-compiler": "^2.6.12",
         "mapbox-gl": "^2.2.0",
-        "vue-mapbox": "^0.4.1"
+        "vue-mapbox": "^0.4.1",
+        "swiper": "^5.2.1",
+        "vue-awesome-swiper": "^4.1.1"
     }
 }

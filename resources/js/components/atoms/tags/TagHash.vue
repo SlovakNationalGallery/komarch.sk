@@ -1,9 +1,9 @@
 <template>
     <a
-        class="text-sm border-l border-r px-2 py-1 mr-4 rounded-lg hover:text-blue"
+        class="px-1 mr-4 hover:text-blue flex items-center"
         :href="tagUrl"
     >
-        #{{ tag.name }}
+        ❪<span class="text-sm">#{{ tag.name }}</span>❫
     </a>
 </template>
 
@@ -17,7 +17,7 @@
       },
       computed: {
           tagUrl() {
-            return 'spravy?category[]' + this.tag.slug;
+            return `${window.location.origin}/spravy?categories[]=${this.tag.name}`;
           }
       }
   }
