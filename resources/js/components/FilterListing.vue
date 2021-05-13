@@ -12,8 +12,7 @@
       mode="out-in"
     >
       <div
-        v-for="option in options"
-        v-if="selectedOption.key === option.key"
+        v-for="option in resultsList"
         :key="option.key"
         class="mt-10"
       >
@@ -52,6 +51,11 @@ export default {
   data () {
     return {
       selectedOption: this.options[0]
+    }
+  },
+  computed: {
+    resultsList () {
+      return [this.options.find(option => option.key === this.selectedOption.key)]
     }
   }
 }
