@@ -1,6 +1,6 @@
 <template>
     <article class="py-10 grid grid-cols-2 place-items-start items-center">
-        <TagHash :tag="post.tags[0]"></TagHash>
+        <TagHash :tag="post.tags[0]" v-if="post.tags[0]"></TagHash>
         <TagDate>{{ post.date }}</TagDate>
         <h3 class="mt-1 text-xl col-span-2 tracking-tight">
             <LinkTitle :url="post.url">
