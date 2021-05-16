@@ -78,22 +78,37 @@ export default {
   data () {
     return {
       posts: [],
+      selectedOption: {},
       isLoading: false,
-      selectedOption: {}
+      isError: false
     }
   },
   watch: {
     selectedOption: {
       immediate: true,
       async handler (newValue) {
-        this.isLoading = true
-        const response = await axios.get(`./api/posts${newValue.params || ''}`)
-        this.posts = response.data.data
-        this.isLoading = false
+        this.posts = await this.fetchUrl(`./api/posts${newValue.params || ''}`)
       }
     }
   },
   methods: {
+    async fetchUrl (url) {
+      try {
+        const response = await axios.get(url)
+
+        if (response.status !== 200) {
+          this.isError = true
+          this.isLoading = false
+          return
+        }
+
+        this.isLoading = false
+        return response.data.data
+      } catch (error) {
+        this.isError = true
+        this.isLoading = false
+      }
+    },
     onLoadMore () {
       this.isLoading = true
       setTimeout(() => {
