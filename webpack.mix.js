@@ -1,5 +1,6 @@
 const mix = require('laravel-mix')
 require('laravel-mix-polyfill')
+require('laravel-vue-lang/mix')
 
 /*
  |--------------------------------------------------------------------------
@@ -18,6 +19,7 @@ mix.js('resources/js/app.js', 'public/js')
     require('tailwindcss'),
     require('autoprefixer')
   ])
+  .lang()
 
 if (mix.inProduction()) {
   mix.version()

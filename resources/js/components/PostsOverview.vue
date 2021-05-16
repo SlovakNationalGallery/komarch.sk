@@ -35,10 +35,13 @@
       v-else
       class="py-10"
     >
-      Nenašli sa žiadne články.
+      {{ __('post.no_posts') }}.
     </p>
-    <ButtonArrow class="text-xl mt-10">
-      Načítať ďalšie
+    <ButtonArrow
+      class="text-xl mt-10"
+      @click="onLoadMore"
+    >
+      {{ __('post.navigate_back') }}
     </ButtonArrow>
   </div>
 </template>
@@ -82,6 +85,9 @@ export default {
     }
   },
   methods: {
+    onLoadMore () {
+      console.log('More clicked')
+    },
     onCancel () {
       this.selectedOption = {}
     }
