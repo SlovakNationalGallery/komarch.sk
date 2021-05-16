@@ -5,6 +5,7 @@
   >
     <input
       type="radio"
+      v-bind="$attrs"
       :value="option.key"
       :checked="isChecked"
       class="cursor-pointer h-5 w-5 border border-black rounded-full bg-white checked:bg-black appearance-none focus:outline-none"

@@ -1,10 +1,11 @@
 <template>
   <div>
-    <div class="flex flex-wrap">
+    <div class="mt-24 md:flex flex-wrap">
       <radio-button
         v-for="option in options"
         :key="option.key"
         v-model="selectedOption"
+        :disabled="isLoading"
         :option="option"
         class="mr-12 py-2"
       />
@@ -37,7 +38,10 @@
     >
       {{ __('post.no_posts') }}.
     </p>
-    <div class="mt-10 flex items-center">
+    <div
+      v-if="posts.length > 0"
+      class="mt-10 h-20 flex items-center"
+    >
       <ButtonArrow
         v-if="!isLoading"
         class="text-xl"
