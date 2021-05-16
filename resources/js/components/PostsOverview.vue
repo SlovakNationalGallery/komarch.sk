@@ -22,7 +22,7 @@
 
     <div
       v-if="posts.length > 0"
-      class="lg:flex flex-wrap items-start lg:-ml-6"
+      class="lg:flex flex-wrap items-start lg:-ml-3"
     >
       <TeaserPostBig
         v-for="(post, index) in posts"
@@ -37,15 +37,20 @@
     >
       Nenašli sa žiadne články.
     </p>
+    <ButtonArrow class="text-xl mt-10">
+      Načítať ďalšie
+    </ButtonArrow>
   </div>
 </template>
 
 <script>
 import RadioButton from './atoms/RadioButton'
 import TeaserPostBig from './TeaserPostBig'
+import ButtonArrow from './atoms/buttons/ButtonArrow'
 
 export default {
   components: {
+    ButtonArrow,
     RadioButton,
     TeaserPostBig
   },

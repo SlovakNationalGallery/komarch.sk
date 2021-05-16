@@ -12,5 +12,7 @@
     />
     <posts-overview />
 </div>
-@endsection
 
+<x-footer.footer></x-footer.footer>
+
+@endsection

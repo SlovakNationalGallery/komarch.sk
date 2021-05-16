@@ -8,7 +8,7 @@ Vue.component('NavigationToggle', require('./components/NavigationToggle').defau
 Vue.component('FilterListingPosts', require('./components/FilterListingPosts').default)
 Vue.component('FilterListingTenders', require('./components/FilterListingTenders').default)
 Vue.component('ArtworksMap', require('./components/ArtworksMap').default)
-Vue.component('ButtonCopy', require('./components/atoms/ButtonCopy').default)
+Vue.component('ButtonCopy', require('./components/atoms/buttons/ButtonCopy').default)
 Vue.component('SwiperPosts', require('./components/SwiperPosts').default)
 Vue.component('PostsOverview', require('./components/PostsOverview').default)
 
