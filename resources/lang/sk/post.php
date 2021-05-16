@@ -10,5 +10,6 @@ return [
     'related' => 'Súvisiace',
     'not_published' => 'Návrh',
     'no_posts' => 'Nenašli sa žiadne články',
-    'load_more' => 'Načítať ďalšie'
+    'load_more' => 'Načítať ďalšie',
+    'loading_more' => 'Načítavam ďalšie články...'
 ];

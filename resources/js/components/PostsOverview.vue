@@ -37,12 +37,18 @@
     >
       {{ __('post.no_posts') }}.
     </p>
-    <ButtonArrow
-      class="text-xl mt-10"
-      @click="onLoadMore"
-    >
-      {{ __('post.navigate_back') }}
-    </ButtonArrow>
+    <div class="mt-10 flex items-center">
+      <ButtonArrow
+        v-if="!isLoading"
+        class="text-xl"
+        @click="onLoadMore"
+      >
+        {{ __('post.load_more') }}
+      </ButtonArrow>
+      <p v-else>
+        {{ __('post.loading_more') }}
+      </p>
+    </div>
   </div>
 </template>
 
@@ -72,6 +78,7 @@ export default {
   data () {
     return {
       posts: [],
+      isLoading: false,
       selectedOption: {}
     }
   },
@@ -79,14 +86,19 @@ export default {
     selectedOption: {
       immediate: true,
       async handler (newValue) {
+        this.isLoading = true
         const response = await axios.get(`./api/posts${newValue.params || ''}`)
         this.posts = response.data.data
+        this.isLoading = false
       }
     }
   },
   methods: {
     onLoadMore () {
-      console.log('More clicked')
+      this.isLoading = true
+      setTimeout(() => {
+        this.isLoading = false
+      }, 300)
     },
     onCancel () {
       this.selectedOption = {}
