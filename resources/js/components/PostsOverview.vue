@@ -91,7 +91,7 @@ export default {
     selectedOption: {
       immediate: true,
       async handler (newValue) {
-        this.posts = await this.fetchUrl(`./api/posts${newValue.params || ''}`)
+        this.posts = await this.fetchUrl(`./api/posts?per_page=6${newValue.params || ''}`)
       }
     }
   },
