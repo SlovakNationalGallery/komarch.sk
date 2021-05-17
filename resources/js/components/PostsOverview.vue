@@ -39,7 +39,7 @@
       {{ __('post.no_posts') }}.
     </p>
     <div
-      v-if="posts.length > 0"
+      v-if="hasNextPage"
       class="mt-10 h-20 flex items-center"
     >
       <ButtonArrow
@@ -71,7 +71,7 @@ export default {
     options: {
       type: Array,
       default: () => [
-        { key: 'important', title: 'Dôležité', params: '?featured' },
+        { key: 'important', title: 'Dôležité', params: '&featured' },
         { key: 'tenders', title: 'Súťaže', params: '' },
         { key: 'info', title: 'Správy', params: '' },
         { key: 'education', title: 'Vzdelávanie', params: '' },
@@ -83,6 +83,8 @@ export default {
     return {
       posts: [],
       selectedOption: {},
+      page: 1,
+      hasNextPage: true,
       isLoading: false,
       isError: false
     }
@@ -91,33 +93,36 @@ export default {
     selectedOption: {
       immediate: true,
       async handler (newValue) {
-        this.posts = await this.fetchUrl(`./api/posts?per_page=6${newValue.params || ''}`)
+        const { data, meta } = await this.fetchUrl(`./api/posts?per_page=6&page=1${newValue.params || ''}`)
+        this.posts = data
+        this.page = meta.current_page
+        this.hasNextPage = meta.current_page < meta.last_page
       }
     }
   },
   methods: {
     async fetchUrl (url) {
       try {
+        this.isLoading = true
         const response = await axios.get(url)
 
         if (response.status !== 200) {
           this.isError = true
-          this.isLoading = false
           return
         }
 
-        this.isLoading = false
-        return response.data.data
+        return response.data
       } catch (error) {
         this.isError = true
+      } finally {
         this.isLoading = false
       }
     },
-    onLoadMore () {
-      this.isLoading = true
-      setTimeout(() => {
-        this.isLoading = false
-      }, 300)
+    async onLoadMore () {
+      const { data, meta } = await this.fetchUrl(`./api/posts?per_page=6&page=${this.page + 1}${this.selectedOption.params || ''}`)
+      this.posts.push(...data)
+      this.page = meta.current_page
+      this.hasNextPage = meta.current_page < meta.last_page
     },
     onCancel () {
       this.selectedOption = {}
