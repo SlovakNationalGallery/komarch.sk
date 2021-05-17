@@ -29,7 +29,7 @@
         v-for="(post, index) in posts"
         :key="index"
         :post="post"
-        class="lg:w-1/3 lg:p-3"
+        class="lg:w-1/3 lg:p-3 mt-12"
       />
     </div>
     <p
