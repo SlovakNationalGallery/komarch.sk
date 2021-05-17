@@ -20,7 +20,6 @@
         {{ __('post.cancel_filters') }}.
       </button>
     </div>
-
     <div
       v-if="posts.length > 0"
       class="lg:flex flex-wrap items-start lg:-ml-3"
@@ -98,6 +97,12 @@ export default {
     }
   },
   methods: {
+    onLoadMore () {
+      this.fetchPage(this.page + 1)
+    },
+    onCancel () {
+      this.selectedOption = {}
+    },
     async fetchUrl (url) {
       try {
         this.isLoading = true
@@ -126,12 +131,6 @@ export default {
 
       this.page = meta.current_page
       this.hasNextPage = meta.current_page < meta.last_page
-    },
-    onLoadMore () {
-      this.fetchPage(this.page + 1)
-    },
-    onCancel () {
-      this.selectedOption = {}
     }
   }
 }
