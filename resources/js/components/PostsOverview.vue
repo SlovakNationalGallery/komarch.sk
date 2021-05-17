@@ -92,11 +92,8 @@ export default {
   watch: {
     selectedOption: {
       immediate: true,
-      async handler (newValue) {
-        const { data, meta } = await this.fetchUrl(`./api/posts?per_page=6&page=1${newValue.params || ''}`)
-        this.posts = data
-        this.page = meta.current_page
-        this.hasNextPage = meta.current_page < meta.last_page
+      handler () {
+        this.fetchPage(1)
       }
     }
   },
@@ -118,11 +115,20 @@ export default {
         this.isLoading = false
       }
     },
-    async onLoadMore () {
-      const { data, meta } = await this.fetchUrl(`./api/posts?per_page=6&page=${this.page + 1}${this.selectedOption.params || ''}`)
-      this.posts.push(...data)
+    async fetchPage (pageNumber) {
+      const { data, meta } = await this.fetchUrl(`./api/posts?per_page=6&page=${pageNumber}${this.selectedOption.params || ''}`)
+
+      if (pageNumber === 1) {
+        this.posts = data
+      } else {
+        this.posts.push(...data)
+      }
+
       this.page = meta.current_page
       this.hasNextPage = meta.current_page < meta.last_page
+    },
+    onLoadMore () {
+      this.fetchPage(this.page + 1)
     },
     onCancel () {
       this.selectedOption = {}
