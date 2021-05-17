@@ -17,7 +17,7 @@
         @click="onCancel"
       >
         <span class="icon-close text-lg mr-1" />
-        Zrušiť filter
+        {{ __('post.cancel_filters') }}.
       </button>
     </div>
 
