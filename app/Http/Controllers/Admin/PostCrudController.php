@@ -132,7 +132,6 @@ class PostCrudController extends CrudController
         function() {
             $this->crud->addClause('featured');
         });
-
     }
 
     /**
@@ -143,13 +142,7 @@ class PostCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-
-
-        /**
-         * Columns can be defined using the fluent syntax or array syntax:
-         * - CRUD::column('price')->type('number');
-         * - CRUD::addColumn(['name' => 'price', 'type' => 'number']);
-         */
+        $this->crud->addButtonFromView('line', 'show_online', 'show_online', 'beginning');
     }
 
     /**

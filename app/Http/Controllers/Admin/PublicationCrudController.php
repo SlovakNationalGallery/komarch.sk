@@ -96,13 +96,7 @@ class PublicationCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        // CRUD::setFromDb(); // columns
-
-        /**
-         * Columns can be defined using the fluent syntax or array syntax:
-         * - CRUD::column('price')->type('number');
-         * - CRUD::addColumn(['name' => 'price', 'type' => 'number']);
-         */
+        // $this->crud->addButtonFromView('line', 'show_online', 'show_online', 'beginning'); // @TODO: no route to detail url yet
     }
 
     /**
