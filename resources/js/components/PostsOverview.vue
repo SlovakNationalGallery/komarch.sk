@@ -21,7 +21,6 @@
       </button>
     </div>
     <transition-group
-      v-if="posts.length > 0"
       name="posts-overview"
       mode="out-in"
       class="lg:flex flex-wrap items-start lg:-ml-3"
@@ -34,7 +33,7 @@
       />
     </transition-group>
     <p
-      v-else
+      v-if="posts.length === 0"
       class="py-10"
     >
       {{ __('post.no_posts') }}.
@@ -139,13 +138,11 @@ export default {
 </script>
 
 <style>
-.posts-overview-enter-active,
-.posts-overview-leave-active {
+.posts-overview-enter-active {
   @apply transition-all duration-700;
 }
 
-.posts-overview-enter,
-.posts-overview-leave-to {
+.posts-overview-enter {
   @apply transform opacity-0 translate-y-5;
 }
 </style>
