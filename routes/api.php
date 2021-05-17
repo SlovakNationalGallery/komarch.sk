@@ -29,7 +29,7 @@ Route::get('/posts', function (Request $request) {
     if ($request->has('featured')) {
         $posts->featured();
     }
-    return PostResource::collection($posts->limit(4)->get());
+    return PostResource::collection($posts->paginate());
 });
 
 Route::get('/related-posts', function (Request $request) {
