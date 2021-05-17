@@ -62,8 +62,8 @@ export default {
             type: Array,
             default: () => [
                 { key: 'newest', title: 'Najnovšie', params: '' },
-                { key: 'important', title: 'Dôležité', params: '?featured' },
-                { key: 'COVID-19', title: 'COVID-19', params: '?categories=COVID-19' },
+                { key: 'important', title: 'Dôležité', params: '&featured' },
+                { key: 'COVID-19', title: 'COVID-19', params: '&categories=COVID-19' },
             ]
         }
     },
@@ -71,7 +71,7 @@ export default {
         selectedOption: {
             immediate: true,
             async handler(newValue) {
-                const response = await axios.get(`./api/posts${newValue.params}`)
+                const response = await axios.get(`./api/posts?per_page=4${newValue.params}`)
                 this.displayOption = newValue
                 this.posts = response.data.data
             }

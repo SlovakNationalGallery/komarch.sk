@@ -23,13 +23,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('/posts', function (Request $request) {
     $posts = Post::published()->orderBy('published_at', 'desc');
+    $per_page = min($request->get('per_page', 15), 15);
     if ($request->has('categories')) {
         $posts->withAnyTags($request->input('categories', []));
     }
     if ($request->has('featured')) {
         $posts->featured();
     }
-    return PostResource::collection($posts->paginate());
+    return PostResource::collection($posts->paginate($per_page));
 });
 
 Route::get('/related-posts', function (Request $request) {
