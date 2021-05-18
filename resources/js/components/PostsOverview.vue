@@ -122,7 +122,7 @@ export default {
       }
     },
     async fetchPage (pageNumber) {
-      const { data, meta } = await this.fetchUrl(`./api/posts?page=${pageNumber}${this.selectedOption.params || ''}`)
+      const { data, meta } = await this.fetchUrl(`${window.location.origin}/api/posts?page=${pageNumber}${this.selectedOption.params || ''}`)
 
       if (pageNumber === 1) {
         this.posts = data
