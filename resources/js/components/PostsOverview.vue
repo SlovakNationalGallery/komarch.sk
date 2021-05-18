@@ -10,14 +10,14 @@
         class="mr-12 py-2"
       />
     </div>
-    <div class="h-20">
+    <div class="h-10 md:h-20">
       <button
         v-show="selectedOption.key"
         class="mt-5 focus:outline-none hover:text-blue"
         @click="onCancel"
       >
         <span class="icon-close text-lg mr-1" />
-        {{ __('post.cancel_filters') }}.
+        {{ __('post.cancel_filters') }}
       </button>
     </div>
     <transition-group
@@ -72,10 +72,10 @@ export default {
       type: Array,
       default: () => [
         { key: 'important', title: 'Dôležité', params: '&featured' },
-        { key: 'tenders', title: 'Súťaže', params: '' },
-        { key: 'info', title: 'Správy', params: '' },
-        { key: 'education', title: 'Vzdelávanie', params: '' },
-        { key: 'cezaar', title: 'CE ZA AR', params: '' }
+        { key: 'tenders', title: 'Súťaže', params: '&categories=Súťaže' },
+        { key: 'info', title: 'Správy', params: '&categories=Správy' },
+        { key: 'education', title: 'Vzdelávanie', params: '&categories=Vzdelávanie' },
+        { key: 'cezaar', title: 'CE ZA AR', params: '&categories=CE ZA AR' }
       ]
     }
   },
@@ -122,7 +122,7 @@ export default {
       }
     },
     async fetchPage (pageNumber) {
-      const { data, meta } = await this.fetchUrl(`./api/posts?per_page=6&page=${pageNumber}${this.selectedOption.params || ''}`)
+      const { data, meta } = await this.fetchUrl(`./api/posts?page=${pageNumber}${this.selectedOption.params || ''}`)
 
       if (pageNumber === 1) {
         this.posts = data

@@ -23,7 +23,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('/posts', function (Request $request) {
     $posts = Post::published()->orderBy('published_at', 'desc');
-    $per_page = min($request->get('per_page', 15), 15);
+    $per_page = min($request->get('per_page', 6), 15);
     if ($request->has('categories')) {
         $posts->withAnyTags($request->input('categories', []));
     }
