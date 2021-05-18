@@ -1,7 +1,7 @@
 <template>
   <section class="mt-20">
     <h2 class="text-xl mb-10">
-      <LinkArrow url="/informacie-ska">
+      <LinkArrow url="/spravy">
         Informácie SKA
       </LinkArrow>
     </h2>
@@ -38,7 +38,7 @@
       </div>
     </transition>
 
-    <LinkArrow url="/informacie-ska">
+    <LinkArrow url="/spravy">
       Informácie SKA
     </LinkArrow>
   </section>
