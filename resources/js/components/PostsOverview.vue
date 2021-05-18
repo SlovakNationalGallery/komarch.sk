@@ -26,8 +26,8 @@
       class="lg:flex flex-wrap items-start lg:-ml-3"
     >
       <TeaserPostBig
-        v-for="(post, index) in posts"
-        :key="index"
+        v-for="post in posts"
+        :key="post.id"
         :post="post"
         class="lg:w-1/3 lg:p-3 mt-12"
       />
