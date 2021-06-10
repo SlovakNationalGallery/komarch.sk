@@ -45,3 +45,14 @@ installs as well as long as you configure them equivalently (see
 - Run `npm run dev` to build frontend assets
 - Run `php artisan serve` to start php development server
 - Run `php artisan test --env testing` to run tests against testing database
+
+### Accessing the 'urad/intranet' database
+In order to connect to the 'urad' DB, you'll need to set up a ssh tunnel like this:
+```
+ssh -N -L 3336:localhost:3336 webumenia.sk
+```
+
+Now the database will be reachable at `127.0.0.1:3336` like so:
+```
+URAD_DATABASE_URL="mysql://user:password@127.0.0.1:3336/intranet_komarch"
+``` 
