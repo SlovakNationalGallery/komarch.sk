@@ -33,15 +33,18 @@ class ImportWorks implements ShouldQueue
     {
         $db = DB::connection('urad');
 
+        // Remove Works no longer present in source DB
+        Work::whereNotIn('id', $db->table('lab_works')->pluck('id'))->delete();
+
         $db->table('lab_works')
-        ->lazyById()
-        ->each(function ($work) {
-            Work::unguarded(function() use ($work) {
-                Work::updateOrCreate(
-                ['id' => $work->id],
-                (array) $work
-                );
+            ->lazyById()
+            ->each(function ($work) {
+                Work::unguarded(function() use ($work) {
+                    Work::updateOrCreate(
+                        ['id' => $work->id],
+                        (array) $work
+                    );
+                });
             });
-        });
     }
 }
