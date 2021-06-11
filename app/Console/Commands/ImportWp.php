@@ -26,6 +26,7 @@ class ImportWp extends Command
     protected $wordpressFs;
 
     const WP_UPLOADS = 'wp-content/uploads/';
+    const EN_TERM_ID = 171;
 
     public function handle()
     {
@@ -121,6 +122,10 @@ class ImportWp extends Command
         $oldPosts = $this->wordpressDb->table('wp_posts')
             ->where('post_status', 'publish')
             ->whereIn('post_type', ['post', 'page'])
+            // exclude EN posts/pages
+            ->whereNotIn('ID', function($query) {
+                $query->select('object_id')->from('wp_term_relationships')->where('term_taxonomy_id', '=', self::EN_TERM_ID);
+            })
             ->leftJoin('wp_postmeta', function ($join) {
                 $join->on('wp_postmeta.post_id', '=', 'wp_posts.ID')
                     ->where('wp_postmeta.meta_key', '=', '_amfp_exclude_from_menu');
@@ -176,6 +181,9 @@ class ImportWp extends Command
             });
 
         $bar->finish();
+
+        $this->resolveTranslations();
+
         $this->info("Done 🎉");
     }
 
@@ -185,8 +193,8 @@ class ImportWp extends Command
 
         Page::truncate();
         Post::truncate();
-        Tag::truncate();
         Redirect::truncate();
+        Tag::whereNull('type')->delete();
 
         Schema::enableForeignKeyConstraints();
     }
@@ -245,5 +253,38 @@ class ImportWp extends Command
             ->pipe(function (Collection $tags) use ($model) {
                 return $model->attachTags($tags);
             });
+    }
+
+    protected function resolveTranslations()
+    {
+        $en_ids = $this->wordpressDb->table('wp_term_relationships')
+          ->where('term_taxonomy_id', '=', self::EN_TERM_ID)
+          ->pluck('object_id');
+
+        $this->info("\n" . 'Resolve translations for ' . count($en_ids) . ' pages');
+
+        foreach ($en_ids as $en_id) {
+            $taxonomy = $this->wordpressDb->table('wp_term_taxonomy')
+              ->where('taxonomy', '=', 'post_translations')
+              ->join('wp_term_relationships', function ($join) use ($en_id) {
+                            $join->on('wp_term_relationships.term_taxonomy_id', '=', 'wp_term_taxonomy.term_taxonomy_id')
+                                ->where('wp_term_relationships.object_id', '=', $en_id);
+                        })->select('description')->first();
+
+            if (empty($taxonomy->description)) continue;
+            $description = unserialize($taxonomy->description);
+
+            if (empty($description['sk'])) continue;
+            $sk_id = $description['sk'];
+
+            $oldPage = $this->wordpressDb->table('wp_posts')
+                ->where('ID', $en_id)->first();
+            $page = Page::find($sk_id);
+            if ($page) {
+                $page->setTranslation('title', 'en', $oldPage->post_title);
+                $page->setTranslation('text', 'en', $this->sanitizePostContent($oldPage->post_content));
+                $page->save();
+            }
+        }
     }
 }
