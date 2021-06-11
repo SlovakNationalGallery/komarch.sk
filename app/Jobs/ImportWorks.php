@@ -46,6 +46,7 @@ class ImportWorks implements ShouldQueue
                 });
 
                 $this->importMedia($work, $sourceDb);
+                $this->importTags($work, $sourceDb);
             });
 
         $sourceDb->table('lab_awards')
@@ -99,6 +100,21 @@ class ImportWorks implements ShouldQueue
                         'urad_id' => $sourceMedium->id,
                     ])
                     ->toMediaCollection('images');
+            });
+    }
+
+    private function importTags(Work $work, ConnectionInterface $sourceDb) {
+        $sourceDb
+            ->table('lab_tags')
+            ->select('name->sk as name', 'type')
+            ->join('lab_taggables', 'lab_taggables.tag_id', '=', 'lab_tags.id')
+            ->where('taggable_type', 'App\Models\Work')
+            ->where('taggable_id', $work->id)
+            ->get()
+
+            ->groupBy('type')
+            ->each(function ($tags, $type) use ($work) {
+                $work->syncTagsWithType($tags->pluck('name'), $type);
             });
     }
 }
