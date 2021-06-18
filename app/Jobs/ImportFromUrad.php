@@ -46,13 +46,13 @@ class ImportFromUrad implements ShouldQueue
                 });
 
                 $this->importMedia($work, $sourceDb);
-                $this->importTags($work, $sourceDb);
+                $this->importWorkTags($work, $sourceDb);
             });
 
         $sourceDb->table('lab_awards')
             ->orderBy('id')
-            ->chunk(100, function ($sourceAwards) {
-              $upserts = $sourceAwards
+            ->chunk(100, function ($awards) {
+              $upserts = $awards
                 ->map(fn ($a) => (array) $a)
                 ->toArray();
 
@@ -61,8 +61,8 @@ class ImportFromUrad implements ShouldQueue
 
         $sourceDb->table('lab_award_work')
             ->orderBy('id')
-            ->chunk(100, function ($sourceAwardWorks) {
-              $upserts = $sourceAwardWorks
+            ->chunk(100, function ($awardWorks) {
+              $upserts = $awardWorks
                 ->map(fn ($aw) => (array) $aw)
                 ->toArray();
 
@@ -71,8 +71,8 @@ class ImportFromUrad implements ShouldQueue
 
         $sourceDb->table('lab_publications')
             ->orderBy('id')
-            ->chunk(100, function ($sourcePublications) {
-              $upserts = $sourcePublications
+            ->chunk(100, function ($publications) {
+              $upserts = $publications
                 ->map(fn ($p) => (array) $p)
                 ->toArray();
 
@@ -81,15 +81,49 @@ class ImportFromUrad implements ShouldQueue
 
         $sourceDb->table('lab_publication_work')
             ->orderBy('id')
-            ->chunk(100, function ($sourcePublicationWork) {
-              $upserts = $sourcePublicationWork
+            ->chunk(100, function ($publicationWorks) {
+              $upserts = $publicationWorks
                 ->map(fn ($pw) => (array) $pw)
                 ->toArray();
 
               DB::table('citation_publication_work')->upsert($upserts, ['id']);
             });
 
+        $sourceDb->table('lab_contests')
+            ->orderBy('id')
+            ->chunk(100, function ($contests) {
+              $upserts = $contests
+                ->map(fn ($c) => (array) $c)
+                ->toArray();
+
+              DB::table('contests')->upsert($upserts, ['id']);
+            });
+
+        $sourceDb->table('lab_jurors')
+            ->orderBy('id')
+            ->chunk(100, function ($jurors) {
+              $upserts = $jurors
+                ->map(fn ($j) => (array) $j)
+                ->toArray();
+
+              DB::table('jurors')->upsert($upserts, ['id']);
+            });
+
+        $sourceDb->table('lab_proposals')
+            ->orderBy('id')
+            ->chunk(100, function ($proposals) {
+              $upserts = $proposals
+                ->map(fn ($p) => (array) $p)
+                ->toArray();
+
+              DB::table('proposals')->upsert($upserts, ['id']);
+            });
+
         // Remove entities no longer present in source DB
+        DB::table('proposals')->whereNotIn('id', $sourceDb->table('lab_proposals')->pluck('id'))->delete();
+        DB::table('jurors')->whereNotIn('id', $sourceDb->table('lab_jurors')->pluck('id'))->delete();
+        DB::table('contests')->whereNotIn('id', $sourceDb->table('lab_contests')->pluck('id'))->delete();
+
         DB::table('citation_publication_work')->whereNotIn('id', $sourceDb->table('lab_publication_work')->pluck('id'))->delete();
         DB::table('citation_publications')->whereNotIn('id', $sourceDb->table('lab_publications')->pluck('id'))->delete();
 
@@ -121,7 +155,7 @@ class ImportFromUrad implements ShouldQueue
             });
     }
 
-    private function importTags(Work $work, ConnectionInterface $sourceDb) {
+    private function importWorkTags(Work $work, ConnectionInterface $sourceDb) {
         $sourceDb
             ->table('lab_tags')
             ->select('name->sk as name', 'type')
