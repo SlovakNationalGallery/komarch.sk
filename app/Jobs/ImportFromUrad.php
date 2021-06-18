@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Models\Contest;
 use App\Models\Work;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -36,15 +37,19 @@ class ImportFromUrad implements ShouldQueue
         $sourceDb = DB::connection('urad');
 
         $sourceDb->table('lab_works')
+            ->orderBy('id')
+            ->chunk(100, function ($works) {
+                $upserts = $works
+                    ->map(fn ($w) => (array) $w)
+                    ->toArray();
+
+                DB::table('works')->upsert($upserts, ['id']);
+            });
+
+        $sourceDb->table('lab_works')
             ->lazyById()
             ->each(function ($sourceWork) use ($sourceDb) {
-                $work = Work::unguarded(function() use ($sourceWork) {
-                    return Work::updateOrCreate(
-                        ['id' => $sourceWork->id],
-                        (array) $sourceWork
-                    );
-                });
-
+                $work = Work::find($sourceWork->id);
                 $this->importMedia($work, $sourceDb);
                 $this->importWorkTags($work, $sourceDb);
             });
@@ -52,71 +57,78 @@ class ImportFromUrad implements ShouldQueue
         $sourceDb->table('lab_awards')
             ->orderBy('id')
             ->chunk(100, function ($awards) {
-              $upserts = $awards
-                ->map(fn ($a) => (array) $a)
-                ->toArray();
+                $upserts = $awards
+                    ->map(fn ($a) => (array) $a)
+                    ->toArray();
 
-              DB::table('awards')->upsert($upserts, ['id']);
+                DB::table('awards')->upsert($upserts, ['id']);
             });
 
         $sourceDb->table('lab_award_work')
             ->orderBy('id')
             ->chunk(100, function ($awardWorks) {
-              $upserts = $awardWorks
-                ->map(fn ($aw) => (array) $aw)
-                ->toArray();
+                $upserts = $awardWorks
+                    ->map(fn ($aw) => (array) $aw)
+                    ->toArray();
 
-              DB::table('award_work')->upsert($upserts, ['id']);
+                DB::table('award_work')->upsert($upserts, ['id']);
             });
 
         $sourceDb->table('lab_publications')
             ->orderBy('id')
             ->chunk(100, function ($publications) {
-              $upserts = $publications
-                ->map(fn ($p) => (array) $p)
-                ->toArray();
+                $upserts = $publications
+                    ->map(fn ($p) => (array) $p)
+                    ->toArray();
 
-              DB::table('citation_publications')->upsert($upserts, ['id']);
+                DB::table('citation_publications')->upsert($upserts, ['id']);
             });
 
         $sourceDb->table('lab_publication_work')
             ->orderBy('id')
             ->chunk(100, function ($publicationWorks) {
-              $upserts = $publicationWorks
-                ->map(fn ($pw) => (array) $pw)
-                ->toArray();
+                $upserts = $publicationWorks
+                    ->map(fn ($pw) => (array) $pw)
+                    ->toArray();
 
-              DB::table('citation_publication_work')->upsert($upserts, ['id']);
+                DB::table('citation_publication_work')->upsert($upserts, ['id']);
             });
 
         $sourceDb->table('lab_contests')
             ->orderBy('id')
             ->chunk(100, function ($contests) {
-              $upserts = $contests
-                ->map(fn ($c) => (array) $c)
-                ->toArray();
+                $upserts = $contests
+                    ->map(fn ($c) => (array) $c)
+                    ->toArray();
 
-              DB::table('contests')->upsert($upserts, ['id']);
+                DB::table('contests')->upsert($upserts, ['id']);
             });
 
         $sourceDb->table('lab_jurors')
             ->orderBy('id')
             ->chunk(100, function ($jurors) {
-              $upserts = $jurors
-                ->map(fn ($j) => (array) $j)
-                ->toArray();
+                $upserts = $jurors
+                    ->map(fn ($j) => (array) $j)
+                    ->toArray();
 
-              DB::table('jurors')->upsert($upserts, ['id']);
+                DB::table('jurors')->upsert($upserts, ['id']);
             });
 
         $sourceDb->table('lab_proposals')
             ->orderBy('id')
             ->chunk(100, function ($proposals) {
-              $upserts = $proposals
-                ->map(fn ($p) => (array) $p)
-                ->toArray();
+                $upserts = $proposals
+                    ->map(fn ($p) => (array) $p)
+                    ->toArray();
 
-              DB::table('proposals')->upsert($upserts, ['id']);
+                DB::table('proposals')->upsert($upserts, ['id']);
+            });
+
+        $sourceDb->table('lab_contests')
+            ->lazyById()
+            ->each(function ($sourceContest) use ($sourceDb) {
+                $contest = Contest::find($sourceContest->id);
+                $this->importContestTags($contest, $sourceDb);
             });
 
         // Remove entities no longer present in source DB
@@ -167,6 +179,21 @@ class ImportFromUrad implements ShouldQueue
             ->groupBy('type')
             ->each(function ($tags, $type) use ($work) {
                 $work->syncTagsWithType($tags->pluck('name'), $type);
+            });
+    }
+
+    private function importContestTags(Contest $contest, ConnectionInterface $sourceDb) {
+        $sourceDb
+            ->table('lab_tags')
+            ->select('name->sk as name', 'type')
+            ->join('lab_taggables', 'lab_taggables.tag_id', '=', 'lab_tags.id')
+            ->where('taggable_type', 'App\Models\Contest')
+            ->where('taggable_id', $contest->id)
+            ->get()
+
+            ->groupBy('type')
+            ->each(function ($tags, $type) use ($contest) {
+                $contest->syncTagsWithType($tags->pluck('name'), $type);
             });
     }
 }
