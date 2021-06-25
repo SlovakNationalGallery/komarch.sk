@@ -31,6 +31,12 @@ class ArchitectController extends Controller
             });
         }
 
+        if ($request->filled('locationDistrictsIn')) {
+            $architects->whereHas('addresses', function (Builder $query) use ($request) {
+                $query->whereIn('location_district', $request->query('locationDistrictsIn'));
+            });
+        }
+
         $perPage = min($request->get('perPage', 10), 15);
         return ArchitectResource::collection($architects->paginate($perPage));
     }

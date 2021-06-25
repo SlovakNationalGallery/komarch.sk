@@ -66,4 +66,21 @@ class ArchitectApiTest extends TestCase
                 ['id' => $matching->id]
             ]]);
     }
+
+    public function test_filtering_by_locations()
+    {
+        $matching = Architect::factory()
+            ->hasAddresses(1, ['location_district' => 'Detva'])
+            ->create();
+
+        Architect::factory()
+            ->hasAddresses(1, ['location_district' => 'Čadca'])
+            ->create();
+
+        $this->get(route('api.architects.index', ['locationDistrictsIn' => ['Detva']]))
+            ->assertJsonCount(1, 'data')
+            ->assertJson(['data' => [
+                ['id' => $matching->id]
+            ]]);
+    }
 }
