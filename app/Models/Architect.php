@@ -65,12 +65,6 @@ class Architect extends Model
             });
         }
 
-        if ($request->filled('locationDistrictsIn')) {
-            $query->whereHas('address', function (Builder $query) use ($request) {
-                $query->whereIn('location_district', $request->query('locationDistrictsIn'));
-            });
-        }
-
         return $query;
     }
 }
