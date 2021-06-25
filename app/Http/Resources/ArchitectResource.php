@@ -17,7 +17,7 @@ class ArchitectResource extends JsonResource
     {
         return Arr::only(
             $this->resource->attributesToArray(),
-            ['id', 'first_name', 'last_name', 'works_count']
+            ['id', 'first_name', 'last_name', 'works_count', 'awards_count']
         );
     }
 }

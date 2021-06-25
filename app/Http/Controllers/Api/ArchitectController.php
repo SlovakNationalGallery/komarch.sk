@@ -7,14 +7,13 @@ use App\Http\Resources\ArchitectResource;
 use App\Models\Architect;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 
 class ArchitectController extends Controller
 {
     public function index(Request $request)
     {
         $architects = Architect::query()
-            ->withCount('works');
+            ->withCount(['works', 'awards']);
 
         if ($request->filled('q')) {
             $architects->where('last_name', 'like', "%{$request->query('q')}%");

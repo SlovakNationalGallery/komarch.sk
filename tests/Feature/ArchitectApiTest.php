@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Architect;
+use App\Models\Award;
 use App\Models\Work;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -19,12 +20,20 @@ class ArchitectApiTest extends TestCase
      */
     public function test_index()
     {
-        $works = Work::factory()->count(2)->create();
+        $award = Award::factory()->create();
+        $work = Work::factory()->create();
+
+        $work->awards()->attach($award, [
+            // Generate random ID for pivot table (as it is not auto-incrementing)
+            'id' => $this->faker->unique()->randomNumber(),
+            'nomination' => 0,
+            'winning' => 1,
+        ]);
+
         Architect::factory()
             ->hasAttached(
-                $works,
-                // Generate random ID for pivot table (as it is not auto-incrementing)
-                fn () => ['id' => $this->faker->unique()->randomNumber()]
+                $work,
+                ['id' => $this->faker->unique()->randomNumber()]
             )
             ->create([
                 'id' => 1,
@@ -39,7 +48,8 @@ class ArchitectApiTest extends TestCase
                     'id' => 1,
                     'first_name' => 'Ján Miloslav',
                     'last_name' => 'Bahna',
-                    'works_count' => 2,
+                    'works_count' => 1,
+                    'awards_count' => 1,
                 ]
             ]]);
     }
