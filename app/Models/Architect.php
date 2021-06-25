@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 use Staudenmeir\EloquentHasManyDeep\HasRelationships as HasDeepRelationships;
 
 class Architect extends Model
@@ -27,5 +27,10 @@ class Architect extends Model
     public function works()
     {
         return $this->belongsToMany(Work::class);
+    }
+
+    public function getLastNameAttribute($value)
+    {
+        return Str::title($value);
     }
 }

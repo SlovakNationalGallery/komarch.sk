@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\ArchitectController;
 use App\Http\Controllers\Api\ImportFromUrad;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -20,6 +21,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('/jobs/import-from-urad', ImportFromUrad::class);
+
+Route::get('architects', [ArchitectController::class, 'index'])->name('api.architects.index');
 
 Route::get('/posts', 'App\Http\Controllers\Api\PostController@index');
 Route::get('/posts-filters', 'App\Http\Controllers\Api\PostController@filters');
