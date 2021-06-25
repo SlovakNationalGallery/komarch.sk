@@ -25,7 +25,7 @@ class ArchitectFiltersApiTest extends TestCase
             ->create(['last_name' => 'Bahna']);
 
         Architect::factory()
-            ->hasNumbers(1, ['architect_number' => '1001 KA'])
+            ->hasNumbers(1, ['architect_number' => '1001 HKA'])
             ->create(['last_name' => 'Králik']);
 
         $this->get(route('api.architects-filters.index'))
@@ -36,9 +36,9 @@ class ArchitectFiltersApiTest extends TestCase
                 ],
                 'authorizationsIn' => [
                     'AA' => 1,
-                    'KA' => 1,
+                    'KA' => 0,
                     'HA' => 0,
-                    'HKA' => 0,
+                    'HKA' => 1,
                     'DC' => 0,
                 ]
             ]);

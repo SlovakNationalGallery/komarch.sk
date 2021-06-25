@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Number extends Model
 {
@@ -16,6 +17,6 @@ class Number extends Model
 
     public function getAuthorizationAttribute()
     {
-        return substr($this->architect_number, -2);
+        return Str::of($this->architect_number)->explode(' ')->last();
     }
 }
