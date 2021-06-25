@@ -14,9 +14,9 @@ class Architect extends Model
 
     public $incrementing = false;
 
-    public function addresses()
+    public function address()
     {
-        return $this->hasMany(Address::class);
+        return $this->hasOne(Address::class);
     }
 
     // Note this includes both nominations and awarded awards
