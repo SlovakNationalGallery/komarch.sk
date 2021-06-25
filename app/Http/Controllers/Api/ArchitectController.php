@@ -14,8 +14,10 @@ class ArchitectController extends Controller
     {
         $architects = Architect::query()
             ->with('address')
-            ->withCount(['works', 'awards']);
+            ->withCount(['works', 'awards'])
+            ->leftJoin('addresses', 'addresses.architect_id', '=', 'architects.id');
 
+        // Filtering
         if ($request->filled('q')) {
             $architects->where('last_name', 'like', "%{$request->query('q')}%");
         }
@@ -38,7 +40,19 @@ class ArchitectController extends Controller
             });
         }
 
+        // Ordering
+        $architects->orderBy(
+            $this->getOrderBy($request),
+            $request->query('direction', 'asc')
+        );
+
         $perPage = min($request->get('perPage', 10), 15);
         return ArchitectResource::collection($architects->paginate($perPage));
+    }
+
+    private function getOrderBy(Request $request)
+    {
+        if ($request->query === 'location_city') return 'addresses.location_city';
+        return $request->query('sortby', 'last_name');
     }
 }
