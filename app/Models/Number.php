@@ -13,4 +13,9 @@ class Number extends Model
     {
         return $this->belongsTo(Architect::class);
     }
+
+    public function getAuthorizationAttribute()
+    {
+        return substr($this->architect_number, -2);
+    }
 }
