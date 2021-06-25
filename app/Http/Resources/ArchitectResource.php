@@ -15,6 +15,7 @@ class ArchitectResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'id' => $this->id,
             'last_name' => $this->last_name,
         ];
     }

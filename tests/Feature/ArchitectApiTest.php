@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Architect;
+use App\Models\Number;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Testing\Fluent\AssertableJson;
@@ -46,6 +47,23 @@ class ArchitectApiTest extends TestCase
             ->assertJsonCount(1, 'data')
             ->assertJson(['data' => [
                 ['last_name' => 'Bahna']
+            ]]);
+    }
+
+    public function test_filtering_by_authorizations()
+    {
+        $matching = Architect::factory()
+            ->hasNumbers(1, ['architect_number' => '1000 AA'])
+            ->create();
+
+        Architect::factory()
+            ->hasNumbers(1, ['architect_number' => '1001 KA'])
+            ->create();
+
+        $this->get(route('api.architects.index', ['authorizationsIn' => ['AA', 'DC']]))
+            ->assertJsonCount(1, 'data')
+            ->assertJson(['data' => [
+                ['id' => $matching->id]
             ]]);
     }
 }

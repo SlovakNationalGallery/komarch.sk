@@ -12,6 +12,7 @@ class Architect extends Model
     use HasFactory;
     use HasDeepRelationships;
 
+    public $incrementing = false;
 
     public function addresses()
     {
@@ -22,6 +23,11 @@ class Architect extends Model
     public function awards()
     {
         return $this->hasManyDeep(Award::class, ['architect_work', Work::class, 'award_work']);
+    }
+
+    public function numbers()
+    {
+        return $this->hasMany(Number::class);
     }
 
     public function works()
