@@ -13,6 +13,7 @@ class ArchitectController extends Controller
     public function index(Request $request)
     {
         $architects = Architect::query()
+            ->with('address')
             ->withCount(['works', 'awards']);
 
         if ($request->filled('q')) {

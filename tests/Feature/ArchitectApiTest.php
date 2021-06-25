@@ -35,6 +35,7 @@ class ArchitectApiTest extends TestCase
                 $work,
                 ['id' => $this->faker->unique()->randomNumber()]
             )
+            ->hasAddress(1, ['location_city' => 'Bratislava'])
             ->create([
                 'id' => 1,
                 'first_name' => 'Ján Miloslav',
@@ -48,6 +49,7 @@ class ArchitectApiTest extends TestCase
                     'id' => 1,
                     'first_name' => 'Ján Miloslav',
                     'last_name' => 'Bahna',
+                    'location_city' => 'Bratislava',
                     'works_count' => 1,
                     'awards_count' => 1,
                 ]

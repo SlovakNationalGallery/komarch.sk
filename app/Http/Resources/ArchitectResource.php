@@ -15,9 +15,14 @@ class ArchitectResource extends JsonResource
      */
     public function toArray($request)
     {
-        return Arr::only(
-            $this->resource->attributesToArray(),
-            ['id', 'first_name', 'last_name', 'works_count', 'awards_count']
+        return array_merge(
+            Arr::only(
+                $this->resource->attributesToArray(),
+                ['id', 'first_name', 'last_name', 'works_count', 'awards_count']
+            ),
+            [
+                'location_city' => Arr::get($this, 'address.location_city'),
+            ],
         );
     }
 }
