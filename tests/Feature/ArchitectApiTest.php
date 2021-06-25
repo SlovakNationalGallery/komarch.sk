@@ -3,27 +3,45 @@
 namespace Tests\Feature;
 
 use App\Models\Architect;
-use App\Models\Number;
+use App\Models\Work;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
 
 class ArchitectApiTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase, WithFaker;
 
     /**
      * A basic feature test example.
      *
      * @return void
      */
-    public function test_index_works()
+    public function test_index()
     {
-        Architect::factory()->create();
+        $works = Work::factory()->count(2)->create();
+        Architect::factory()
+            ->hasAttached(
+                $works,
+                // Generate random ID for pivot table (as it is not auto-incrementing)
+                fn () => ['id' => $this->faker->unique()->randomNumber()]
+            )
+            ->create([
+                'id' => 1,
+                'first_name' => 'Ján Miloslav',
+                'last_name' => 'BAHNA',
+            ]);
 
-        $response = $this->get('/api/architects');
-        $response->assertStatus(200);
+        $this->get('/api/architects')
+            ->assertStatus(200)
+            ->assertJson(['data' => [
+                [
+                    'id' => 1,
+                    'first_name' => 'Ján Miloslav',
+                    'last_name' => 'Bahna',
+                    'works_count' => 2,
+                ]
+            ]]);
     }
 
     public function test_search()

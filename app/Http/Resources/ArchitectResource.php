@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Arr;
 
 class ArchitectResource extends JsonResource
 {
@@ -14,9 +15,9 @@ class ArchitectResource extends JsonResource
      */
     public function toArray($request)
     {
-        return [
-            'id' => $this->id,
-            'last_name' => $this->last_name,
-        ];
+        return Arr::only(
+            $this->resource->attributesToArray(),
+            ['id', 'first_name', 'last_name', 'works_count']
+        );
     }
 }

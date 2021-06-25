@@ -16,6 +16,8 @@ class Work extends Model implements HasMedia
     use \Backpack\CRUD\app\Models\Traits\CrudTrait;
     use HasFactory, InteractsWithMedia, HasTags, HasShortDescription;
 
+    public $incrementing = false;
+
     public $with = ['other_architects', 'awards'];
 
     public static $filterable = ['other_architects', 'awards'];

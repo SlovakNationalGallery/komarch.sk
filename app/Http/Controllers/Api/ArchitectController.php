@@ -13,7 +13,8 @@ class ArchitectController extends Controller
 {
     public function index(Request $request)
     {
-        $architects = Architect::query();
+        $architects = Architect::query()
+            ->withCount('works');
 
         if ($request->filled('q')) {
             $architects->where('last_name', 'like', "%{$request->query('q')}%");
