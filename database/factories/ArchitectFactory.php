@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Architect;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 class ArchitectFactory extends Factory
 {
@@ -25,8 +26,8 @@ class ArchitectFactory extends Factory
             'id' => $this->faker->unique()->randomNumber(),
             'gender' => 'M',
             'title_before' => 'Ing.arch.',
-            'first_name' => 'Ján Miloslav',
-            'last_name' => 'BAHNA',
+            'first_name' => $this->faker->firstName,
+            'last_name' => Str::upper($this->faker->lastName),
             'title_after' => '',
         ];
     }

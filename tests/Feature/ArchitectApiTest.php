@@ -25,12 +25,24 @@ class ArchitectApiTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_index_supports_search()
+    public function test_search()
     {
         Architect::factory()->create(['last_name' => 'Bahna']);
         Architect::factory()->create(['last_name' => 'Králik']);
 
         $this->get(route('api.architects.index', ['q' => 'bah']))
+            ->assertJsonCount(1, 'data')
+            ->assertJson(['data' => [
+                ['last_name' => 'Bahna']
+            ]]);
+    }
+
+    public function test_filtering_by_first_letter()
+    {
+        Architect::factory()->create(['last_name' => 'Bahna']);
+        Architect::factory()->create(['last_name' => 'Králik']);
+
+        $this->get(route('api.architects.index', ['startsWith' => 'b']))
             ->assertJsonCount(1, 'data')
             ->assertJson(['data' => [
                 ['last_name' => 'Bahna']

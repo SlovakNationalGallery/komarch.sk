@@ -18,6 +18,10 @@ class ArchitectController extends Controller
             $architects->where('last_name', 'like', "%{$request->query('q')}%");
         }
 
+        if ($request->filled('startsWith')) {
+            $architects->where('last_name', 'like', "{$request->query('startsWith')}%");
+        }
+
         $perPage = min($request->get('perPage', 10), 15);
         return ArchitectResource::collection($architects->paginate($perPage));
     }
