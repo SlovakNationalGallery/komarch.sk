@@ -22,6 +22,7 @@ class ArchitectResource extends JsonResource
             ),
             [
                 'location_city' => Arr::get($this, 'address.location_city'),
+                'url' => 'TODO',
             ],
         );
     }

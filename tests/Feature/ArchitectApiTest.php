@@ -52,6 +52,7 @@ class ArchitectApiTest extends TestCase
                     'location_city' => 'Bratislava',
                     'works_count' => 1,
                     'awards_count' => 1,
+                    'url' => 'TODO',
                 ]
             ]]);
     }
