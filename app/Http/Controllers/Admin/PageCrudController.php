@@ -154,6 +154,16 @@ class PageCrudController extends CrudController
             });
         });
 
+        $this->crud->addFilter([
+          'name'  => 'parent_id',
+          'type'  => 'select2_wide',
+          'label' => 'Parent page'
+        ], function() {
+            return \App\Models\Page::getTree($only_parents = true);
+        }, function($value) {
+            $this->crud->addClause('where', 'parent_id', $value);
+        });
+
     }
 
     /**

@@ -133,4 +133,20 @@ class Page extends Model implements HasMedia
     {
         return $this->shortenString($this->text);
     }
+
+    /**
+     * returns nested-list of page titles
+     */
+    public static function getTree($only_parents = false, $parent_id = 0, $spacing = '', $tree_array = []): array
+    {
+        $categories = self::select('id', 'title', 'parent_id')->where('parent_id' ,'=', $parent_id)->orderBy('menu_order')->get();
+        foreach ($categories as $item){
+            if (!$only_parents || $item->children()->exists()) {
+                $tree_array[$item->id] = $spacing . ' ' . $item->title;
+                $tree_array = self::getTree($only_parents, $item->id, $spacing . '—', $tree_array);
+            }
+        }
+        return $tree_array;
+    }
+
 }

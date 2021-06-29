@@ -18,14 +18,18 @@ class ImportFromUrad implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    private bool $dangerouslyDisableConstraints;
+    private bool $skipMediaImports;
+
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($dangerouslyDisableConstraints = false, $skipMediaImports = false)
     {
-        //
+        $this->dangerouslyDisableConstraints = $dangerouslyDisableConstraints;
+        $this->skipMediaImports = $skipMediaImports;
     }
 
     /**
@@ -46,9 +50,11 @@ class ImportFromUrad implements ShouldQueue
         $this->importTable('lab_architects', 'architects');
         $this->importTable('lab_addresses', 'addresses');
         $this->importTable('lab_business_numbers', 'business_numbers');
+        if ($this->dangerouslyDisableConstraints) DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         $this->importTable('lab_numbers', 'numbers');
         $this->importTable('lab_architect_contest', 'architect_contest');
         $this->importTable('lab_architect_work', 'architect_work');
+        if ($this->dangerouslyDisableConstraints) DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
         $sourceDb = $this->getSourceDb();
 
@@ -102,6 +108,8 @@ class ImportFromUrad implements ShouldQueue
 
     private function importMedia(Work $work)
     {
+        if ($this->skipMediaImports) return;
+
         $existingUradIds = $work->getMedia('images')->map->getCustomProperty('urad_id');
 
         $this->getSourceDb()->table('lab_media')
