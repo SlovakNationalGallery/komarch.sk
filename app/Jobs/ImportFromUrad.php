@@ -45,6 +45,8 @@ class ImportFromUrad implements ShouldQueue
         $this->importTable('lab_publications', 'citation_publications');
         $this->importTable('lab_publication_work', 'citation_publication_work');
         $this->importTable('lab_contests', 'contests');
+        $this->importTable('lab_rewards', 'rewards');
+        $this->importTable('lab_contestresults', 'contestresults');
         $this->importTable('lab_jurors', 'jurors');
         $this->importTable('lab_proposals', 'proposals');
         $this->importTable('lab_architects', 'architects');
