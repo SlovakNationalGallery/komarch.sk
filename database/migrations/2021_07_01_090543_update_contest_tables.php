@@ -15,6 +15,7 @@ class UpdateContestTables extends Migration
     {
         Schema::table('contests', function (Blueprint $table) {
             $table->renameColumn('subject', 'perex');
+            $table->date('results_published_at')->nullable()->change();
             $table->dropColumn('goal');
         });
 
@@ -48,6 +49,7 @@ class UpdateContestTables extends Migration
         Schema::dropIfExists('rewards');
         Schema::table('contests', function (Blueprint $table) {
             $table->string('goal')->nullable();
+            $table->string('results_published_at')->nullable()->change();
             $table->renameColumn('perex', 'subject');
         });
     }
