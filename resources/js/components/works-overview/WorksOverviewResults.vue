@@ -48,21 +48,25 @@ export default {
     results: {
       type: Array,
       required: true
+    },
+    total: {
+      type: Number,
+      required: true
     }
   },
   computed: {
     count () {
       let localizedObjectsLabel = 'works.objects_plural'
 
-      if (this.results.length === 1) {
+      if (this.total === 1) {
         localizedObjectsLabel = 'works.objects_one'
       }
 
-      if (this.results.length > 1 && this.results.length < 5) {
+      if (this.total > 1 && this.total < 5) {
         localizedObjectsLabel = 'works.objects_few'
       }
 
-      return `(${this.results.length}) ${this.__(localizedObjectsLabel)}`
+      return `(${this.total}) ${this.__(localizedObjectsLabel)}`
     },
     sortingName: {
       get () {

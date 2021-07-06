@@ -31,6 +31,7 @@
     <WorksOverviewResults
       v-model="sorting"
       :results="results"
+      :total="total"
     />
     <p
       v-if="results.length === 0"
@@ -83,6 +84,7 @@ export default {
         name: null,
         year: null
       },
+      total: 0,
       page: 1,
       hasNextPage: true
     }
@@ -170,6 +172,7 @@ export default {
       }
 
       this.results = worksResponse.data
+      this.total = worksResponse.meta.total
       this.hasNextPage = worksResponse.meta.current_page < worksResponse.meta.last_page
     },
     async onLoadMore () {
