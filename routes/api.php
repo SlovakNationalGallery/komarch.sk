@@ -34,6 +34,6 @@ Route::get('/documents', 'App\Http\Controllers\Api\DocumentController@index');
 Route::get('/documents-filters', 'App\Http\Controllers\Api\DocumentController@filters');
 Route::get('/document/{id}/download', 'App\Http\Controllers\Api\DocumentController@download');
 
-Route::get('/works', 'App\Http\Controllers\Api\WorkController@index');
-Route::get('/works-filters', 'App\Http\Controllers\Api\WorkController@filters');
+Route::get('/works', 'App\Http\Controllers\Api\WorkController@index')->name('api.works.index');
+Route::get('/works-filters', 'App\Http\Controllers\Api\WorkController@filters')->name('api.works-filters.index');
 Route::get('/works/{id}/images', 'App\Http\Controllers\Api\WorkController@images');

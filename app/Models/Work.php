@@ -10,11 +10,12 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Tags\HasTags;
 use Illuminate\Support\Str;
 use App\Traits\HasShortDescription;
+use Laravel\Scout\Searchable;
 
 class Work extends Model implements HasMedia
 {
     use \Backpack\CRUD\app\Models\Traits\CrudTrait;
-    use HasFactory, InteractsWithMedia, HasTags, HasShortDescription;
+    use HasFactory, InteractsWithMedia, HasTags, HasShortDescription, Searchable;
 
     public $incrementing = false;
 
@@ -129,5 +130,9 @@ class Work extends Model implements HasMedia
         return $result;
     }
 
+    public function toSearchableArray()
+    {
+        return Arr::only($this->toArray(), ['name', 'annotation']);
+    }
 
 }
