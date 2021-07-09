@@ -28,6 +28,15 @@ class PostFactory extends Factory
         ];
     }
 
+    public function published()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'published_at' => $this->faker->date(),
+            ];
+        });
+    }
+
     /**
      * Post with rich content (tags, custom author ... )
      *

@@ -14,6 +14,11 @@ class PostController extends Controller
     {
         $posts = $this->loadPosts($request);
 
+        // search
+        if ($request->filled('q')) {
+            $posts->whereIn('id', Post::search($request->query('q'))->keys());
+        }
+
         // sort
         $posts->orderBy(
             $request->input('sortby', 'published_at'),
