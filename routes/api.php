@@ -38,6 +38,6 @@ Route::get('/works', 'App\Http\Controllers\Api\WorkController@index');
 Route::get('/works-filters', 'App\Http\Controllers\Api\WorkController@filters');
 Route::get('/works/{id}/images', 'App\Http\Controllers\Api\WorkController@images');
 
-Route::get('/contests', 'App\Http\Controllers\Api\ContestController@index');
-Route::get('/contests-filters', 'App\Http\Controllers\Api\ContestController@filters');
+Route::get('/contests', 'App\Http\Controllers\Api\ContestController@index')->name('api.contests.index');
+Route::get('/contests-filters', 'App\Http\Controllers\Api\ContestController@filters')->name('api.contests-filters.index');
 

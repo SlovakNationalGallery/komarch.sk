@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
@@ -15,9 +16,12 @@ use Spatie\Tags\HasTags;
 class Contest extends Model implements HasMedia
 {
     use CrudTrait;
+    use HasFactory;
     use HasTags;
     use InteractsWithMedia;
     use Searchable;
+
+    public $incrementing = false;
 
     protected $dates = [
         'announced_at',
