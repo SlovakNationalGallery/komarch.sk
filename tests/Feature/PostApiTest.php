@@ -28,7 +28,7 @@ class PostApiTest extends TestCase
         Post::factory()->published()->create(['title' => 'Dovoľujeme si Vás pozvať na vernisáž']);
         Post::factory()->published()->create(['title' => 'Deň lesa a krajiny v parlamente']);
 
-        $this->get(route('api.posts.index', ['q' => 'vernisaz']))
+        $this->get(route('api.posts.index', ['q' => 'verni']))
             ->assertJsonCount(1, 'data')
             ->assertJson(['data' => [
                 ['title' => 'Dovoľujeme si Vás pozvať na vernisáž']
