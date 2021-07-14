@@ -23,7 +23,7 @@ class ContestApiTest extends TestCase
         Contest::factory()->create(['title' => 'Vízia rozvoja obce Bernolákovo']);
         Contest::factory()->create(['title' => 'Vízia rozvoja obce Dunajská Streda']);
 
-        $this->get(route('api.contests.index', ['q' => 'bernolakovo']))
+        $this->get(route('api.contests.index', ['q' => 'bernol']))
             ->assertJsonCount(1, 'data')
             ->assertJson(['data' => [
                 ['title' => 'Vízia rozvoja obce Bernolákovo']
