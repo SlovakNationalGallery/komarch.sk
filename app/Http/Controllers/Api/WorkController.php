@@ -17,7 +17,7 @@ class WorkController extends Controller
 
         // search
         if ($request->filled('q')) {
-            $works->whereIn('id', Work::search($request->query('q'))->keys());
+            $works->whereIn('id', Work::search("{$request->query('q')}*")->keys());
         }
 
         // sort
