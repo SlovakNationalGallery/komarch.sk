@@ -4,7 +4,12 @@
     {{ $work->name }}
 @stop
 
-<x-work.work-og :work="$work"></x-work.work-og>
+<x-og :title="$work->name"
+      :description="$work->short_description"
+      :url="$work->url"
+      :image="$work->cover_image"
+></x-og>
+
 
 @section('content')
 <x-header.header></x-header.header>

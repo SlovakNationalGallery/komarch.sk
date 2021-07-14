@@ -29,7 +29,7 @@
       v-if="posts.length === 0"
       class="py-10"
     >
-      {{ __('post.no_posts') }}.
+      {{ __('posts.no_posts') }}.
     </p>
     <ButtonLoadMore
       v-if="hasNextPage"

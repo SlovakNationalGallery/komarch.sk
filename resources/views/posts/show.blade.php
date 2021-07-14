@@ -4,7 +4,11 @@
 {{ $post->title }}
 @stop
 
-<x-post.post-og :post="$post"></x-post.post-og>
+<x-og :title="$post->title"
+      :description="$post->perex"
+      :url="$post->url"
+      :image="$post->cover_image"
+></x-og>
 
 @section('content')
 <x-header.header></x-header.header>

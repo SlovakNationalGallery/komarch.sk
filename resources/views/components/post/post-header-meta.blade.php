@@ -5,6 +5,6 @@
         </x-tag-hash>
     @endforeach
     <span class="ml-2 lg:ml-10">
-        {{ $post->is_published ? $post->published_at->formatLocalized('%d %B %Y') : __('post.not_published') }}
+        {{ $post->is_published ? $post->published_at->formatLocalized('%d %B %Y') : __('posts.not_published') }}
     </span>
 </div>
