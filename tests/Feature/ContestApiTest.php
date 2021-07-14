@@ -2,37 +2,37 @@
 
 namespace Tests\Feature;
 
-use App\Models\Work;
+use App\Models\Contest;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\RefreshSearchIndex;
 use Tests\TestCase;
 
-class WorkApiTest extends TestCase
+class ContestApiTest extends TestCase
 {
 
     use RefreshDatabase, RefreshSearchIndex;
 
     public function testIndex()
     {
-        $response = $this->get(route('api.works.index'));
+        $response = $this->get(route('api.contests.index'));
         $response->assertStatus(200);
     }
 
     public function testSearchByName()
     {
-        Work::factory()->create(['name' => 'Televízna veža, Bratislava - Kamzík']);
-        Work::factory()->create(['name' => 'Rezidencia Bárdošov, Bratislava']);
+        Contest::factory()->create(['title' => 'Vízia rozvoja obce Bernolákovo']);
+        Contest::factory()->create(['title' => 'Vízia rozvoja obce Dunajská Streda']);
 
-        $this->get(route('api.works.index', ['q' => 'kamz']))
+        $this->get(route('api.contests.index', ['q' => 'bernol']))
             ->assertJsonCount(1, 'data')
             ->assertJson(['data' => [
-                ['name' => 'Televízna veža, Bratislava - Kamzík']
+                ['title' => 'Vízia rozvoja obce Bernolákovo']
             ]]);
     }
 
     public function testFilters()
     {
-        $response = $this->get(route('api.works-filters.index'));
+        $response = $this->get(route('api.contests-filters.index'));
         $response->assertStatus(200);
     }
 }

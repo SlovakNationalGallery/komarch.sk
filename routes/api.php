@@ -34,10 +34,10 @@ Route::get('/documents', 'App\Http\Controllers\Api\DocumentController@index');
 Route::get('/documents-filters', 'App\Http\Controllers\Api\DocumentController@filters');
 Route::get('/document/{id}/download', 'App\Http\Controllers\Api\DocumentController@download');
 
-Route::get('/works', 'App\Http\Controllers\Api\WorkController@index');
-Route::get('/works-filters', 'App\Http\Controllers\Api\WorkController@filters');
+Route::get('/works', 'App\Http\Controllers\Api\WorkController@index')->name('api.works.index');
+Route::get('/works-filters', 'App\Http\Controllers\Api\WorkController@filters')->name('api.works-filters.index');
 Route::get('/works/{id}/images', 'App\Http\Controllers\Api\WorkController@images');
 
-Route::get('/contests', 'App\Http\Controllers\Api\ContestController@index');
-Route::get('/contests-filters', 'App\Http\Controllers\Api\ContestController@filters');
+Route::get('/contests', 'App\Http\Controllers\Api\ContestController@index')->name('api.contests.index');
+Route::get('/contests-filters', 'App\Http\Controllers\Api\ContestController@filters')->name('api.contests-filters.index');
 

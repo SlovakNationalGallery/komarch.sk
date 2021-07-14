@@ -2,17 +2,26 @@
 
 namespace App\Models;
 
+use Backpack\CRUD\app\Models\Traits\CrudTrait;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
+use Laravel\Scout\Searchable;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Tags\HasTags;
 
 class Contest extends Model implements HasMedia
 {
-    use \Backpack\CRUD\app\Models\Traits\CrudTrait;  
-    use HasTags, InteractsWithMedia;
+    use CrudTrait;
+    use HasFactory;
+    use HasTags;
+    use InteractsWithMedia;
+    use Searchable;
+
+    public $incrementing = false;
 
     protected $dates = [
         'announced_at',
@@ -57,7 +66,7 @@ class Contest extends Model implements HasMedia
     {
         return $query->whereDate('finished_at', '<', Carbon::now());
     }
-  
+
     public function registerMediaCollections(): void
     {
         $this
@@ -66,5 +75,10 @@ class Contest extends Model implements HasMedia
 
         $this
             ->addMediaCollection('contest_attachments');
-     }
+    }
+
+    public function toSearchableArray()
+    {
+        return Arr::only($this->toArray(), ['title', 'perex']);
+    }
 }
