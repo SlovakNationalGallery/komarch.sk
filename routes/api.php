@@ -37,3 +37,7 @@ Route::get('/document/{id}/download', 'App\Http\Controllers\Api\DocumentControll
 Route::get('/works', 'App\Http\Controllers\Api\WorkController@index');
 Route::get('/works-filters', 'App\Http\Controllers\Api\WorkController@filters');
 Route::get('/works/{id}/images', 'App\Http\Controllers\Api\WorkController@images');
+
+Route::get('/contests', 'App\Http\Controllers\Api\ContestController@index');
+Route::get('/contests-filters', 'App\Http\Controllers\Api\ContestController@filters');
+

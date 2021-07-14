@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Models\Contest;
+use App\Models\ContestResult;
 use App\Models\Work;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -39,6 +40,8 @@ class ImportFromUrad implements ShouldQueue
      */
     public function handle()
     {
+        if ($this->dangerouslyDisableConstraints) DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+
         $this->importTable('lab_works', 'works');
         $this->importTable('lab_awards', 'awards');
         $this->importTable('lab_award_work', 'award_work');
@@ -52,16 +55,18 @@ class ImportFromUrad implements ShouldQueue
         $this->importTable('lab_architects', 'architects');
         $this->importTable('lab_addresses', 'addresses');
         $this->importTable('lab_business_numbers', 'business_numbers');
-        if ($this->dangerouslyDisableConstraints) DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         $this->importTable('lab_numbers', 'numbers');
         $this->importTable('lab_architect_contest', 'architect_contest');
+        $this->importTable('lab_architect_contestresult', 'architect_contestresult');
         $this->importTable('lab_architect_work', 'architect_work');
+
         if ($this->dangerouslyDisableConstraints) DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
         $sourceDb = $this->getSourceDb();
 
         // Remove entities no longer present in source DB
         DB::table('architect_work')->whereNotIn('id', $sourceDb->table('lab_architect_work')->pluck('id'))->delete();
+        DB::table('architect_contestresult')->whereNotIn('id', $sourceDb->table('lab_architect_contestresult')->pluck('id'))->delete();
         DB::table('architect_contest')->whereNotIn('id', $sourceDb->table('lab_architect_contest')->pluck('id'))->delete();
         DB::table('numbers')->whereNotIn('id', $sourceDb->table('lab_numbers')->pluck('id'))->delete();
         DB::table('business_numbers')->whereNotIn('id', $sourceDb->table('lab_business_numbers')->pluck('id'))->delete();
@@ -81,12 +86,17 @@ class ImportFromUrad implements ShouldQueue
 
         // Synchronize tags & media
         foreach (Work::cursor() as $work) {
-            $this->importMedia($work);
+            $this->importModelMedia('App\Models\Work', $work, ['work_pictures']);
             $this->importModelTags('App\Models\Work', $work);
         }
 
         foreach (Contest::cursor() as $contest) {
+            $this->importModelMedia('App\Models\Contest', $contest, ['contest_pictures', 'contest_attachments']);
             $this->importModelTags('App\Models\Contest', $contest);
+        }
+
+        foreach (ContestResult::cursor() as $contestResult) {
+            $this->importModelMedia('App\Models\Contestresult', $contestResult, ['contestresult_pictures']);
         }
     }
 
@@ -108,26 +118,41 @@ class ImportFromUrad implements ShouldQueue
             });
     }
 
-    private function importMedia(Work $work)
+    private function importModelMedia(string $sourceDbModelClassname, Model $entity, array $collectionNames)
     {
         if ($this->skipMediaImports) return;
 
-        $existingUradIds = $work->getMedia('images')->map->getCustomProperty('urad_id');
+        $sourceUradIds =  $this->getSourceDb()->table('lab_media')
+            ->where('model_type', $sourceDbModelClassname)
+            ->where('model_id', $entity->id) // Model IDs between us and Urad are identical
+            ->whereIn('collection_name', $collectionNames)
+            ->pluck('id');
 
+        $importedUradIds = $entity->media()
+            ->whereNotNull('custom_properties->urad_id')
+            ->select('custom_properties->urad_id as urad_id')
+            ->pluck('urad_id');
+
+        // Import Media not yet present in our database
         $this->getSourceDb()->table('lab_media')
-            ->where('model_type', 'App\Models\Work')
-            ->where('collection_name', 'work_pictures')
-            ->where('model_id', $work->id) // Work ID from 'Urad' matches our Work ID
-            ->whereNotIn('id', $existingUradIds)
+            ->whereIn('id', $sourceUradIds->diff($importedUradIds)->values())
             ->lazyById()
-            ->each(function ($sourceMedium) use ($work) {
-                $work
+            ->each(function ($sourceMedium) use ($entity) {
+                $entity
                     ->addMediaFromDisk("lab_sng/{$sourceMedium->id}/{$sourceMedium->file_name}", 'urad')
                     ->preservingOriginal()
                     ->withCustomProperties([
                         'urad_id' => $sourceMedium->id,
                     ])
-                    ->toMediaCollection('images');
+                    ->toMediaCollection($sourceMedium->collection_name);
+            });
+
+        // Remove Media no longer present in the source
+        $entity->media()
+            ->whereIn('custom_properties->urad_id', $importedUradIds->diff($sourceUradIds)->values())
+            ->lazyById()
+            ->each(function ($medium) {
+                $medium->delete();
             });
     }
 
@@ -142,7 +167,9 @@ class ImportFromUrad implements ShouldQueue
             ->get()
 
             ->groupBy('type')
-            ->each(function ($tags, $type) use ($entity) {
+            ->each(function ($tags) use ($entity) {
+                // NULL types get grouped as empty strings
+                $type = $tags[0]->type;
                 $entity->syncTagsWithType($tags->pluck('name'), $type);
             });
     }

@@ -1,7 +1,11 @@
 @extends('layouts.app')
 @section('title', $page->title)
 
-<x-page.page-og :page="$page"></x-page.page-og>
+<x-og :title="$page->title"
+      :description="$page->short_description"
+      :url="$page->url"
+      :image="$page->cover_image"
+></x-og>
 
 @section('content')
 
