@@ -76,7 +76,7 @@ export default {
     selectedOption: {
       immediate: true,
       async handler (newValue) {
-        const response = await axios.get(`./api/posts${newValue.params}`)
+        const response = await axios.get(`/api/posts${newValue.params}`)
         this.displayOption = newValue
         this.posts = response.data.data
       }
