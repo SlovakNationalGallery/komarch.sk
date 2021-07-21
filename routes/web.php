@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\PostsController;
 use Illuminate\Support\Facades\Route;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,8 +31,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
 
     Route::get('/search', 'App\Http\Controllers\SearchController@index')->name('search');
 
-    Route::resource('spravy', '\App\Http\Controllers\PostsController')->names('posts')
-                ->parameter('spravy', 'post');
+    Route::resource('/spravy', PostsController::class)->names('posts')->parameter('spravy', 'post');
 
     Route::get('/sutaze', 'App\Http\Controllers\ContestsController@index')->name('contests');
     Route::get('/sutaz/{id}-{slug}', 'App\Http\Controllers\ContestsController@show')->name('contests.detail');
