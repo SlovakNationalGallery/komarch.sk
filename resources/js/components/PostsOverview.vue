@@ -4,10 +4,12 @@
       <radio-button
         v-for="filter in filters"
         :key="filter.key"
-        v-model="activeFilter"
+        :value="activeFilter"
         :disabled="fetchState.isFetching"
         :option="filter"
+        name="filter"
         class="mr-12 py-2"
+        @input="onFilterChange"
       />
     </div>
     <div class="h-10 md:h-20">
@@ -59,50 +61,98 @@ export default {
   ],
   data () {
     return {
-      filters: [],
-      activeFilter: {},
+      filters: [
+        {
+          key: 'featured',
+          title: 'Dôležité',
+          queryName: 'featured',
+          queryValue: 1
+        }
+      ],
       posts: [],
-      page: 1,
       hasNextPage: true
     }
   },
+  computed: {
+    activeFilter () {
+      if (this.$route.query.featured !== undefined) {
+        return this.filters[0]
+      }
+
+      if (this.$route.query.categories) {
+        return this.filters.find(({ queryValue }) => queryValue === this.$route.query.categories)
+      }
+
+      return {}
+    },
+    pageNumber () {
+      return parseInt(this.$route.query.page || 1)
+    }
+  },
   watch: {
-    activeFilter: {
-      immediate: true,
-      handler () {
-        this.fetchPage(1)
+    $route (to, from) {
+      if (to.query.featured !== from.query.featured ||
+          to.query.categories !== from.query.categories ||
+          to.query.page !== from.query.page
+      ) {
+        this.fetchPosts()
       }
     }
   },
-  // TODO: refactor using proper axios parameters
   async created () {
     const { categories } = await this.axiosGet('posts-filters')
-
-    const importantFilter = { key: 'Dôležité', title: 'Dôležité', params: '&featured' }
-
-    const filters = [
-      importantFilter
-    ]
-
-    for (const key in categories) {
-      if (key !== importantFilter.key) {
-        filters.push({ key: key, title: key, params: `&categories=${key}` })
-      }
+    for (const category in categories) {
+      this.filters.push({
+        key: category,
+        title: category,
+        queryName: 'categories',
+        queryValue: category
+      })
     }
-
-    this.filters = filters
+  },
+  mounted () {
+    this.fetchPosts()
   },
   methods: {
     onLoadMore () {
-      this.fetchPage(this.page + 1)
+      this.$router.push({
+        query: {
+          ...this.$route.query,
+          page: this.pageNumber + 1
+        }
+      })
     },
     onCancel () {
-      this.activeFilter = {}
+      this.$router.push({
+        query: {
+          ...this.$route.query,
+          page: undefined,
+          featured: undefined,
+          categories: undefined
+        }
+      })
     },
-    async fetchPage (pageNumber) {
-      const { data, meta } = await this.axiosGet(`posts?page=${pageNumber}${this.activeFilter.params || ''}`)
+    onFilterChange (filter) {
+      this.$router.push({
+        query: {
+          ...this.$route.query,
+          page: undefined,
+          featured: filter.queryName === 'featured' ? null : undefined,
+          categories: filter.queryName === 'categories' ? filter.queryValue : undefined,
+        }
+      })
+    },
+    async fetchPosts () {
+      const url = new URL('/posts', window.location.origin)
+      url.searchParams.append('page', this.pageNumber)
 
-      if (pageNumber === 1) {
+      if (this.activeFilter.queryName) {
+        url.searchParams.append(this.activeFilter.queryName, this.activeFilter.queryValue)
+      }
+
+      const { data, meta } = await this.axiosGet(`posts${url.search}`)
+
+      if (this.pageNumber === 1) {
         this.posts = data
       } else {
         this.posts.push(...data)
@@ -111,12 +161,12 @@ export default {
       this.page = meta.current_page
       this.hasNextPage = meta.current_page < meta.last_page
     },
-    getIsotopeOptions() {
+    getIsotopeOptions () {
       return {
         itemSelector: '[data-grid-item]',
-        percentPosition: true,
-      };
-    },
+        percentPosition: true
+      }
+    }
   }
 }
 </script>

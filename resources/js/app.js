@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import VueRouter from 'vue-router'
 import VueMapbox from 'vue-mapbox'
 import Mapbox from 'mapbox-gl'
 import vClickOutside from 'v-click-outside'
@@ -19,11 +20,13 @@ Vue.component('WorksOverview', require('./components/works-overview/WorksOvervie
 Vue.component('ImageGallery', require('./components/ImageGallery').default)
 Vue.component('Clock', require('./components/Clock').default)
 
+Vue.use(VueRouter)
 Vue.use(VueMapbox, { mapboxgl: Mapbox })
 Vue.use(Lang)
 Vue.use(vClickOutside)
 
 // eslint-disable-next-line no-unused-vars
 const app = new Vue({
-  el: '#app'
+  el: '#app',
+  router: new VueRouter({ mode: 'history' })
 })
