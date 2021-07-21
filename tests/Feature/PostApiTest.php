@@ -35,10 +35,14 @@ class PostApiTest extends TestCase
             ]]);
     }
 
-    public function testRelated()
+    public function testShow()
     {
         $post = Post::factory()->create();
-        $response = $this->get('/api/post/' . $post->id . '/related');
-        $response->assertStatus(200);
+
+        $this->get(route('api.posts.show', $post))
+            ->assertJson([
+                'id' => $post->id,
+                'related' => []
+            ]);
     }
 }

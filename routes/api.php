@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\ArchitectFiltersController;
 use App\Http\Controllers\Api\ImportFromUrad;
 use App\Http\Resources\MediaResource;
 use App\Models\Work;
+use App\Http\Controllers\Api\PostController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -28,9 +29,8 @@ Route::post('/jobs/import-from-urad', ImportFromUrad::class);
 Route::get('architects', [ArchitectController::class, 'index'])->name('api.architects.index');
 Route::get('architects-filters', [ArchitectFiltersController::class, 'index'])->name('api.architects-filters.index');
 
-Route::get('/posts', 'App\Http\Controllers\Api\PostController@index')->name('api.posts.index');;
+Route::resource('/posts', PostController::class)->names('api.posts')->parameters(['posts' => 'post:id']);
 Route::get('/posts-filters', 'App\Http\Controllers\Api\PostController@filters')->name('api.posts-filters.index');;
-Route::get('/post/{id}/related', 'App\Http\Controllers\Api\PostController@related');
 
 Route::get('/documents', 'App\Http\Controllers\Api\DocumentController@index');
 Route::get('/documents-filters', 'App\Http\Controllers\Api\DocumentController@filters');

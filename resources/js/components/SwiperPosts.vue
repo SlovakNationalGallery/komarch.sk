@@ -71,8 +71,8 @@ export default {
     }
   },
   async created () {
-    const response = await axios.get(`/api/post/${this.postId}/related`)
-    this.posts = response.data.data
+    const response = await axios.get(`/api/posts/${this.postId}`)
+    this.posts = response.data.related
     await this.$nextTick()
     this.updateControls()
   },

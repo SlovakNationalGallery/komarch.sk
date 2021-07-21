@@ -40,25 +40,31 @@ class PostController extends Controller
         return collect(['categories' => $categories]);
     }
 
-    public function related($id, Request $request)
+    public function show(Post $post)
     {
-        $related_posts = Post::boolSearch($id)
-            ->must('more_like_this',
-            [
-                'fields' => ['title.' . app()->getLocale()],
-                'like' => [
-                    '_id' => $id
-                ],
-                'min_term_freq' => 1,
-                'min_doc_freq' => 1,
-            ])->size(10)->execute();
+        $related_posts = Post::boolSearch($post->id)
+            ->must(
+                'more_like_this',
+                [
+                    'fields' => ['title.' . app()->getLocale()],
+                    'like' => [
+                        '_id' => $post->id
+                    ],
+                    'min_term_freq' => 1,
+                    'min_doc_freq' => 1,
+                ])
+            ->size(10)
+            ->execute();
 
-        return PostResource::collection($related_posts->models());
+        return [
+            'id' => $post->id,
+            'related' => PostResource::collection($related_posts->models()),
+        ];
     }
 
     private function loadPosts(Request $request)
     {
-        $posts = Post::published();
+        $posts = Post::published()->with('media');
 
         // apply filters
         if ($request->has('categories')) {
