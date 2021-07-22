@@ -35,6 +35,8 @@ class Contest extends Model implements HasMedia
         'updated_at',
     ];
 
+    protected $appends = ['state'];
+
     public static $filterable = ['typologies'];
 
     public function getUrlAttribute(): string
@@ -57,9 +59,23 @@ class Contest extends Model implements HasMedia
         return $this->getMedia('contest_attachments');
     }
 
+    public function getStateAttribute()
+    {
+        if (is_null($this->announced_at) || $this->announced_at->isFuture()) {
+            return 'upcoming';
+        } elseif (
+            ($this->announced_at->isPast()) &&
+            (is_null($this->finished_at) || $this->finished_at->isFuture())
+        ) {
+            return 'ongoing';
+        }
+
+        return 'finished';
+    }
+
     public function typologies()
     {
-        return $this->morphToMany(Tag::class, 'taggable')->where('type', '');
+        return $this->morphToMany(Tag::class, 'taggable')->whereNull('type');
     }
 
     public function scopeOngoing($query)

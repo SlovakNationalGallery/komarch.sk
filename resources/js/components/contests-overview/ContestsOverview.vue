@@ -30,6 +30,7 @@ import InputSearch from '../atoms/InputSearch'
 import axiosGet from '../axiosGetMixin'
 
 const FILTER_TYPOLOGIES = 'typologies'
+const FILTER_STATES = 'states'
 
 export default {
   components: {
@@ -60,7 +61,8 @@ export default {
   computed: {
     filterParams () {
       const params = {
-        typologies: this.selectedFilters.filter(filter => filter.type === FILTER_TYPOLOGIES).map(filter => filter.title)
+        typologies: this.selectedFilters.filter(filter => filter.type === FILTER_TYPOLOGIES).map(filter => filter.title),
+        states: this.selectedFilters.filter(filter => filter.type === FILTER_STATES).map(filter => filter.title)
       }
 
       if (this.sorting.title) {
@@ -117,13 +119,19 @@ export default {
       ])
 
       const typologies = []
+      const states = []
 
       for (const key in filtersResponse.typologies) {
         typologies.push({ key: key, title: key, items: filtersResponse.typologies[key], type: FILTER_TYPOLOGIES })
       }
 
+      for (const key in filtersResponse.states) {
+        states.push({ key: key, title: key, items: filtersResponse.states[key], type: FILTER_STATES })
+      }
+
       this.filters = {
-        typologies
+        typologies,
+        states
       }
 
       this.results = contestsResponse.data

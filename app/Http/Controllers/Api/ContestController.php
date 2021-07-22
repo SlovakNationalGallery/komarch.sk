@@ -34,6 +34,11 @@ class ContestController extends Controller
     {
         $contests = $this->loadContests($request)->get();
         $filters = collect();
+        $filters['states'] = [
+            trans('contests.ongoing') => $contests->where('state', 'ongoing')->count(),
+            trans('contests.upcoming') => $contests->where('state', 'upcoming')->count(),
+            trans('contests.finished') => $contests->where('state', 'finished')->count(),
+        ];
         foreach (Contest::$filterable as $filter) {
             $filters[$filter] = $contests->pluck($filter)->flatten()->countBy('name');
         }
@@ -46,19 +51,20 @@ class ContestController extends Controller
 
         // apply filters
         if ($request->has('typologies')) {
-            $contests->withAnyTags($request->input('typologies', []), ''); //@TODO remove type='' once it's fixed in importer
+            $contests->withAnyTags($request->input('typologies', []));
         }
 
-        if ($request->has('ongoing')) {
-            $contests->ongoing();
-        }
-
-        if ($request->has('upcoming')) {
-            $contests->upcoming();
-        }
-
-        if ($request->has('finished')) {
-            $contests->finished();
+        $state = implode($request->input('states', []));
+        switch ($state) {
+            case trans('contests.ongoing'):
+                $contests->ongoing();
+                break;
+            case trans('contests.upcoming'):
+                $contests->upcoming();
+                break;
+            case trans('contests.finished'):
+                $contests->finished();
+                break;
         }
 
         return $contests;

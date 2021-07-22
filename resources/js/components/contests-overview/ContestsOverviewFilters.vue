@@ -1,6 +1,13 @@
 <template>
   <div class="md:flex items-start">
     <InputCheckboxGroup
+      v-if="filters.states && filters.states.length > 0"
+      :filters="filters.states"
+      :value="value"
+      :title="`${__('contests.state')}:`"
+      @input="onInput"
+    />
+    <InputCheckboxGroup
       v-if="filters.typologies && filters.typologies.length > 0"
       :filters="filters.typologies"
       :value="value"

@@ -4,6 +4,7 @@ return [
     'title' => 'Competitions',
     'navigate_back' => 'Back to all competitions',
     'no_results' => 'No competitions found',
+    'state' => 'State',
     'typology' => 'Typology of competition',
     'participation_conditions' => 'Participantation conditions',
     'terms' => 'Dates',
@@ -18,4 +19,7 @@ return [
     'rewards' => 'Rewards',
     'web_terms' => 'competition website',
     'web_results' => 'website with results ',
+    'ongoing' => 'Ongoing',
+    'upcoming' => 'Upcoming',
+    'finished' => 'Finished',
 ];

@@ -18,6 +18,7 @@ class ContestResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'url' => $this->url,
+            'state' => $this->state,
             'announced_at' => optional($this->announced_at)->formatLocalized(config('settings.date_format')),
             'finished_at' => optional($this->finished_at)->formatLocalized(config('settings.date_format')),
             'results_published_at' => optional($this->results_published_at)->formatLocalized(config('settings.date_format')),

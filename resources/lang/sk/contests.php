@@ -4,6 +4,7 @@ return [
     'title' => 'Súťaže',
     'navigate_back' => 'Späť na všetky súťaže',
     'no_results' => 'Nenašli sa žiadne súťaže',
+    'state' => 'Stav',
     'typology' => 'Typológia súťaže',
     'participation_conditions' => 'Okruh účastníkov',
     'terms' => 'Termíny',
@@ -18,4 +19,7 @@ return [
     'rewards' => 'Ceny',
     'web_terms' => 'webstránka súťaže',
     'web_results' => 'webstránka s výsledkami',
+    'ongoing' => 'Prebiehajúce',
+    'upcoming' => 'Pripavované',
+    'finished' => 'Ukončené',
 ];
