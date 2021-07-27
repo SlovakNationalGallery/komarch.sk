@@ -62,7 +62,12 @@ class Architect extends Model
 
     public function getUrlAttribute(): string
     {
-        return '#' . $this->id; // @TODO
+        return route('architects.detail', [$this->id, $this->slug]);
+    }
+
+    public function getSlugAttribute()
+    {
+        return Str::slug($this->full_name);
     }
 
     public function getAuthorizationsAttribute()

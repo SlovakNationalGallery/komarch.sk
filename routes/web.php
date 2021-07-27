@@ -29,6 +29,10 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
     Route::get('/diela', 'App\Http\Controllers\WorksController@index')->name('works');
     Route::get('/dielo/{id}-{slug}', 'App\Http\Controllers\WorksController@show')->name('works.detail');
 
+    Route::get('/architekti', 'App\Http\Controllers\ArchitectsController@index')->name('architects');
+    Route::get('/architekt/{id}-{slug}', 'App\Http\Controllers\ArchitectsController@show')->name('architects.detail');
+
+
     Route::get('/search', 'App\Http\Controllers\SearchController@index')->name('search');
 
     Route::resource('/spravy', PostsController::class)->names('posts')->parameter('spravy', 'post');
