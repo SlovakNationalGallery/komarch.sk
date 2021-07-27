@@ -18,11 +18,11 @@ class ArchitectResource extends JsonResource
         return array_merge(
             Arr::only(
                 $this->resource->attributesToArray(),
-                ['id', 'first_name', 'last_name', 'works_count', 'awards_count']
+                ['id', 'first_name', 'last_name', 'works_count', 'awards_count', 'contests_count']
             ),
             [
                 'location_city' => Arr::get($this, 'address.location_city'),
-                'url' => 'TODO',
+                'url' => $this->url,
             ],
         );
     }

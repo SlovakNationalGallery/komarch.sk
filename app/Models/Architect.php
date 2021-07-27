@@ -30,6 +30,11 @@ class Architect extends Model
         return $this->hasManyDeep(Award::class, ['architect_work', Work::class, 'award_work']);
     }
 
+    public function contests()
+    {
+        return $this->belongsToMany(Contest::class)->withPivot('depended', 'type');
+    }
+
     public function numbers()
     {
         return $this->hasMany(Number::class);

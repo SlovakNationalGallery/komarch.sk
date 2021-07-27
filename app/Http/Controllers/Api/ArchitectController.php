@@ -13,7 +13,7 @@ class ArchitectController extends Controller
     {
         $architects = Architect::query()
             ->with('address')
-            ->withCount(['works', 'awards'])
+            ->withCount(['works', 'awards', 'contests'])
             ->leftJoin('addresses', 'addresses.architect_id', '=', 'architects.id')
 
             ->filtered($request)
