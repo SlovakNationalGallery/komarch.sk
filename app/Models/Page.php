@@ -47,6 +47,7 @@ class Page extends Model implements HasMedia
         'wp_post_name',
         'published_at',
         'cover_image',
+        'redirect_url',
     ];
     protected $dates = ['published_at'];
 
