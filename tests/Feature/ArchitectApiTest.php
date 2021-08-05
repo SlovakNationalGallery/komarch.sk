@@ -31,7 +31,7 @@ class ArchitectApiTest extends TestCase
             'winning' => 1,
         ]);
 
-        Architect::factory()
+        $architect = Architect::factory()
             ->hasAttached(
                 $work,
                 ['id' => $this->faker->unique()->randomNumber()]
@@ -53,7 +53,7 @@ class ArchitectApiTest extends TestCase
                     'location_city' => 'Bratislava',
                     'works_count' => 1,
                     'awards_count' => 1,
-                    'url' => 'TODO',
+                    'url' => route('architects.detail', ['id' => $architect->id, 'slug' => $architect->slug]),
                 ]
             ]]);
     }
