@@ -44,7 +44,7 @@ export default {
   props: {
     authorizationLabels: {
       type: Object,
-      default: () => {}
+      required: true
     }
   },
   data () {
@@ -52,14 +52,7 @@ export default {
       filters: {},
       selectedFilters: [],
       searchTerm: null,
-      sorting: {
-        last_name: null,
-        first_name: null,
-        location_city: null,
-        works_count: null,
-        awards_count: null,
-        contests_count: null
-      },
+      sorting: {},
       results: [],
       page: 1,
       hasNextPage: true
@@ -67,45 +60,12 @@ export default {
   },
   computed: {
     filterParams () {
-      const params = {
-        authorizationsIn: this.selectedFilters.filter(filter => filter.type === FILTER_AUTHORIZATIONS).map(filter => filter.key)
+      return {
+        authorizationsIn: this.selectedFilters.filter(filter => filter.type === FILTER_AUTHORIZATIONS).map(filter => filter.key),
+        sortby: this.sorting.name,
+        direction: this.sorting.direction,
+        q: this.searchTerm
       }
-
-      if (this.sorting.last_name) {
-        params.sortby = 'last_name'
-        params.direction = this.sorting.last_name
-      }
-
-      if (this.sorting.first_name) {
-        params.sortby = 'first_name'
-        params.direction = this.sorting.first_name
-      }
-
-      if (this.sorting.location_city) {
-        params.sortby = 'location_city'
-        params.direction = this.sorting.location_city
-      }
-
-      if (this.sorting.works_count) {
-        params.sortby = 'works_count'
-        params.direction = this.sorting.works_count
-      }
-
-      if (this.sorting.awards_count) {
-        params.sortby = 'awards_count'
-        params.direction = this.sorting.awards_count
-      }
-
-      if (this.sorting.contests_count) {
-        params.sortby = 'contests_count'
-        params.direction = this.sorting.contests_count
-      }
-
-      if (this.searchTerm) {
-        params.q = this.searchTerm
-      }
-
-      return params
     }
   },
   watch: {

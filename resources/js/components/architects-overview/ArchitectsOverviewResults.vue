@@ -27,54 +27,60 @@
         <tr>
           <th>
             <ButtonSortable
-              v-model="sortingLastName"
+              :value="getSortingDirectionFor('last_name')"
               style="min-width: 200px"
               class="pb-10 text-sm"
+              @input="setSorting('last_name', $event)"
             >
               {{ __('architects.last_name') }}
             </ButtonSortable>
           </th>
           <th>
             <ButtonSortable
-              v-model="sortingFirstName"
+              :value="getSortingDirectionFor('first_name')"
               style="min-width: 200px"
               class="pb-10 text-sm"
+              @input="setSorting('first_name', $event)"
             >
               {{ __('architects.first_name') }}
             </ButtonSortable>
           </th>
           <th>
             <ButtonSortable
-              v-model="sortingLocationCity"
+              :value="getSortingDirectionFor('location_city')"
               style="min-width: 200px"
               class="pb-10 text-sm"
+              @input="setSorting('location_city', $event)"
             >
               {{ __('architects.location_city') }}
             </ButtonSortable>
           </th>
           <th>
             <ButtonSortable
-              v-model="sortingWorksCount"
+              :value="getSortingDirectionFor('works_count')"
               style="min-width: 200px"
               class="pb-10 text-sm"
+              @input="setSorting('works_count', $event)"
             >
               {{ __('architects.works_count') }}
             </ButtonSortable>
           </th>
           <th>
             <ButtonSortable
-              v-model="sortingAwardsCount"
+              :value="getSortingDirectionFor('awards_count')"
               style="min-width: 200px"
               class="pb-10 text-sm"
+              @input="setSorting('awards_count', $event)"
             >
               {{ __('architects.awards_count') }}
             </ButtonSortable>
           </th>
           <th>
             <ButtonSortable
-              v-model="sortingContestsCount"
+              :value="getSortingDirectionFor('contests_count')"
               style="min-width: 200px"
               class="pb-10 text-sm"
+              @input="setSorting('contests_count', $event)"
             >
               {{ __('architects.contests_count') }}
             </ButtonSortable>
@@ -137,66 +143,13 @@ export default {
       required: true
     }
   },
-  computed: {
-    sortingLastName: {
-      get () {
-        return this.value.last_name
-      },
-      set (newValue) {
-        this.$emit('input', {
-          last_name: newValue
-        })
-      }
+  methods: {
+    getSortingDirectionFor (name) {
+      if (this.value.name === name) return this.value.direction
+      return null
     },
-    sortingFirstName: {
-      get () {
-        return this.value.first_name
-      },
-      set (newValue) {
-        this.$emit('input', {
-          first_name: newValue
-        })
-      }
-    },
-    sortingLocationCity: {
-      get () {
-        return this.value.location_city
-      },
-      set (newValue) {
-        this.$emit('input', {
-          location_city: newValue
-        })
-      }
-    },
-    sortingWorksCount: {
-      get () {
-        return this.value.works_count
-      },
-      set (newValue) {
-        this.$emit('input', {
-          works_count: newValue
-        })
-      }
-    },
-    sortingAwardsCount: {
-      get () {
-        return this.value.awards_count
-      },
-      set (newValue) {
-        this.$emit('input', {
-          awards_count: newValue
-        })
-      }
-    },
-    sortingContestsCount: {
-      get () {
-        return this.value.contests_count
-      },
-      set (newValue) {
-        this.$emit('input', {
-          contests_count: newValue
-        })
-      }
+    setSorting (name, direction) {
+      this.$emit('input', { name, direction })
     }
   }
 }
