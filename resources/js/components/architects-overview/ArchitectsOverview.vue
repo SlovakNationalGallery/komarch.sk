@@ -41,6 +41,12 @@ export default {
   mixins: [
     axiosGet
   ],
+  props: {
+    authorizationLabels: {
+      type: Object,
+      default: () => {}
+    }
+  },
   data () {
     return {
       filters: {},
@@ -62,7 +68,7 @@ export default {
   computed: {
     filterParams () {
       const params = {
-        authorizationsIn: this.selectedFilters.filter(filter => filter.type === FILTER_AUTHORIZATIONS).map(filter => filter.title),
+        authorizationsIn: this.selectedFilters.filter(filter => filter.type === FILTER_AUTHORIZATIONS).map(filter => filter.key)
       }
 
       if (this.sorting.last_name) {
@@ -131,7 +137,12 @@ export default {
       const authorizationsIn = []
 
       for (const key in filtersResponse.authorizationsIn) {
-        authorizationsIn.push({ key: key, title: key, items: filtersResponse.authorizationsIn[key], type: FILTER_AUTHORIZATIONS })
+        authorizationsIn.push({
+          key: key,
+          title: this.authorizationLabels[key] || key,
+          items: filtersResponse.authorizationsIn[key],
+          type: FILTER_AUTHORIZATIONS
+        })
       }
       this.filters = {
         authorizationsIn

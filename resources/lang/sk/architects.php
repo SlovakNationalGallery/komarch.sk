@@ -11,4 +11,11 @@ return [
     'awards_count' => 'Ocenenia',
     'contests_count' => 'Porotovanie',
     'authorization' => 'Typ autorizácie',
+    'authorizations' => [
+        'AA' => 'Autorizovaný architekt',
+        'KA' => 'Krajinný architekt',
+        'HA' => 'Hosťujúci architekt',
+        'HKA' => 'Hosťujúci krajinný architekt',
+        'DC' => 'Dobrovoľný člen',
+    ]
 ];

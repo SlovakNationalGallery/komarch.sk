@@ -10,7 +10,9 @@
         :title="trans('architects.title')"
         text="“{{ __('app.intro') }}”"
     />
-    <architects-overview />
+    <architects-overview
+        :authorization-labels="{{ json_encode( __('architects.authorizations')) }}"
+    />
 </div>
 
 <x-footer.footer></x-footer.footer>
