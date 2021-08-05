@@ -4,47 +4,49 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Architect;
+use App\Models\Number;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
 class ArchitectFiltersController extends Controller
 {
     public function index(Request $request)
     {
-        $architects = Architect::query()
-            ->with('numbers')
-            ->filtered($request)
-            ->get();
-
         return [
-            'startsWith' => $this->getStartsWith($architects),
-            'authorizationsIn' => $this->getAuthorizationsIn($architects),
+            'startsWith' => $this->getStartsWith($request),
+            'authorizationsIn' => $this->getAuthorizationsIn($request),
         ];
     }
 
-    private function getStartsWith(Collection $architects) {
-        $architectsByFirstLetters = $architects
-            ->groupBy(function ($architect, $key) {
-                return (string) Str::of($architect->last_name)
-                    ->substr(0, 1)
-                    ->upper()
-                    ->ascii();
-            });
+    private function getStartsWith(Request $request) {
+        $architectsFirstLetters = Architect::query()
+            ->filtered($request)
+            ->selectRaw('LEFT(last_name, 1) AS first_letter')
+            ->groupBy('first_letter')
+            ->pluck('first_letter')
+            ->flatMap(fn ($letter) => [
+              (string) Str::of($letter)->ascii() => true
+            ]);
 
         $startsWith = [];
         foreach (range('A', 'Z') as $letter) {
-            $startsWith[$letter] = $architectsByFirstLetters->has($letter);
+            $startsWith[$letter] = $architectsFirstLetters->has($letter);
         }
 
         return $startsWith;
     }
 
-    private function getAuthorizationsIn(Collection $architects) {
-        $counts = $architects
-            ->pluck('authorizations')
-            ->flatten()
-            ->countBy()
+    private function getAuthorizationsIn(Request $request) {
+        $counts = Number::query()
+            ->whereHas('architect', function (Builder $query) use ($request) {
+                $query->filtered($request);
+            })
+            ->selectRaw("SUBSTRING_INDEX(TRIM(architect_number), ' ', -1) as authorization_type")
+            ->selectRaw('count(*) as count')
+            ->groupBy('authorization_type')
+            ->get()
+            ->flatMap(fn ($row) => [$row->authorization_type => $row->count])
             ->toArray();
 
         return array_merge(
