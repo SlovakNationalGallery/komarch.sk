@@ -12,18 +12,24 @@
       mode="out-in"
     >
       <div
-        :key="selectedOption.key"
+        :key="fetchedOption"
         class="mt-10"
       >
-        <div
-          v-for="(item, index) in items.filter(it => it.filterTags.includes(selectedOption.key))"
-          :key="index"
-        >
-          <slot
-            name="list-item"
-            :item="item"
-          />
-        </div>
+        <template v-if="items.length > 0">
+          <div
+            v-for="(item, index) in items"
+            :key="index"
+          >
+            <slot
+              name="list-item"
+              :item="item"
+            />
+          </div>
+        </template>
+        <slot
+          v-else-if="fetchedOption"
+          name="empty-list"
+        />
       </div>
     </transition>
     <slot name="after-list" />
@@ -42,19 +48,27 @@ export default {
       type: Array,
       required: true
     },
+    value: {
+      type: Object,
+      required: true
+    },
+    fetchedOption: {
+      type: String,
+      default: null
+    },
     items: {
       type: Array,
       required: true
     }
   },
-  data () {
-    return {
-      selectedOption: this.options[0]
-    }
-  },
   computed: {
-    resultsList () {
-      return [this.options.find(option => option.key === this.selectedOption.key)]
+    selectedOption: {
+      get () {
+        return this.value
+      },
+      set (val) {
+        this.$emit('input', val)
+      }
     }
   }
 }

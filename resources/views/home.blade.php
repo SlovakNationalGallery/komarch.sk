@@ -31,7 +31,9 @@
 
     <div class="lg:flex">
         <div class="flex-1 md:mr-14">
-            <filter-listing-tenders />
+            <filter-listing-tenders
+                :options="{{ json_encode($contestFilterOptions) }}"
+            />
         </div>
         <div class="flex-1 md:mr-14">
             <filter-listing-posts />

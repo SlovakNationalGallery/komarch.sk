@@ -1,7 +1,9 @@
 <template>
   <FilterListing
+    v-model="selectedOption"
+    :fetched-option="fetchedOption"
     :options="options"
-    :items="tenders"
+    :items="contests"
   >
     <template #before-list>
       <h2 class="text-xl mb-10">
@@ -10,9 +12,17 @@
         </LinkArrow>
       </h2>
     </template>
+
+    <template #empty-list>
+      <p class="py-10">
+        Nenašli sa žiadne súťaže.
+      </p>
+    </template>
+
     <template #list-item="{ item }">
       <TeaserTender :tender="item" />
     </template>
+
     <template #after-list>
       <LinkArrow url="/sutaze">
         Viac súťaží
@@ -35,25 +45,29 @@ export default {
   props: {
     options: {
       type: Array,
-      default: () => [
-        { key: 'running', title: 'Prebiehajúce' },
-        { key: 'prepared', title: 'Pripravované' },
-        { key: 'closed', title: 'Ukončené' }
-      ]
-    },
-    tenders: {
-      type: Array,
-      default: () => [
-        { filterTags: ['running'], date: '11. 2. 2021 – 10. 12. 2020', days: '3 dni', title: 'Výsledky krajinársko-urbanistickej súťaže Revitalizácia Mlynského náhonu', url: '#' },
-        { filterTags: ['running'], date: '12. 1. 2021 – 10. 12. 2020', days: '3 dni', title: 'Výsledky krajinársko-urbanistickej súťaže Revitalizácia Mlynského náhonu', url: '#' },
-        { filterTags: ['running'], date: '13. 1. 2021 – 10. 12. 2020', days: '3 dni', title: 'Výsledky krajinársko-urbanistickej súťaže Revitalizácia Mlynského náhonu', url: '#' },
-        { filterTags: ['prepared'], date: '14. 1. 2021 – 10. 12. 2020', days: '3 dni', title: 'Výsledky krajinársko-urbanistickej súťaže Revitalizácia Mlynského náhonu', url: '#' },
-        { filterTags: ['prepared'], date: '15. 1. 2021 – 10. 12. 2020', days: '3 dni', title: 'Výsledky krajinársko-urbanistickej súťaže Revitalizácia Mlynského náhonu', url: '#' },
-        { filterTags: ['prepared'], date: '17. 1. 2021 – 10. 12. 2020', days: '3 dni', title: 'Výsledky krajinársko-urbanistickej súťaže Revitalizácia Mlynského náhonu', url: '#' },
-        { filterTags: ['prepared'], date: '18. 1. 2021 – 10. 12. 2020', days: '3 dni', title: 'Výsledky krajinársko-urbanistickej súťaže Revitalizácia Mlynského náhonu', url: '#' },
-        { filterTags: ['closed'], date: '19. 1. 2021 – 10. 12. 2020', days: '3 dni', title: 'Výsledky krajinársko-urbanistickej súťaže Revitalizácia Mlynského náhonu', url: '#' },
-        { filterTags: ['closed'], date: '20. 1. 2021 – 10. 12. 2020', days: '3 dni', title: 'Výsledky krajinársko-urbanistickej súťaže Revitalizácia Mlynského náhonu', url: '#' }
-      ]
+      required: true
+    }
+  },
+  data () {
+    return {
+      selectedOption: this.options[0],
+      contests: [],
+      fetchedOption: null
+    }
+  },
+  watch: {
+    selectedOption (value) {
+      this.fetch()
+    }
+  },
+  created () {
+    this.fetch()
+  },
+  methods: {
+    async fetch () {
+      const response = await axios.get('/api/contests', { params: { states: [this.selectedOption.key] } })
+      this.fetchedOption = this.selectedOption.key
+      this.contests = response.data.data
     }
   }
 }
